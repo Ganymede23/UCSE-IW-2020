@@ -2,7 +2,9 @@
 
 <form action="." method="post">
     {% csrf_token %}
-    {{ datos_usuario.as_p }}
+    <!––{{ datos_usuario.as_p }}-->
+    <input type="text" name="username" placeholder="Username..." class="form-control">
+    <input type="password" name="password" placeholder="Password..." class="form-control">
 
     <input type="submit" value="Guardar" />
 </form>
