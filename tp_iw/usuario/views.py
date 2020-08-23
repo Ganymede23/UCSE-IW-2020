@@ -1,56 +1,57 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from .forms import CargarDatos, CreateUserForm
 from django.contrib.auth.decorators import login_required
+from .forms import CreateUserForm
 
 # Create your views here.
 
+
 def home(request):
-    return  render(request, "home.html")  
+    return render(request, "home.html")
+
 
 def login_user(request):
-    if request.method == 'POST':
-        #datos_usuario = CargarDatos(request.POST)
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+    if request.method == "POST":
+
+        username = request.POST["username"]  # recibe campo usuario
+        password = request.POST["password"]  # recibe campo password
+        user = authenticate(
+            request, username=username, password=password
+        )  # verifica usuario logeado
         if user is not None:
             login(request, user)
-            #return redirect('home_logueado')
-            return HttpResponseRedirect('/home_logueado')
-            #redirect()
 
-    #else:
-    #    datos_usuario = CargarDatos()
-    #context = {}
-    return  render(request, "login.html")
+            return HttpResponseRedirect(
+                "/home_logueado"
+            )  # si se logea correctamente redirige a home_logeado
+
+    return render(request, "login.html")
+
 
 def register(request):
 
-    form = CreateUserForm
-    
-    if request.method == 'POST':
-        form=CreateUserForm(request.POST)
+    form = CreateUserForm  # usa el formulario creado en Forms.py
+
+    if (
+        request.method == "POST"
+    ):  # si le llegan datos los toma y verifica que sean validos
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
 
-    context = {'form':form}
+    context = {"form": form}
 
-    return render(request, 'register.html', context)
+    return render(request, "register.html", context)
 
-@login_required(login_url='/login/')
+
+@login_required(
+    login_url="/login/"
+)  # el decorador te envia al login si intentas entrar sin logearte a home_logueado
 def home_logueado(request):
-    return  render(request, "home_logueado.html") 
-
-def prueba(request):
-    return  render(request, "prueba.html")
-
-def logout_user(request):
-    logout(request) 
-    return HttpResponseRedirect('/home')
+    return render(request, "home_logueado.html")
 
 
-
-
+def logout_user(request):  # vista para cerrar sesion
+    logout(request)
+    return HttpResponseRedirect("/home")
