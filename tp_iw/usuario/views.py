@@ -25,7 +25,7 @@ def login_user(request):
     #else:
     #    datos_usuario = CargarDatos()
     #context = {}
-    return  render(request, "accounts/login.html")
+    return  render(request, "login.html")
 
 def register(request):
 
@@ -45,7 +45,11 @@ def home_logueado(request):
     return  render(request, "home_logueado.html") 
 
 def prueba(request):
-    return  render(request, "prueba.html") 
+    return  render(request, "prueba.html")
+
+def logout_user(request):
+    logout(request) 
+    return HttpResponseRedirect('/home')
 
 
 
