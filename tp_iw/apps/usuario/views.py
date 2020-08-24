@@ -7,8 +7,8 @@ from .forms import CreateUserForm
 # Create your views here.
 
 
-def home(request):
-    return render(request, "home.html")
+def index(request):
+    return render(request, "index.html")
 
 
 def login_user(request):
@@ -23,8 +23,8 @@ def login_user(request):
             login(request, user)
 
             return HttpResponseRedirect(
-                "/home_logueado"
-            )  # si se logea correctamente redirige a home_logeado
+                "/home"
+            )  # si se logea correctamente redirige a home_logeado / home
 
     return render(request, "login.html")
 
@@ -48,10 +48,10 @@ def register(request):
 @login_required(
     login_url="/login/"
 )  # el decorador te envia al login si intentas entrar sin logearte a home_logueado
-def home_logueado(request):
-    return render(request, "home_logueado.html")
+def home(request):
+    return render(request, "home.html")
 
 
 def logout_user(request):  # vista para cerrar sesion
     logout(request)
-    return HttpResponseRedirect("/home")
+    return HttpResponseRedirect("/index")

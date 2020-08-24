@@ -15,14 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from apps.usuario.views import login_user, home, register, home_logueado, logout_user
+from apps.usuario.views import login_user, index, register, home, logout_user
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login_user),
-    path('home/', home),
+    path('index/', index),
     path('register/', register),
-    path('home_logueado/', home_logueado),
+    path('home/', home),
     path('logout_user/', logout_user)
 ]

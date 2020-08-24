@@ -1,20 +1,19 @@
-{% load static %}
 <!DOCTYPE html>
-
 <html>
+    <head>
+        <title>PAGINA SECUNDARIA</title>
+    </head>
+    <body>
+        <h1>Bienvenido a Leelo!</h1>
 
-<head>
-</head>
+        <p>Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura" ¡y mucho mas!</p>
 
-<body>
-    <h1>Bienvenido a Leelo!</h1>
+        <footer>
+        <hr>
+            <p>BCT Web Development Studio ®<p/>
+            <p><i>Todos los derechos e izquierdos reservados.<i><p/>
+        </footer>
 
-    <form method="get" action="/home_logueado">
-    <button type="submit">Ingresar</button>
-    </form>
-    
-    <!-- <button type="button" action="/login">Entrar!</button> -->
-
-    <p>Gracias por visitarnos - v2 Heroku</p>
-</body>
+        <a class="btn btn-primary" href="/logout_user">Cerrar Sesion</a>
+    </body>
 </html>
