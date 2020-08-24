@@ -2,7 +2,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import CreateUserForm
+
 
 # Create your views here.
 
@@ -25,6 +27,8 @@ def login_user(request):
             return HttpResponseRedirect(
                 "/home"
             )  # si se logea correctamente redirige a home_logeado / home
+        else:
+            messages.error(request, 'Datos inválidos!')
 
     return render(request, "login.html")
 
