@@ -1,20 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
-
 <html>
+    <head>
+        <title>Leelo - Inicio</title>
+    </head>
 
-<head>
-</head>
+    <body>
+        <h1>Bienvenido a Leelo!</h1>
 
-<body>
-    <h1>Bienvenido a Leelo!</h1>
-
-    <form method="get" action="/home">
-    <button type="submit">Ingresar</button>
-    </form>
-    
-    <!-- <button type="button" action="/login">Entrar!</button> -->
-
-    <p>Gracias por visitarnos - v2 Heroku</p>
-</body>
+        <form method="get">
+        <input type="submit" class="inline" formaction="/register" value="Registrarse">
+        <input type="submit" class="inline" formaction="/home" value="Ingresar">
+        </form>
+        
+        <p>Gracias por visitarnos - v2 Heroku</p>
+    </body>
 </html>

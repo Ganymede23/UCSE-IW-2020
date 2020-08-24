@@ -1,10 +1,22 @@
-<h1>Ingresa tus datos:</h1>
 
-<form action="." method="post">
-    {% csrf_token %}
-    <!––{{ datos_usuario.as_p }}-->
-    <input type="text" name="username" placeholder="Username..." class="form-control">
-    <input type="password" name="password" placeholder="Password..." class="form-control">
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leelo - Inicio de Sesión </title>
+    </head>
 
-    <input type="submit" value="Guardar" />
-</form>
+    <body>
+        <h1>Ingresa tus datos:</h1>
+
+        <form action="." method="post">
+            {% csrf_token %}
+            <!––{{ datos_usuario.as_p }}-->
+            <input type="text" name="username" placeholder="Username..." class="form-control">
+            <input type="password" name="password" placeholder="Password..." class="form-control">
+
+            <input type="submit" value="Entrar" />
+        </form>
+        <p></p>
+        <a class="btn btn-primary" href="/register">¿No tienes cuenta? Regístrate aquí.</a>
+    </body>
+</html>

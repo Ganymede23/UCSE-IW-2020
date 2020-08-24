@@ -39,7 +39,8 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-
+            return HttpResponseRedirect("/login")
+        #agregar error de ingreso
     context = {"form": form}
 
     return render(request, "register.html", context)
