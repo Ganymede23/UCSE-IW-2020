@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from usuario.views import login_user, home, register, home_logueado, logout_user
+from apps.usuario.views import login_user, home, register, home_logueado, logout_user
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
