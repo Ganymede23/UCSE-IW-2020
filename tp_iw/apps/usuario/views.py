@@ -44,7 +44,7 @@ def login_user(request):
 
             return HttpResponseRedirect(
                 "/home"
-            )  # si se logea correctamente redirige a home_logeado / home
+            )  # si se logea correctamente redirige a home
         else:
             messages.error(request, 'Datos inválidos.')
 
@@ -70,7 +70,7 @@ def register(request):
 
 @login_required(
     login_url="/login/"
-)  # el decorador te envia al login si intentas entrar sin logearte a home_logueado
+)  # el decorador te envia al login si intentas entrar sin logearte a home
 def home(request):
     return render(request, "home.html")
 

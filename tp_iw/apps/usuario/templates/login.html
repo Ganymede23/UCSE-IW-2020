@@ -1,4 +1,5 @@
-
+{% load socialaccount%}
+{% providers_media_js %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,6 +35,7 @@
             {% endif %}
         <p></p>
         <a class="btn btn-primary" href="/register">¿No tienes cuenta? Regístrate aquí.</a>
+        <a href="{% provider_login_url "google" %}"> O inicia sesion con Google </a> <!--iniciar sesion usando api de google gmail-->
     </body>
 
     <!--reCaptcha API-->
