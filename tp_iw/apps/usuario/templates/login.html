@@ -1,7 +1,8 @@
+{% extends 'base_layout.html' %}
 {% load socialaccount%}
 {% providers_media_js %}
-<!DOCTYPE html>
-<html>
+                
+{% block content1 %}
     <head>
         <title>Leelo - Inicio de Sesión </title>
     </head>
@@ -12,9 +13,9 @@
         <form action="." method="post">
             {% csrf_token %}
             <!––{{ datos_usuario.as_p }}-->
-            <label><input type="text" name="username" placeholder="Usuario..." class="form-control">
+            <label><input type="text" name="username" placeholder="Usuario..." class="form-control"></label>
             <p></p>
-            <input type="password" name="password" placeholder="Contraseña..." class="form-control">
+            <input type="password" name="password" placeholder="Contraseña..." class="form-control"></label>
             <p></p>
             <label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>
             <p></p>
@@ -44,4 +45,4 @@
     <!--reCaptcha API-->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-</html>
+{% endblock %}

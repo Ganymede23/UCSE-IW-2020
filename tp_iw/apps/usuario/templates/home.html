@@ -1,23 +1,17 @@
+{% extends 'base_layout.html' %}        
+        
+{% block content1 %}
 
-<!DOCTYPE html>
-<html>
     <head>
         <title>Leelo - Inicio</title>
     </head>
 
-    <body>
-        <h1>Bienvenido a Leelo!</h1>
+    <h1>Bienvenido a Leelo!</h1>
 
-        <p>Te logueaste bien!</p>
+    <p>Te logueaste bien!</p>
 
-        <p>Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura" ¡y mucho mas!</p>
+    <p>Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura" ¡y mucho mas!</p>
 
-        <footer>
-        <hr>
-            <p>BCT Web Development Studio ®<p/>
-            <p><i>Todos los derechos e izquierdos reservados.<i><p/>
-        </footer>
+    <a class="btn btn-primary" href="/logout_user">Cerrar Sesion</a>
+{% endblock %}
 
-        <a class="btn btn-primary" href="/logout_user">Cerrar Sesion</a>
-    </body>
-</html>
