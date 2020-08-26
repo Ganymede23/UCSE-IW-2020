@@ -156,4 +156,4 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/home'
 
 # Activate Django-Heroku.
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
