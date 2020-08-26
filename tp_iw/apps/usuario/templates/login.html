@@ -11,11 +11,19 @@
         <form action="." method="post">
             {% csrf_token %}
             <!––{{ datos_usuario.as_p }}-->
-            <input type="text" name="username" placeholder="Username..." class="form-control">
-            <input type="password" name="password" placeholder="Password..." class="form-control">
-
+            <label><input type="text" name="username" placeholder="Usuario..." class="form-control">
+            <p></p>
+            <input type="password" name="password" placeholder="Contraseña..." class="form-control">
+            <p></p>
+            <label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>
+            <p></p>
+            <div class="g-recaptcha" data-sitekey="6LdwXMMZAAAAAMjBPkLK-UTh7ka1eUZ1ZG5EixsM"></div>
+            <p></p>
             <input type="submit" value="Entrar" />
         </form>
+
+        <!--Ciclo que muestra cada mensaje de error/advertencia-->
+
         <p></p>
             {% if messages %}
             <ul class="messages">
@@ -27,4 +35,8 @@
         <p></p>
         <a class="btn btn-primary" href="/register">¿No tienes cuenta? Regístrate aquí.</a>
     </body>
+
+    <!--reCaptcha API-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </html>

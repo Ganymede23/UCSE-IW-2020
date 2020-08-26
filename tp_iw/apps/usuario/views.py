@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CreateUserForm
-
+import requests
+import json
 
 # Create your views here.
 
@@ -15,12 +16,29 @@ def index(request):
 
 def login_user(request):
     if request.method == "POST":
-
         username = request.POST["username"]  # recibe campo usuario
         password = request.POST["password"]  # recibe campo password
         user = authenticate(
             request, username=username, password=password
         )  # verifica usuario logeado
+
+        #Remember Me
+        if not request.POST.get('remember_me', None):
+            request.session.set_expiry(0)
+
+        #reCaptcha
+        captcha_token=request.POST.get("g-recaptcha-response")
+        captcha_url="https://www.google.com/recaptcha/api/siteverify"
+        captcha_secret="6LdwXMMZAAAAAH61OADU2Pc-0vge2znwGBsn7l8l"
+        captcha_data={"secret":captcha_secret,"response":captcha_token}
+        captcha_server_response=requests.post(url=captcha_url,data=captcha_data)
+        #print(captcha_server_response)
+        #print(captcha_server_response.text)
+        captcha_json=json.loads(captcha_server_response.text)
+        if captcha_json['success']==False:
+            messages.error(request, 'Captcha inválido.')
+            return HttpResponseRedirect("/login")
+
         if user is not None:
             login(request, user)
 
@@ -28,7 +46,7 @@ def login_user(request):
                 "/home"
             )  # si se logea correctamente redirige a home_logeado / home
         else:
-            messages.error(request, 'Datos inválidos!')
+            messages.error(request, 'Datos inválidos.')
 
     return render(request, "login.html")
 
