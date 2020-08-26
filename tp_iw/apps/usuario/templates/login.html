@@ -23,6 +23,11 @@
             <input type="submit" value="Entrar" />
         </form>
 
+        <a class="btn btn-primary" href="/register">¿No tienes cuenta? Regístrate aquí.</a>
+
+        <!--iniciar sesion usando api de google gmail-->
+        <a href="{% provider_login_url "google" %}"> O inicia sesion con Google </a> 
+
         <!--Ciclo que muestra cada mensaje de error/advertencia-->
 
         <p></p>
@@ -34,8 +39,6 @@
             </ul>
             {% endif %}
         <p></p>
-        <a class="btn btn-primary" href="/register">¿No tienes cuenta? Regístrate aquí.</a>
-        <a href="{% provider_login_url "google" %}"> O inicia sesion con Google </a> <!--iniciar sesion usando api de google gmail-->
     </body>
 
     <!--reCaptcha API-->
