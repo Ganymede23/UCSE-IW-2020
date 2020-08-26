@@ -1,1 +1,1 @@
-web: gunicorn tp_iw.wsgi --log-file -
+web: cd tp_iw && gunicorn tp_iw.wsgi --log-file -
