@@ -2,10 +2,21 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import CreateUserForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.urls import reverse
+
 import requests
 import json
+
+
+from .forms import CreateUserForm
+from .tokens import account_activation_token
 
 # Create your views here.
 
@@ -60,9 +71,39 @@ def register(request):
     ):  # si le llegan datos los toma y verifica que sean validos
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
+
+            user = form.save(commit=False)
+            user.is_active = False # lo pone como falso para que necesite la confirmacion por mail para logear
+            user.save()
+
+            # aqui crea el mail con el mensaje de activacion
+
+            uidb64= urlsafe_base64_encode(force_bytes(user.pk)) # crea el token encodeado
+
+            domain = get_current_site(request).domain
+            link= reverse('activate', kwargs={'uidb64':uidb64,'token':account_activation_token.make_token(user)}) # arma el link de activacion
+
+            activate_url = domain+link # le agrega el dominio al link
+
+            mail_subject = 'Activa tu cuenta' 
+
+            mail_body = 'Hola '+ user.username + \
+                ' Verifica tu cuenta con el siguiente link:\n' + activate_url
+
+            to_email = form.cleaned_data.get('email') # toma el email del usuario
+            
+            email = EmailMessage( # arma el email
+                        mail_subject, 
+                        mail_body, 
+                        to=[to_email]
+            )
+            email.send(fail_silently=False)
+
+            # redirije al login
             return HttpResponseRedirect("/login")
-        #agregar error de ingreso
+        else:
+            form = CreateUserForm(request.POST)
+
     context = {"form": form}
 
     return render(request, "register.html", context)
@@ -78,3 +119,25 @@ def home(request):
 def logout_user(request):  # vista para cerrar sesion
     logout(request)
     return HttpResponseRedirect("/index")
+
+def activate(request, uidb64=None, token=None):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+        if not account_activation_token.check_token(user,token):
+            return HttpResponseRedirect('/login'+'?message='+'El usuario ya esta activado')
+
+        if user.is_active:
+            return HttpResponseRedirect('/login')
+        user.is_active=True
+        user.save()   
+
+        # messages.success(request,'La cuenta se activo correctamente')
+        return HttpResponseRedirect('/login')
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+   
+    return HttpResponseRedirect('/login')

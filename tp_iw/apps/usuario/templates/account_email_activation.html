@@ -1,0 +1,15 @@
+<!-- Este httml es que recibe el usuario cuando clickea el enlace de activacion que se le envia a su mail -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    {% autoescape off %}
+    Bienvenido! {{ user.username }},
+    haga clic aqui para confirmar la activacion de su cuenta!,{{ domain }}{% url 'activate' uidb64=uid token=token %}
+    {% endautoescape %}
+
+</body>
+
+</html>

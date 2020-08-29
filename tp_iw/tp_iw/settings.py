@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
+    #auteticacion por mail
+    'six',
+
     # nuestras apps
     'apps.usuario',
 ]
@@ -153,7 +156,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/home' # Controla el redirect luego de iniciar sesion con gogle
+
+# CONFIGURACION DEL SMTP DE GOOGLE
+EMAIL_USE_TLS = True
+#EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackEnd"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'leeloingweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'starfleet31'
+EMAIL_PORT = 587
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
