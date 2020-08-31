@@ -81,9 +81,10 @@ def register(request):
 
             uidb64= urlsafe_base64_encode(force_bytes(user.pk)) # crea el id encodeado
 
-            domain = get_current_site(request).domain
+            #domain = get_current_site(request).domain
             link= reverse('activate', kwargs={'uidb64':uidb64,'token':token}) # arma el link de activacion
-            activate_url = domain+link # le agrega el dominio al link
+            #activate_url = domain + link
+            activate_url = 'http://127.0.0.1:8000'+ link # le agrega el dominio al link
 
             mail_subject = 'Activa tu cuenta' 
 
@@ -154,4 +155,4 @@ def activate(request, uidb64, token):
         user = None
 
    
-    return render(request, 'login.html') #
+    return render(request, 'login.html') 
