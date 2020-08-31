@@ -83,12 +83,11 @@ def register(request):
 
             domain = get_current_site(request).domain
             link= reverse('activate', kwargs={'uidb64':uidb64,'token':token}) # arma el link de activacion
-                                       
             activate_url = domain+link # le agrega el dominio al link
 
             mail_subject = 'Activa tu cuenta' 
 
-            mail_body = 'Hola '+ user.username + \
+            mail_body = 'Hola '+ user.username + '!' + \
                 ' Verifica tu cuenta con el siguiente link:\n' + activate_url
 
             to_email = form.cleaned_data.get('email') # toma el email del usuario
@@ -122,37 +121,37 @@ def logout_user(request):  # vista para cerrar sesion
     return HttpResponseRedirect("/index")
 
 
-
-def activate(request, uidb64, token):
+ # esta es otra forma pero deje la otra porque creo que es mas linda,igual no se
+'''def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
-        user = UserModel._default_manager.get(pk=uid)
+        user = User._default_manager.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('/login')
+        return HttpResponse("su cuenta se activo")
     else:
-        return HttpResponse('/login')
+        return HttpResponse("/login")'''
 
-'''def activate(request, uidb64=None, token=None):
+def activate(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
+        uid = force_text(urlsafe_base64_decode(uidb64)) #decodea uid
+        user = User.objects.get(pk=uid)#busca usuario
 
         if not default_token_generator.check_token(user,token):
-            return HttpResponseRedirect('/login'+'?message='+'El usuario ya esta activado')
+            return HttpResponseRedirect('/login'+'?message='+'El usuario ya esta activado') # por si ya se habia activado
 
         if user.is_active:
             return render(request, 'login.html')
-        user.is_active=True
+        user.is_active=True #lo cambia activo para que se pueda logear
         user.save()   
 
-        # messages.success(request,'La cuenta se activo correctamente')
+        # messages.success(request,'La cuenta se activo correctamente') # es es mensaje que tenemos que hacer aparecer
         return render(request, 'login.html')
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist): #si el usuario noo existe
         user = None
 
    
-    return render(request, 'login.html')'''
+    return render(request, 'login.html') #
