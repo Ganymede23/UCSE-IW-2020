@@ -19,7 +19,7 @@ import json
 
 
 from .forms import CreateUserForm
-from .models import Escritos
+from .models import Escrito
 
 
 def index(request):
@@ -115,7 +115,7 @@ def register(request):
 )  # el decorador te envia al login si intentas entrar sin logearte a home
 def home(request):
 
-    escritos = Escritos.objects.all().order_by("date_time") #de aca muestra los escritos esta forma de hacerlo lo sque de un ejemplo de fisa basicamente
+    escritos = Escrito.objects.all().order_by("date_time") #de aca muestra los escritos esta forma de hacerlo lo sque de un ejemplo de fisa basicamente
 
     return render(request, "home.html",{'list_escritos': escritos})
 
