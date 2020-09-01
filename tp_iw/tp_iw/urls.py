@@ -27,6 +27,7 @@ urlpatterns = [
     path('register/', register),
     path('home/', home),
     path('logout_user/', logout_user),
+    #path('email_activation/', email_activation),
     path('activate/<uidb64>/<token>/', activate, name='activate'),#path de la activacion del email
     #allauth
     path('accounts/', include('allauth.urls')),

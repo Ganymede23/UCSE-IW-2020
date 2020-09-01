@@ -1,0 +1,19 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block content1 %}
+    <head>
+        <title>Leelo - Verificación de Correo</title>
+    </head>
+
+    <body>
+        <h1>Verificación de correo electrónico</h1>
+
+        <p>¡Tu correo electrónico ya ha sido verificado!</p>
+
+        <form method="get">
+        <input type="submit" class="inline" formaction="/home" value="Ir al Inicio">
+        </form>
+
+    </body>
+{% endblock %}

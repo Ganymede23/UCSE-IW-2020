@@ -145,14 +145,15 @@ def activate(request, uidb64, token):
             return HttpResponseRedirect('/login'+'?message='+'El usuario ya esta activado') # por si ya se habia activado
 
         if user.is_active:
-            return render(request, 'login.html')
+            return render(request, 'email_activation.html')
         user.is_active=True #lo cambia activo para que se pueda logear
         user.save()   
 
         # messages.success(request,'La cuenta se activo correctamente') # es es mensaje que tenemos que hacer aparecer
-        return render(request, 'login.html')
+        return render(request, 'email_activation.html')
     except(TypeError, ValueError, OverflowError, User.DoesNotExist): #si el usuario noo existe
         user = None
 
    
-    return render(request, 'login.html') 
+    return render(request, 'email_activation.html') 
+
