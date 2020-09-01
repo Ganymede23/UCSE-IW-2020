@@ -12,14 +12,14 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.urls import reverse
 
+#from django.views.generic import ListView, DetailView
+
 import requests
 import json
 
 
 from .forms import CreateUserForm
-#from .tokens import account_activation_token
-
-# Create your views here.
+from .models import Escritos
 
 
 def index(request):
@@ -114,7 +114,10 @@ def register(request):
     login_url="/login/"
 )  # el decorador te envia al login si intentas entrar sin logearte a home
 def home(request):
-    return render(request, "home.html")
+
+    escritos = Escritos.objects.all().order_by("date_time") #de aca muestra los escritos esta forma de hacerlo lo sque de un ejemplo de fisa basicamente
+
+    return render(request, "home.html",{'list_escritos': escritos})
 
 
 def logout_user(request):  # vista para cerrar sesion
@@ -122,7 +125,7 @@ def logout_user(request):  # vista para cerrar sesion
     return HttpResponseRedirect("/index")
 
 
- # esta es otra forma pero deje la otra porque creo que es mas linda,igual no se
+# esta es otra forma pero deje la otra porque creo que es mas linda,igual no se
 '''def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
@@ -142,7 +145,7 @@ def activate(request, uidb64, token):
         user = User.objects.get(pk=uid)#busca usuario
 
         if not default_token_generator.check_token(user,token):
-            return HttpResponseRedirect('/login'+'?message='+'El usuario ya esta activado') # por si ya se habia activado
+            messages.error(request, 'su cuenta ya esta activada') # por si ya se habia activado
 
         if user.is_active:
             return render(request, 'email_activation.html')
@@ -151,9 +154,19 @@ def activate(request, uidb64, token):
 
         # messages.success(request,'La cuenta se activo correctamente') # es es mensaje que tenemos que hacer aparecer
         return render(request, 'email_activation.html')
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist): #si el usuario noo existe
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist): #si el usuario no existe
         user = None
 
-   
     return render(request, 'email_activation.html') 
+
+
+# ====ESCRITOS=====
+
+def escritodetail(request):
+
+    #aca tiene que traerse los dattos del escrito donde clickeo para mostrarlos en el "escritos_details"
+
+    return render(request, 'escritos_details.httml')
+
+
 

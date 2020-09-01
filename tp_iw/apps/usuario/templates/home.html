@@ -13,5 +13,15 @@
     <p>Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura" ¡y mucho mas!</p>
 
     <a class="btn btn-primary" href="/logout_user">Cerrar Sesion</a>
+
+
+    <!--esto te genera una lista de los escritos-->
+    <ul>
+    {%for escrito in list_escritos %}
+        <li><a href="{%urrl 'escritos_detail' escrito.pk %}" {{escrito.title}} - {{escrito.author.}} - {{escrito.date_time}} <br/>
+        {{escrito.body}}</li>
+    {% endfor%}
+    </ul>
+
 {% endblock %}
 
