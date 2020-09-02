@@ -46,6 +46,8 @@ INSTALLED_APPS = [
 
     # nuestras apps
     'apps.usuario',
+    'apps.escritos',
+    'apps.home',
 ]
 
 SITE_ID = 1

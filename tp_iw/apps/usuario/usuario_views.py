@@ -17,14 +17,7 @@ from django.urls import reverse
 import requests
 import json
 
-
 from .forms import CreateUserForm
-from .models import Escrito
-
-
-def index(request):
-    return render(request, "index.html")
-
 
 def login_user(request):
     if request.method == "POST":
@@ -49,13 +42,13 @@ def login_user(request):
         captcha_json=json.loads(captcha_server_response.text)
         if captcha_json['success']==False:
             messages.error(request, 'Captcha inválido.')
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/usuario/login/")
 
         if user is not None:
             login(request, user)
 
             return HttpResponseRedirect(
-                "/home"
+                "/home/homepage"
             )  # si se logea correctamente redirige a home
         else:
             messages.error(request, 'Datos inválidos.')
@@ -84,7 +77,7 @@ def register(request):
             #domain = get_current_site(request).domain
             link= reverse('activate', kwargs={'uidb64':uidb64,'token':token}) # arma el link de activacion
             #activate_url = domain + link
-            activate_url = 'http://127.0.0.1:8000'+ link # le agrega el dominio al link
+            activate_url = 'http://127.0.0.1:8000' + link # le agrega el dominio al link
 
             mail_subject = 'Activa tu cuenta' 
 
@@ -101,7 +94,7 @@ def register(request):
             email.send(fail_silently=False)
 
             # redirije al login
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/usuario/login")
         else:
             form = CreateUserForm(request.POST)
 
@@ -110,34 +103,9 @@ def register(request):
     return render(request, "register.html", context)
 
 
-@login_required(
-    login_url="/login/"
-)  # el decorador te envia al login si intentas entrar sin logearte a home
-def home(request):
-
-    escritos = Escrito.objects.all().order_by("date_time") #de aca muestra los escritos esta forma de hacerlo lo sque de un ejemplo de fisa basicamente
-
-    return render(request, "home.html",{'list_escritos': escritos})
-
-
 def logout_user(request):  # vista para cerrar sesion
     logout(request)
-    return HttpResponseRedirect("/index")
-
-
-# esta es otra forma pero deje la otra porque creo que es mas linda,igual no se
-'''def activate(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User._default_manager.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse("su cuenta se activo")
-    else:
-        return HttpResponse("/login")'''
+    return HttpResponseRedirect("/home/index/")
 
 def activate(request, uidb64, token):
     try:
@@ -160,13 +128,6 @@ def activate(request, uidb64, token):
     return render(request, 'email_activation.html') 
 
 
-# ====ESCRITOS=====
-
-def escritodetail(request):
-
-    #aca tiene que traerse los dattos del escrito donde clickeo para mostrarlos en el "escritos_details"
-
-    return render(request, 'escritos_details.httml')
 
 
 

@@ -15,23 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from apps.usuario.views import login_user, index, register, home, logout_user, activate
 from django.contrib.auth.decorators import login_required
-from apps.usuario import views
+
+#from apps.usuario.usuario_views import login_user,  register, logout_user, activate
+
+from apps.home.home_views import index #, home_page
+#from apps.home import home_views
+
+#from apps.escritos.escritos_views import escritodetail
 
 urlpatterns = [
-    path('', views.index, name='/index'),
+    #adminn
     path('admin/', admin.site.urls),
-    path('login/', login_user),
-    path('index/', index),
-    path('register/', register),
-    path('home/', home),
-    path('logout_user/', logout_user),
-    path('email_activation/', activate),
-    path('activate/<uidb64>/<token>/', activate, name='activate'),#path de la activacion del email
+
+    #home
+    path('', index, name='index'),
+    path('home/', include('apps.home.urls')),
+
+    #usuario
+    path('usuario/', include('apps.usuario.urls')),
+
     #allauth
     path('accounts/', include('allauth.urls')),
 
     #Escritos
-    #path('escritodetail/<int:pk>', escritodetail)
+    path('escritos/', include('apps.escritos.urls'))
 ]
