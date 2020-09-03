@@ -17,13 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.auth.decorators import login_required
 
-#from apps.usuario.usuario_views import login_user,  register, logout_user, activate
-
-from apps.home.home_views import index #, home_page
-#from apps.home import home_views
-
-#from apps.escritos.escritos_views import escritodetail
-
+from apps.home.home_views import index 
 urlpatterns = [
     #adminn
     path('admin/', admin.site.urls),

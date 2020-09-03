@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-
-{% load static %}
-
 {% extends 'base_layout.html' %}        
         
 {% block content1 %}
 
-<html>
     <head>
-        <title>Cuentanos tu historia!</title>
+        <h1>{{escrito.title}}</h1>
     </head>
 
-    <!--aca se tiene que visualizar el escrito cuando entras desde la home-->
-    
-</html>
-
+    <small>{{ escrito.author}} </small><br/>
+    <hr>
+    <br/>
+    {{ escrito.body }}
 
 {% endblock %}

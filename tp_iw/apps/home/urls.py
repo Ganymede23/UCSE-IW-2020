@@ -6,5 +6,5 @@ from .home_views import index, home_page
 urlpatterns = [
     path('', index, name='index'),
     path('index/', index),
-    path('homepage/', home_page),
+    path('homepage/', home_page, name='homepage'),
 ]

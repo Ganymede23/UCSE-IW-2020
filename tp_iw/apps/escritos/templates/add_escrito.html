@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}        
+        
+{% block content1 %}
+
+    <head>
+        <h1>Crea un nuevo Escrito</h1>
+    </head>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-primary">Terminar</button>
+    </form>
+        
+{% endblock %}

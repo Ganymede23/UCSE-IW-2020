@@ -13,12 +13,13 @@
     <p>Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura" ¡y mucho mas!</p>
 
     <a class="btn btn-primary" href="/usuario/logout_user">Cerrar Sesion</a>
-
-
+    <br/>
+    <br/>
+    <a class="btn btn-primary" href= {%url 'add_escrito' %} >Crear Escrito</a>
     <!--esto te genera una lista de los escritos-->
     <ul>
     {%for escrito in list_escritos %}
-        <li><a href="{%url 'escritos_details' escrito.pk %}"> {{escrito.title}} - {{escrito.author.}} - {{escrito.date}} <br/>
+        <li><a href="{%url 'escritos_details' escrito.pk %}"> {{escrito.title}} </a> - {{escrito.author}} - {{escrito.date}} <br/>
         {{escrito.body}}</li>
     {% endfor%}
     </ul>

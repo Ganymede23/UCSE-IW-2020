@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+import datetime
 
 
 #este es el modelo de los escritos (no se si realmentte iria en la aplicacion usuarios o deberiamos pensar una nueva)
@@ -10,7 +12,12 @@ class Escrito(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
-    date = models.DateTimeField(auto_now=False, auto_now_add=False)
+    date = models.DateTimeField(default = datetime.datetime.now() )
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
+
+    def get_absolute_url(self):
+        #return reverse('escrito_details', args=(str(self.id)) )
+        return reverse('homepage')
+    
