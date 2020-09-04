@@ -14,7 +14,7 @@
 
             {% csrf_token %}
             {% for field in form %}
-                {{field.label}}
+                <!--{{field.label}}-->
                 {{field}}
                 <p></p>
             {% endfor %}
@@ -29,21 +29,36 @@
             <input type="password" name="password2" placeholder="Contraseña..." class="form-control">
             <p></p>
         -->
+            <div class="g-recaptcha" data-sitekey="6Ldx7ccZAAAAABRWw1IUUycfMY2hrHhH38KutCtP"></div>
+            <p></p>
+
             <input type= "submit" class="btn btn-primary" name= "create_user" text= "Crear cuenta">
         </form> 
         <p></p>
             {{form.errors}}
         <p></p>
         <a href="/usuario/login"> ¿Ya tienes cuenta? Ingresa aquí.</a>
+        <p></p>
         <a href="{% provider_login_url "google" %}"> O registrate con Google </a> 
+        <p></p>
 
-        <!--
-            {% csrf_token %}
-            {% for field in form %}
-                {{field.label}}
-                {{field}}
-            {% endfor %}
-        -->
+
+        <!--Ciclo que muestra cada mensaje de error/advertencia-->
+
+        <p></p>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        <p></p>
 
     </body>
+
+    <!--reCaptcha API-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 {% endblock %}
+

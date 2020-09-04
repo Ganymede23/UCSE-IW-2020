@@ -31,19 +31,6 @@ def login_user(request):
         if not request.POST.get('remember_me', None):
             request.session.set_expiry(0)
 
-        #reCaptcha
-        captcha_token=request.POST.get("g-recaptcha-response")
-        captcha_url="https://www.google.com/recaptcha/api/siteverify"
-        captcha_secret="6LdwXMMZAAAAAH61OADU2Pc-0vge2znwGBsn7l8l"
-        captcha_data={"secret":captcha_secret,"response":captcha_token}
-        captcha_server_response=requests.post(url=captcha_url,data=captcha_data)
-        #print(captcha_server_response)
-        #print(captcha_server_response.text)
-        captcha_json=json.loads(captcha_server_response.text)
-        if captcha_json['success']==False:
-            messages.error(request, 'Captcha inválido.')
-            return HttpResponseRedirect("/usuario/login/")
-
         if user is not None:
             login(request, user)
 
@@ -60,9 +47,22 @@ def register(request):
 
     form = CreateUserForm  # usa el formulario creado en Forms.py
 
-    if (
-        request.method == "POST"
-    ):  # si le llegan datos los toma y verifica que sean validos
+    if request.method == "POST":  # si le llegan datos los toma y verifica que sean validos
+        
+        #reCaptcha
+        captcha_token=request.POST.get("g-recaptcha-response")
+        captcha_url="https://www.google.com/recaptcha/api/siteverify"
+        captcha_secret="6Ldx7ccZAAAAAE1lFcNx88aMHkB7fCEFK19gWpc_"
+        captcha_data={"secret":captcha_secret,"response":captcha_token}
+        captcha_server_response=requests.post(url=captcha_url,data=captcha_data)
+        print(request.POST.get("g-recaptcha-response"))
+        #print(captcha_server_response)
+        print(captcha_server_response.text)
+        captcha_json=json.loads(captcha_server_response.text)
+        if captcha_json['success']==False:
+            messages.error(request, 'Captcha inválido.')
+            return HttpResponseRedirect("/usuario/register/")
+        
         form = CreateUserForm(request.POST)
         if form.is_valid():
 
