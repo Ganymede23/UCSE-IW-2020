@@ -11,23 +11,33 @@
         <h1>Ingresa tus datos:</h1>
 
         <form action="." method="post">
+
             {% csrf_token %}
+
             <!––{{ datos_usuario.as_p }}-->
             <label><input type="text" name="username" placeholder="Usuario..." class="form-control"></label>
             <p></p>
+
             <input type="password" name="password" placeholder="Contraseña..." class="form-control"></label>
             <p></p>
-            <label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>
+
+            <!--<label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>-->
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Recuerdame</label>
+            </div>            
             <p></p>
+
             <div class="g-recaptcha" data-sitekey="6LdwXMMZAAAAAMjBPkLK-UTh7ka1eUZ1ZG5EixsM"></div>
             <p></p>
-            <input type="submit" value="Entrar" />
+
+            <input type="submit" class="btn btn-primary" value="Entrar" />
         </form>
 
-        <a class="btn btn-primary" href="/usuario/register">¿No tienes cuenta? Regístrate aquí.</a>
+        <a  href="/usuario/register">¿No tienes cuenta? Regístrate aquí.</a>
 
         <!--iniciar sesion usando api de google gmail-->
-        <a href="{% provider_login_url "google" %}"> O inicia sesion con Google </a> 
+        <a  href="{% provider_login_url "google" %}"> O inicia sesion con Google </a> 
 
         <!--Ciclo que muestra cada mensaje de error/advertencia-->
 
@@ -40,6 +50,7 @@
             </ul>
             {% endif %}
         <p></p>
+        
     </body>
 
     <!--reCaptcha API-->
