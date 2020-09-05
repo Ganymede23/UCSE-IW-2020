@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView
 
 from django.views import generic
 
@@ -22,6 +23,22 @@ import requests
 import json
 
 from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm
+from .models import Profile
+
+
+class ShowProfilePageView(DetailView):
+    model = Profile
+    template_name = 'user_profile.html'
+
+    def get_context_data(self, *args, **kwargs):
+        users = Profile.objects.all()
+        context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
+
+        page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
+
+        context["page_user"] = page_user
+        return context
+
 
 def login_user(request):
     if request.method == "POST":
@@ -73,6 +90,8 @@ def register(request):
             user = form.save(commit=False)
             user.is_active = False # lo pone como falso para que necesite la confirmacion por mail para logear
             user.save()
+            
+            profile=Profile.objects.create(user=user, bio= "sda")
 
             token = default_token_generator.make_token(user)# token para link de verificacion
 
@@ -148,6 +167,7 @@ class PasswordsChangeView(PasswordChangeView):
 
 def password_success(self, request):
     return render(request,'password_success.html', {})
+
 
 
 

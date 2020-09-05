@@ -13,7 +13,7 @@
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
         <a href="{%url 'add_escrito' %}" class="list-group-item list-group-item-action bg-light">Crear Escrito</a>
-        <a href="/usuario/edit_profile" class="list-group-item list-group-item-action bg-light">Perfil</a>
+        <a href="{%url 'show_profile_page' user.profile.id %}" class="list-group-item list-group-item-action bg-light">Perfil</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Grupos</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Libros</a>
       </div>
