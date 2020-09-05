@@ -1,0 +1,17 @@
+{% extends 'base_layout.html' %}
+{% block content1 %}
+
+<div class="container">
+<h1>Editar perfil</h1>
+<br/><br/>
+
+<div class ="form-group">
+    <form method = "POST"?>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-primary"> Guardar Cambios </button>
+    </form>
+</div>
+
+</div>
+{% endblock %}

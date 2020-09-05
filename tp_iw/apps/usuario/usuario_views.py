@@ -4,20 +4,24 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+
+from django.views import generic
 
 #from django.views.generic import ListView, DetailView
 
 import requests
 import json
 
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm
 
 def login_user(request):
     if request.method == "POST":
@@ -126,6 +130,24 @@ def activate(request, uidb64, token):
         user = None
 
     return render(request, 'email_activation.html') 
+
+#====PERFIL DE USUARIO=====
+
+class UserEditView(generic.UpdateView):#editar usuario
+    form_class = ChangeUserForm
+    template_name = 'edit_profile.html'
+    success_url = reverse_lazy('/home/home_page')
+
+    def get_object(self):
+        return self.request.user
+
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    #orm_class = PasswordChangeForm
+    succes_url = reverse_lazy('password_success')
+
+def password_success(self, request):
+    return render(request,'password_success.html', {})
 
 
 
