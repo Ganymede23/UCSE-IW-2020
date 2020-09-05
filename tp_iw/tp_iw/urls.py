@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required
 
 from apps.home.home_views import index 
 urlpatterns = [
-    #adminn
+    #admin
     path('admin/', admin.site.urls),
 
     #home
