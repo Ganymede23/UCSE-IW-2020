@@ -103,8 +103,8 @@ def register(request):
             )
             email.send(fail_silently=False)
 
-            # redirije al login
-            return HttpResponseRedirect("/usuario/login")
+            # redirije a la confirmación de email de verificación
+            return HttpResponseRedirect("/usuario/email_confirmation_sent")
         else:
             form = CreateUserForm(request.POST)
 
@@ -137,6 +137,9 @@ def activate(request, uidb64, token):
 
     return render(request, 'email_activation.html') 
 
+def email_confirmation_sent(request):
+    return render(request, 'email_confirmation_sent.html')
+
 #====PERFIL DE USUARIO=====
 
 class UserEditView(generic.UpdateView):#editar usuario
@@ -149,7 +152,7 @@ class UserEditView(generic.UpdateView):#editar usuario
 
 class PasswordsChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
-    #orm_class = PasswordChangeForm
+    #form_class = PasswordChangeForm
     succes_url = reverse_lazy('password_success')
 
 def password_success(self, request):

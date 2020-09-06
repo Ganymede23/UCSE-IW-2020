@@ -94,8 +94,8 @@ DATABASES = {
         'NAME': 'mydatabase',
     }
 }
-'''
 
+'''
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -166,7 +166,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
 
-LOGIN_REDIRECT_URL = '/home' # Controla el redirect luego de iniciar sesion con gogle
+LOGIN_REDIRECT_URL = '/home' # Controla el redirect luego de iniciar sesion con Google
 
 # CONFIGURACION DEL SMTP DE GOOGLE
 EMAIL_USE_TLS = True

@@ -1,58 +1,70 @@
-{% extends 'base_layout.html' %}
-{% load socialaccount%}
+{% extends 'base_mini.html' %}
+{% load socialaccount %}
 {% providers_media_js %}
-                
-{% block content1 %}
+
+{% block content_center %}
     <head>
         <title>Leelo - Inicio de Sesión </title>
     </head>
 
-    <body>
-        <h1>Ingresa tus datos:</h1>
+    <hr>
+    <h3>Ingresa tus datos</h3>
+    <hr>
+    <form action="." method="post">
 
-        <form action="." method="post">
-
-            {% csrf_token %}
-
-            <!––{{ datos_usuario.as_p }}-->
-            <label><input type="text" name="username" placeholder="Usuario..." class="form-control"></label>
-            <p></p>
-
-            <input type="password" name="password" placeholder="Contraseña..." class="form-control"></label>
-            <p></p>
-
-            <!--<label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>-->
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Recuerdame</label>
-            </div>            
-
-            <p></p>
-            <input type="submit" class="btn btn-primary" value="Entrar" />
-        </form>
-
-        <a  href="/usuario/register">¿No tienes cuenta? Regístrate aquí.</a>
-
-        <!--iniciar sesion usando api de google gmail-->
-        <a  href="{% provider_login_url "google" %}"> O inicia sesion con Google </a> 
-
-        <!--Si se olvidó la contra acá puede cambiarla-->
-        <a  href="/usuario/reset_password"> ¿Has olvidado tu contraseña? </a> 
-
-        <!--Ciclo que muestra cada mensaje de error/advertencia-->
-
-        <p></p>
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        <p></p>
+        {% csrf_token %}
         
-    </body>
+        <label><input type="text" name="username" placeholder="Usuario..." class="form-control"></label>
+        <p></p>
 
+        <input type="password" name="password" placeholder="Contraseña..." class="form-control"></label>
+        <p></p>
 
+        <!--<label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>-->
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1">Recuerdame</label>
+        </div>            
+
+        <p></p>
+        <input type="submit" class="btn btn-primary" value="Entrar" />
+    </form>
+
+    <hr>
+    <a align="center" href="/usuario/register">¿No tienes cuenta? Regístrate aquí.</a>
+    <p></p>
+    <hr>
+    
+    <!--iniciar sesion usando API de Google gmail --> 
+    <a href="{% provider_login_url "google" %}" style="text-align:center">Inicia sesion con tu cuenta de Google</a>
+
+    <!-- BOTON A IMPLEMENTAR
+    <div class="row">
+        <div class="col-md-12" style="text-align:center">
+            <a class="btn btn-outline-dark" href="{% provider_login_url "google" %}" role="button" style="text-transform:none">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            Ingresar con Google
+            </a>
+        </div>
+    </div>
+    -->
+    <hr>
+
+    <!--REESTABLECIMIENTO DE CONTRASEÑA-->
+    <a  href="/usuario/reset_password"> ¿Has olvidado tu contraseña? </a> 
+    <hr>
+    
+    <!--Ciclo que muestra cada mensaje de error/advertencia-->
+    <p></p>
+        {% if messages %}
+        <p class="messages">
+            {% for message in messages %}
+            <div class="p-3 mb-2 bg-danger text-white" style="text-align:center" {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+            </div>
+            {% endfor %}
+        </p>
+        {% endif %}
+    <p></p>
 
 {% endblock %}

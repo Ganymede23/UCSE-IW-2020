@@ -1,0 +1,18 @@
+{% extends 'base_mini.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block content_center %}
+    <head>
+        <title>Leelo - Correo de verificación </title>
+    </head>
+
+    <body>
+    <hr>
+    <h3>¡Se ha enviado el correo!</h3>
+    <hr>
+    <p>Te hemos enviado un correo electrónico a la dirección que ingresaste en el paso anterior con instrucciones para <b>activar tu cuenta</b>. Deberías recibirlo en breve.</p>
+
+    <p>Si no lo encuentras, asegúrate que has escrito bien la dirección o búscalo en la sección de "correo no deseado".</p>
+    </body>
+{% endblock %}

@@ -1,15 +1,15 @@
-{% extends 'base_layout.html' %}
-{% load socialaccount%}
+{% extends 'base_mini.html' %}
+{% load socialaccount %}
 {% providers_media_js %}
 
-{% block content1 %}
+{% block content_center %}
     <head>
-        <title>Leelo - Registro de Usuario</title>
+        <title>Leelo - Inicio de Sesión </title>
     </head>
 
-    <body>
-        <h1>Ingresa tus datos:</h1>
-
+    <hr>
+    <h3>Ingresa tus datos</h3>
+    <hr>
         <form method="POST" action="">
 
             {% csrf_token %}
@@ -19,27 +19,22 @@
                 <p></p>
             {% endfor %}
 
-        <!--
-            <input type="text" name="username" placeholder="Usuario..." class="form-control">
-            <p></p>
-            <input type="email" name="email" placeholder="Correo electrónico..." class="form-control">
-            <p></p>
-            <input type="password" name="password1" placeholder="Contraseña..." class="form-control">
-            <p></p>
-            <input type="password" name="password2" placeholder="Contraseña..." class="form-control">
-            <p></p>
-        -->
-            <div class="g-recaptcha" data-sitekey="6Ldx7ccZAAAAABRWw1IUUycfMY2hrHhH38KutCtP"></div>
+            <div class="text-center">
+                <div class="g-recaptcha" data-sitekey="6Ldx7ccZAAAAABRWw1IUUycfMY2hrHhH38KutCtP" style="text-align:center"></div>
+            </div>
             <p></p>
 
             <input type= "submit" class="btn btn-primary" name= "create_user" value= "Crear cuenta">
-        </form> 
-        <p></p>
-            {{form.errors}}
-        <p></p>
-        <a href="/usuario/login"> ¿Ya tienes cuenta? Ingresa aquí.</a>
+        </form>
+
         <p></p>
         <a href="{% provider_login_url "google" %}"> O registrate con Google </a> 
+        <p></p>
+
+            {{form.errors}}
+
+        <p></p>
+        <a href="/usuario/login"> ¿Ya tienes cuenta? Ingresa aquí.</a>
         <p></p>
 
 
@@ -47,11 +42,13 @@
 
         <p></p>
             {% if messages %}
-            <ul class="messages">
+            <p class="messages">
                 {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                <div class="p-3 mb-2 bg-danger text-white" style="text-align:center" {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+                </div>
                 {% endfor %}
-            </ul>
+            </p>
             {% endif %}
         <p></p>
 

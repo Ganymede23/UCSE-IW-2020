@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 
-from.usuario_views import login_user,  register, logout_user, activate, UserEditView,PasswordsChangeView,password_success, ShowProfilePageView
+from.usuario_views import login_user,  register, logout_user, activate, email_confirmation_sent, UserEditView,PasswordsChangeView,password_success, ShowProfilePageView
 
 urlpatterns = [
     path ('login/', login_user ),
     path('register/', register),
     path('logout_user/', logout_user),
     path('email_activation/', activate),
+    path('email_confirmation_sent/', email_confirmation_sent),
     path('activate/<uidb64>/<token>/', activate, name='activate'),#path de la activacion del email
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="reset_password.html"), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="reset_password_sent.html"), name="password_reset_done"),
