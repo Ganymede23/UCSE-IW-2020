@@ -173,7 +173,7 @@ class UserEditView(generic.UpdateView):  # editar usuario
 class PasswordsChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
     # form_class = PasswordChangeForm
-    succes_url = reverse_lazy("password_success")
+    succes_url = reverse_lazy("/usuario/password_success")
 
 
 def password_success(self, request):
