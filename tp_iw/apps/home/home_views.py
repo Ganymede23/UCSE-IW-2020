@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from apps.escritos.models import Escrito
 
 
 def index(request):
-    return render(request, "index.html")
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/home/homepage")
+    else:
+        return render(request, "index.html")
 
 
 @login_required(

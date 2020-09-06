@@ -56,7 +56,7 @@
             {{escrito.title}}
           </a>
           - {{escrito.author}} - {{escrito.date}} <br />
-          {{escrito.body}}
+          {{escrito.body|safe}}
         </li>
         {% endfor%}
       </ul>

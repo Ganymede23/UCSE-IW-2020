@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 import datetime
 
 
@@ -9,7 +10,8 @@ import datetime
 class Escrito(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE,)
-    body = models.TextField()
+    #body = models.TextField()
+    body = RichTextField(blank=True, null=True)
     date = models.DateTimeField(default = datetime.datetime.now() )
 
     def __str__(self):
@@ -18,4 +20,3 @@ class Escrito(models.Model):
     def get_absolute_url(self):
         #return reverse('escritos_details', args=(str(self.id)) )
         return reverse('homepage')
-    

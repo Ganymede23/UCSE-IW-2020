@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'apps.usuario',
     'apps.escritos',
     'apps.home',
+    'ckeditor',
 ]
 
 SITE_ID = 1
