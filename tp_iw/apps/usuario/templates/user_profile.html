@@ -5,14 +5,15 @@
 <h1>PERFIL DE USUARIO!</h1>
 
 {{ page_user }}
-
-<!--{{ page_user.username }}-->
+</br></br>
 {{ page_user.bio }}
+</br></br>
 {{ page_user.user.email }}
 <p></p>
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 
+{% if user.is_authenticated %} <!--falta que no se visualice el editar perfil en otros usuarios-->
 <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
-
+{% endif  %}
 
 {% endblock %}

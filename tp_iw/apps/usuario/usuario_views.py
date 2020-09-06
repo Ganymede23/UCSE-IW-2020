@@ -160,7 +160,6 @@ def email_confirmation_sent(request):
 
 # ====PERFIL DE USUARIO=====
 
-
 class UserEditView(generic.UpdateView):  # editar usuario
     form_class = ChangeUserForm
     template_name = "edit_profile.html"
