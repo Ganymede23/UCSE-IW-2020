@@ -1,33 +1,42 @@
-{% extends 'base_layout.html' %}        
-{% load static %}       
-{% block content1 %}
+{% extends 'base_layout.html' %} {% load static %} {% block content1 %}
 
-    <head>
-        <h1>{{escrito.title}}</h1>
-    </head>
+<head>
+  <h1>{{escrito.title}}</h1>
+</head>
 
-    <small>{{ escrito.author}} </small><br/>
-    <hr>
-    <br/>
-    {{ escrito.body }}
+<small>{{ escrito.author}} </small><br />
+<hr />
+<br />
+{{ escrito.body }}
 
-    <br/><br/>
+<br /><br />
 
-    <!--<img scr="{{escrito.author.profile.profile_pic.url}}" width=100px height=100px class="rounded-circle">-->
-  
-    <div class="card mb-3" style="max-width: 540px;">
-    <div class="row no-gutters">
-        <div class="col-md-4">
-        <img src=""{{escrito.author.profile.profile_pic.url}}"" class="card-img" alt="...">
-        </div>
-        <div class="col-md-8">
-        <div class="card-body">
-            <h5 class="card-title">{{escrito.author}}</h5>
-            <p class="card-text"{{escrito.author.profile.bio}}</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-        </div>
+
+<!--Esta es la tarjeta que muestra el perfil del autor-->
+
+<div class="card mb-3" style="max-width: 540px">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img
+        src="{{escrito.author.profile.profile_pic.url}}"
+        class="card-img"
+        alt="..."
+      />
     </div>
-    </div>    
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{escrito.author}}</h5>
+        <p class="card-text">{{escrito.author.profile.bio}}</p>
+        <p class="card-text">
+          <a
+            href="{%url 'show_profile_page' escrito.author.profile.id %}"
+            class="text-muted"
+            >ir al perfil</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

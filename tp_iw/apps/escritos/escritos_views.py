@@ -13,4 +13,4 @@ class add_escrito_view (CreateView):
     model = Escrito
     template_name = 'add_escrito.html' 
     #fields = '__all__'
-    fields = ('title','body', 'author') 
+    fields = ('title','body', "author") 

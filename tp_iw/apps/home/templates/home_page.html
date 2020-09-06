@@ -1,57 +1,71 @@
-{% extends 'base_layout.html' %}        
-        
-{% block content1 %}
+{% extends 'base_layout.html' %} {% block content1 %}
 
-
-
-
-  <div class="d-flex" id="wrapper">
-
-    <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Leelo </div>
-      <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
-        <a href="{%url 'add_escrito' %}" class="list-group-item list-group-item-action bg-light">Crear Escrito</a>
-        <a href="{%url 'show_profile_page' user.profile.id %}" class="list-group-item list-group-item-action bg-light">Perfil</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Grupos</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Libros</a>
-      </div>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Leelo</div>
+    <div class="list-group list-group-flush">
+      <a href="#" class="list-group-item list-group-item-action bg-light"
+        >Home
+      </a>
+      <a
+        href="{%url 'add_escrito' %}"
+        class="list-group-item list-group-item-action bg-light"
+        >Crear Escrito
+      </a>
+      <a
+        href="{%url 'show_profile_page' user.profile.id %}"
+        class="list-group-item list-group-item-action bg-light"
+        >Perfil
+      </a>
+      <a href="#" class="list-group-item list-group-item-action bg-light"
+        >Grupos
+      </a>
+      <a href="#" class="list-group-item list-group-item-action bg-light"
+        >Libros
+      </a>
     </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-
-    <div class="container-fluid">
-        <head>
-            <title>Leelo - Inicio</title>
-        </head>
-
-        <h1>Bienvenido a Leelo!</h1>
-
-        <p>Te logueaste bien!</p>
-
-        <p>Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura" ¡y mucho mas!</p>
-
-        <!--<a class="btn btn-primary" href= {%url 'add_escrito' %} >Crear Escrito</a>-->
-        <br/>
-        <br/>
-        <!--esto te genera una lista de los escritos-->
-        <ul>
-        {%for escrito in list_escritos %}
-            <li><a href="{%url 'escritos_details' escrito.pk %}"> {{escrito.title}} </a> - {{escrito.author}} - {{escrito.date}} <br/>
-            {{escrito.body}}</li>
-        {% endfor%}
-    </ul>
-
-    <br/>
-    <a class="btn btn-primary" href="/usuario/logout_user">Cerrar Sesion</a>
-      </div>
-    </div>
-    <!-- /#page-content-wrapper -->
-
   </div>
+  <!-- /#sidebar-wrapper -->
 
-  {% endblock %}
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <head>
+        <title>Leelo - Inicio</title>
+      </head>
 
+      <h1>Bienvenido a Leelo!</h1>
+
+      <p>Te logueaste bien!</p>
+
+      <p>
+        Esta es tu Home. Aqui puedes interactuar con las publicaciones de otros
+        usuarios, acceder a la Wiki, participar de nuestros "Grupos de Lectura"
+        ¡y mucho mas!
+      </p>
+
+      <!--<a class="btn btn-primary" href= {%url 'add_escrito' %} >Crear Escrito</a>-->
+      <br />
+      <br />
+      <!--esto te genera una lista de los escritos-->
+      <ul>
+        {%for escrito in list_escritos %}
+        <li>
+          <a href="{%url 'escritos_details' escrito.pk %}">
+            {{escrito.title}}
+          </a>
+          - {{escrito.author}} - {{escrito.date}} <br />
+          {{escrito.body}}
+        </li>
+        {% endfor%}
+      </ul>
+
+      <br />
+      <a class="btn btn-primary" href="/usuario/logout_user">Cerrar Sesion</a>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+</div>
+
+{% endblock %}
