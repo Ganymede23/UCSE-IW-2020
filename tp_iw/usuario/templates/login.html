@@ -14,20 +14,21 @@
 
         {% csrf_token %}
         
-        <label><input type="text" name="username" placeholder="Usuario..." class="form-control"></label>
-        <p></p>
+        <div>
+            <label><input type="text" name="username" placeholder="Nombre de usuario" class="form-control"></label>
+            <p></p>
 
-        <input type="password" name="password" placeholder="Contraseña..." class="form-control"></label>
-        <p></p>
+            <input type="password" name="password" placeholder="Contraseña" class="form-control"></label>
+            <p></p>
 
-        <!--<label><input type="checkbox" name="remember_me"  class="form-control"> Mantener mi sesión abierta</label>-->
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck1">
-            <label class="custom-control-label" for="customCheck1">Recuerdame</label>
-        </div>            
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Recuerdame</label>
+            </div>            
 
-        <p></p>
-        <input type="submit" class="btn btn-primary" value="Entrar" />
+            <p></p>
+            <input type="submit" class="btn btn-primary" value="Entrar" />
+        </div>
     </form>
 
     <hr>

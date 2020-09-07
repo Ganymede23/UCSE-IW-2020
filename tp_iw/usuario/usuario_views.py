@@ -166,7 +166,6 @@ class UserEditView(generic.UpdateView):  # editar usuario
     def get_object(self):
         return self.request.user
 
-
 class password_change(PasswordChangeView):
     form_class = PasswordChangingForm
     success_url = "/usuario/password_changed" #sigue rompiendo!!!!
@@ -184,11 +183,12 @@ class ShowProfilePageView(DetailView):
         users = Profile.objects.all()
         context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
         user = Profile.user
+
         # <Follow button>
         view_profile = self.get_object()
-        my_profile = Profile.objects.get(user=self.request.user)
+        my_profile = Profile.objects.get(user=self.request.user) #obtiene el perfil propio
         
-        page_user = get_object_or_404(Profile, id=self.kwargs["pk"])
+        user_profile = get_object_or_404(Profile, id=self.kwargs["pk"])
 
         if view_profile.user in my_profile.following.all():
             follow = True
@@ -198,9 +198,8 @@ class ShowProfilePageView(DetailView):
         context["follow"] = follow
         # </Follow button>
         
-        context["page_user"] = page_user
-
-        #context["user"] = Profile.user
+        context["user_profile"] = user_profile #obtiene el perfil propio
+        context["my_profile"] = my_profile 
 
         return context
 

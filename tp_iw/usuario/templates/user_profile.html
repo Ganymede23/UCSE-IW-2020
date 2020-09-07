@@ -4,18 +4,13 @@
 
 <h1>PERFIL DE USUARIO!</h1>
 
-{{ page_user }}
+{{ user_profile }}
 </br></br>
-{{ page_user.bio }}
+{{ user_profile.bio }}
 </br></br>
-{{ page_user.user.email }}
+{{ user_profile.user.email }}
 </br></br>
 
-
-<!--
-<button type="submit" class="btn btn-danger">Dejar de seguir</button>
-<button id="follow-btn" class="btn btn-success">Seguir</button>
--->
 {% if user.is_authenticated %}
     {% if follow %}
         <form action="{% url 'follow_unfollow_profile' %}" method="POST">
@@ -24,14 +19,21 @@
             <button type="submit" class="btn btn-danger">Dejar de seguir</button>
         </form>
     {% else %}
-        <form action="{% url 'follow_unfollow_profile' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="profile_pk" value={{object.pk}}>
-            <button type="submit" id="follow-btn" class="btn btn-success">Seguir</button>
-        </form>
+        <!--IF no muestra el "Seguir" en perfiles ajenos-->
+        {% if my_profile != user_profile %} 
+            <form action="{% url 'follow_unfollow_profile' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value={{object.pk}}>
+                <button type="submit" id="follow-btn" class="btn btn-success">Seguir</button>
+            </form>
+        {% endif %}
     {% endif %}
-    <!--falta que no se visualice el editar perfil en otros usuarios-->
-    <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
+
+    <!--EDITAR PERFIL-->
+    <!--IF no muestra el "Editar Perfil" en perfiles ajenos-->
+    {% if my_profile == user_profile %}
+        <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
+    {% endif %}
 {% endif %}
 
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
