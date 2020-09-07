@@ -9,7 +9,7 @@ import datetime
 
 class Escrito(models.Model):
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(User, on_delete=models.CASCADE,)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     #body = models.TextField()
     body = RichTextField(blank=True, null=True)
     date = models.DateTimeField(default = datetime.datetime.now() )

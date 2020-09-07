@@ -13,7 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import ListView, DetailView
 
 from django.views import generic
 
@@ -80,6 +80,7 @@ def register(request):
             user.is_active = False  # lo pone como falso para que necesite la confirmacion por mail para logear
             user.save()
 
+            #Crea el perfil del usuario recién registrado
             profile = Profile.objects.create(user=user)
 
             token = default_token_generator.make_token(
@@ -186,9 +187,53 @@ class ShowProfilePageView(DetailView):
     def get_context_data(self, *args, **kwargs):
         users = Profile.objects.all()
         context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
-
+        
+        # <Follow button>
+        view_profile = self.get_object()
+        my_profile = Profile.objects.get(user=self.request.user)
+        
         page_user = get_object_or_404(Profile, id=self.kwargs["pk"])
 
+        if view_profile.user in my_profile.following.all():
+            follow = True
+        else:
+            follow = False
+        
+        context["follow"] = follow
+        # </Follow button>
+        
         context["page_user"] = page_user
 
         return context
+
+    # Follow button
+
+    def get_object(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        view_profile = Profile.objects.get(pk=pk)
+        return view_profile
+
+# ====SEGUIR USUARIOS=====
+
+class ProfileListView(ListView):
+    model = Profile
+    template_name = 'suggested_users.html'
+    context_object_name = 'profiles' 
+
+    #Excluye al usuario de la lista de usuarios sugeridos
+    def get_queryset(self):
+        return Profile.objects.all().exclude(user=self.request.user)
+
+def follow_unfollow_profile(request):
+    if request.method=="POST":
+        my_profile = Profile.objects.get(user=request.user)
+        pk = request.POST.get('profile_pk')
+        obj = Profile.objects.get(pk=pk)
+
+        #Verifica si el usuario a seguir/dejar de seguir está en nuestra lista (following)
+        if obj.user in my_profile.following.all():
+            my_profile.following.remove(obj.user)
+        else:
+            my_profile.following.add(obj.user)
+        return redirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect('/usuario/suggested_user')

@@ -32,7 +32,7 @@ urlpatterns = [
     path('home/', include('apps.home.urls')),
 
     #usuario
-    path('usuario/', include('apps.usuario.urls')),
+    path('usuario/', include('usuario.urls')),
 
     #allauth
     path('accounts/', include('allauth.urls')),

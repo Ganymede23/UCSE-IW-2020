@@ -2,9 +2,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path, reverse_lazy
 from django.contrib.auth import views as auth_views
 
-
-
-from.usuario_views import login_user,  register, logout_user, activate, email_confirmation_sent, UserEditView,PasswordsChangeView,password_success, ShowProfilePageView
+from.usuario_views import login_user,  register, logout_user, activate, email_confirmation_sent, UserEditView,PasswordsChangeView,password_success, ShowProfilePageView, ProfileListView, follow_unfollow_profile
 
 urlpatterns = [
     path ('login/', login_user ),
@@ -24,5 +22,8 @@ urlpatterns = [
     path('password_success_new/', auth_views.PasswordChangeView.as_view(success_url=reverse_lazy('usuario:password_success_new')), name='password_success_new'),
 
     path('edit_profile/', UserEditView.as_view(), name='edit_profile'),
-    path('<int:pk>/profile/', ShowProfilePageView.as_view(), name='show_profile_page')
+    path('<int:pk>/profile/', ShowProfilePageView.as_view(), name='show_profile_page'),
+
+    path('suggested_users/', ProfileListView.as_view(), name='profile_list_view'),
+    path('switch_follow/', follow_unfollow_profile, name='follow_unfollow_profile')
 ]

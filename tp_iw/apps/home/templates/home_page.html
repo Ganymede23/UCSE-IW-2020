@@ -46,22 +46,21 @@
       </p>
 
       <!--<a class="btn btn-primary" href= {%url 'add_escrito' %} >Crear Escrito</a>-->
-      <br />
-      <br />
-      <!--esto te genera una lista de los escritos-->
-      <ul>
-        {%for escrito in list_escritos %}
-        <li>
-          <a href="{%url 'escritos_details' escrito.pk %}">
-            {{escrito.title}}
-          </a>
-          - {{escrito.author}} - {{escrito.date}} <br />
-          {{escrito.body|safe}}
-        </li>
-        {% endfor%}
-      </ul>
+      <br>
 
-      <br />
+      {% for escrito in escritos_home %}
+        <ul>
+            <hr>
+            <b>{{escrito.title}}</b>
+            <div>por {{escrito.author}} - {{escrito.date}}</div>
+            <hr>
+            <ul>
+              {{escrito.body|safe }}    
+              <br>
+            </ul>
+        </ul>  
+      {% endfor %}
+      <br>
       <a class="btn btn-primary" href="/usuario/logout_user">Cerrar Sesion</a>
     </div>
   </div>

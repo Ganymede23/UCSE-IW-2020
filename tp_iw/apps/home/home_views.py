@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from usuario.models import Profile
+from itertools import chain
 
 from apps.escritos.models import Escrito
-
 
 def index(request):
     if request.user.is_authenticated:
@@ -11,14 +12,31 @@ def index(request):
     else:
         return render(request, "index.html")
 
-
 @login_required(
     login_url="/usuario/login"
-)  # el decorador te envia al login si intentas entrar sin logearte a home
+)  # el decorador te envia al login si intentas entrar sin loguearte a home
+
 def home_page(request):
+    #Obtiene el perfil del user logueado
+    profile = Profile.objects.get(user=request.user)
+    
+    #Verifica a quién sigue el usuario logueado
+    users = [user for user in profile.following.all()]
+    escritos_home = []
+    escritos_propios = []
+    escritos_seguidos = []
+    queryset = None
 
-    list_escritos = Escrito.objects.all().order_by(
-        "date"
-    )  # de aca muestra los escritos esta forma de hacerlo lo sque de un ejemplo de fisa basicamente
+    #Obtener posts de cuentas seguidas
+    for usuarios in users:
+        escritos_seguidos = Escrito.objects.filter(author=usuarios)
+        escritos_home.append(escritos_seguidos)
 
-    return render(request, "home_page.html", {"list_escritos": list_escritos})
+    #Obtener posts propios
+    escritos_propios = Escrito.objects.filter(author=profile.user)
+    escritos_home.append(escritos_propios)
+
+    if len(escritos_home)>0:
+        queryset = sorted(chain(*escritos_home), reverse=True, key=lambda obj: obj.date)
+    return render(request, 'home_page.html', {'perfil': profile, 'escritos_home': queryset})
+    #return render(request, "home_page.html", {"escritos_homes": escritos_home})
