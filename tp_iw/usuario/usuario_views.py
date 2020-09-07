@@ -164,7 +164,7 @@ def email_confirmation_sent(request):
 class UserEditView(generic.UpdateView):  # editar usuario
     form_class = ChangeUserForm
     template_name = "edit_profile.html"
-    success_url = reverse_lazy("/home/home_page")
+    success_url = "/home/homepage"
 
     def get_object(self):
         return self.request.user
@@ -173,11 +173,11 @@ class UserEditView(generic.UpdateView):  # editar usuario
 class PasswordsChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
     # form_class = PasswordChangeForm
-    success_url = reverse_lazy("/usuario/password_success")
+    success_url = "/usuario/password_success" #sigue rompiendo!!!!
 
 
 def password_success(self, request):
-    return render(request, "password_success_new.html", {})
+    return render(request, "password_success.html", {})
 
 
 class ShowProfilePageView(DetailView):
