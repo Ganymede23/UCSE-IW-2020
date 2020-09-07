@@ -1,6 +1,7 @@
 {% extends 'base_layout.html' %} {% block content1 %}
 
 <div class="d-flex" id="wrapper">
+
   <!-- Sidebar -->
   <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading">Leelo</div>
@@ -24,6 +25,9 @@
       <a href="#" class="list-group-item list-group-item-action bg-light"
         >Libros
       </a>
+      <a href="/usuario/logout_user" class="list-group-item list-group-item-action bg-light"
+        >Cerrar Sesion
+      </a>
     </div>
   </div>
   <!-- /#sidebar-wrapper -->
@@ -40,24 +44,21 @@
       <p>
         Empieza siguiendo a otos usuarios haciendo click <a href= "/usuario/suggested_users"> aqui </a>
       </p>
-
-      <!--<a class="btn btn-primary" href= {%url 'add_escrito' %} >Crear Escrito</a>-->
       <br>
 
       {% for escrito in escritos_home %}
         <ul>
             <hr>
-            <b>{{escrito.title}}</b>
+            <b><a href="{%url 'escritos_details' escrito.pk %}"> {{escrito.title}} </a></b>
             <div>por {{escrito.author}} - {{escrito.date}}</div>
             <hr>
             <ul>
-              {{escrito.body|safe }}    
+              {{escrito.body|safe|truncatewords:100  }}    
               <br>
             </ul>
         </ul>  
       {% endfor %}
       <br>
-      <a class="btn btn-primary" href="/usuario/logout_user">Cerrar Sesion</a>
     </div>
   </div>
   <!-- /#page-content-wrapper -->

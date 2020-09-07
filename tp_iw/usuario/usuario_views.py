@@ -14,10 +14,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView
-
 from django.views import generic
-
-# from django.views.generic import ListView, DetailView
 
 import requests
 import json
@@ -73,15 +70,13 @@ def register(request):
             messages.error(request, "Captcha inválido.")
             return HttpResponseRedirect("/usuario/register/")
 
+        #toma los datos y los guarda
         form = CreateUserForm(request.POST)
         if form.is_valid():
 
             user = form.save(commit=False)
             user.is_active = False  # lo pone como falso para que necesite la confirmacion por mail para logear
             user.save()
-
-            #Crea el perfil del usuario recién registrado
-            profile = Profile.objects.create(user=user)
 
             token = default_token_generator.make_token(
                 user
@@ -90,9 +85,11 @@ def register(request):
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))  # crea el id encodeado
 
             domain = get_current_site(request).domain
+
             link = reverse(
                 "activate", kwargs={"uidb64": uidb64, "token": token}
             )  # arma el link de activacion
+
             activate_url = "http://" + domain + link
 
             mail_subject = "Activa tu cuenta"
@@ -170,14 +167,13 @@ class UserEditView(generic.UpdateView):  # editar usuario
         return self.request.user
 
 
-class PasswordsChangeView(PasswordChangeView):
+class password_change(PasswordChangeView):
     form_class = PasswordChangingForm
-    # form_class = PasswordChangeForm
-    success_url = "/usuario/password_success" #sigue rompiendo!!!!
+    success_url = "/usuario/password_changed" #sigue rompiendo!!!!
 
 
-def password_success(self, request):
-    return render(request, "password_success.html", {})
+def password_changed(request):
+    return render(request, 'password_success.html')
 
 
 class ShowProfilePageView(DetailView):
@@ -187,7 +183,7 @@ class ShowProfilePageView(DetailView):
     def get_context_data(self, *args, **kwargs):
         users = Profile.objects.all()
         context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
-        
+        user = Profile.user
         # <Follow button>
         view_profile = self.get_object()
         my_profile = Profile.objects.get(user=self.request.user)
@@ -203,6 +199,8 @@ class ShowProfilePageView(DetailView):
         # </Follow button>
         
         context["page_user"] = page_user
+
+        #context["user"] = Profile.user
 
         return context
 

@@ -10,34 +10,30 @@
 </br></br>
 {{ page_user.user.email }}
 </br></br>
-{{ follow }}
-</br></br>
+
 
 <!--
 <button type="submit" class="btn btn-danger">Dejar de seguir</button>
 <button id="follow-btn" class="btn btn-success">Seguir</button>
-
-
 -->
-
-{% if follow %}
-    <form action="{% url 'follow_unfollow_profile' %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="profile_pk" value={{object.pk}}>
-        <button type="submit" class="btn btn-danger">Dejar de seguir</button>
-    </form>
-{% else %}
-    <form action="{% url 'follow_unfollow_profile' %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="profile_pk" value={{object.pk}}>
-        <button type="submit" id="follow-btn" class="btn btn-success">Seguir</button>
-    </form>
+{% if user.is_authenticated %}
+    {% if follow %}
+        <form action="{% url 'follow_unfollow_profile' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="profile_pk" value={{object.pk}}>
+            <button type="submit" class="btn btn-danger">Dejar de seguir</button>
+        </form>
+    {% else %}
+        <form action="{% url 'follow_unfollow_profile' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="profile_pk" value={{object.pk}}>
+            <button type="submit" id="follow-btn" class="btn btn-success">Seguir</button>
+        </form>
+    {% endif %}
+    <!--falta que no se visualice el editar perfil en otros usuarios-->
+    <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
 {% endif %}
 
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
-
-{% if user.is_authenticated %} <!--falta que no se visualice el editar perfil en otros usuarios-->
-<a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
-{% endif %}
 
 {% endblock %}

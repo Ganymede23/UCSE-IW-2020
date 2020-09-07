@@ -48,8 +48,8 @@ INSTALLED_APPS = [
 
     # nuestras apps
     'usuario',
-    'apps.escritos',
-    'apps.home',
+    'escritos',
+    'home',
     'ckeditor',
 ]
 

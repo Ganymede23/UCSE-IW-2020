@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from usuario.models import Profile
 from itertools import chain
 
-from apps.escritos.models import Escrito
+from escritos.models import Escrito
 
 def index(request):
     if request.user.is_authenticated:
@@ -38,5 +38,6 @@ def home_page(request):
 
     if len(escritos_home)>0:
         queryset = sorted(chain(*escritos_home), reverse=True, key=lambda obj: obj.date)
+        
     return render(request, 'home_page.html', {'perfil': profile, 'escritos_home': queryset})
-    #return render(request, "home_page.html", {"escritos_homes": escritos_home})
+   

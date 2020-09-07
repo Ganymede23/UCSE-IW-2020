@@ -21,7 +21,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static
 
-from apps.home.home_views import index 
+from home.home_views import index 
 
 urlpatterns = [
     #admin
@@ -29,7 +29,7 @@ urlpatterns = [
 
     #home
     path('', index, name='index'),
-    path('home/', include('apps.home.urls')),
+    path('home/', include('home.urls')),
 
     #usuario
     path('usuario/', include('usuario.urls')),
@@ -38,5 +38,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     #Escritos
-    path('escritos/', include('apps.escritos.urls'))
+    path('escritos/', include('escritos.urls'))
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_URL)
