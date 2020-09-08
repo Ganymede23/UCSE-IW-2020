@@ -34,7 +34,7 @@
 <div class="card mb-3" style="max-width: 540px">
   <div class="row no-gutters">
     <div class="col-md-4">
-    {% if post.author.profile.profile_pic %}
+    {% if escrito.author.profile.profile_pic %}
         <img src="{{MEDIA_URL}}{{escrito.author.profile.profile_pic.url}}" class = "card-img"/>
     {%else%}
       <img src="https://picsum.photos/200/"class = "card-img"/>
