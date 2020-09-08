@@ -7,8 +7,8 @@ class Profile (models.Model):
     profile_pic = profile_pic = models.ImageField(null= True, blank=True, upload_to="images/profiles")
     following = models.ManyToManyField(User, related_name='following', blank=True)
     
-    def profiles_escritos(self):
-        return self.escrito_set.all()
+    def profiles_usuario(self):
+        return self.user
     
     def __str__(self):
         return str(self.user)

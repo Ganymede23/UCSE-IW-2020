@@ -19,7 +19,7 @@
             <button type="submit" class="btn btn-danger">Dejar de seguir</button>
         </form>
     {% else %}
-        <!--IF no muestra el "Seguir" en perfiles ajenos-->
+        <!--IF no muestra el "Seguir" en el perfil logeado-->
         {% if my_profile != user_profile %} 
             <form action="{% url 'follow_unfollow_profile' %}" method="POST">
                 {% csrf_token %}
@@ -31,27 +31,48 @@
 
     <!--EDITAR PERFIL-->
     <!--IF no muestra el "Editar Perfil" en perfiles ajenos-->
-    {% if my_profile == user_profile %}
+    {% if my_profile == user_profile  %}
         <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
         <br>
-        Mis escritos:
-        <br>
-        {% for escrito in escritos  %}
-            <ul>
-                <hr>
-                <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-                <div>por  {{escrito.author}} - {{escrito.date}} </div>
-                <hr>
-                <ul>
-                    {{escrito.body|safe|truncatewords:100  }}    
-                    <br>
-                </ul>
-            </ul>  
-        {% endfor %}
-      <br>
     {% endif %}
+
+    {% if my_profile == user_profile  %}
+    <br>
+    Mis borradores:
+    <br>
+    {% for escrito in borradores %}
+        <ul>
+            <hr>
+            <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+            <div> {{escrito.date}} </div>
+            <hr>
+            <ul>
+                {{escrito.body|safe|truncatewords:100  }}    
+                <br>
+            </ul>
+        </ul>  
+    {% endfor %}
+    <br>
+    {% endif %}
+
 {% endif %}
 
+<br>
+Escritos publicados:
+<br>
+{% for escrito in publicados %}
+    <ul>
+        <hr>
+        <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+        <div> {{escrito.date}} </div>
+        <hr>
+        <ul>
+            {{escrito.body|safe|truncatewords:100  }}    
+            <br>
+        </ul>
+    </ul>  
+{% endfor %}
+<br>
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 
 {% endblock %}

@@ -181,16 +181,20 @@ class ShowProfilePageView(DetailView):
     template_name = "user_profile.html"
 
     def get_context_data(self, *args, **kwargs):
-        users = Profile.objects.all()
-        context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
-        user = Profile.user
-        escritos = Escrito.objects.filter(author=self.request.user).exclude(date=None)
+
+        context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs) #para devolver contexto de la vista
+        
+        user_profile = get_object_or_404(Profile, id=self.kwargs["pk"]) #obtengo perfil 
+
+        user = Profile.profiles_usuario(user_profile) #obtengo usuario del perfil
+
+        publicados = Escrito.objects.filter(author=user, date__isnull=False).order_by('date') #filtra los escritos publicados
+        borradores = Escrito.objects.filter(author=user, date__isnull=True).order_by('created_date') #filtra los escritos borradores
+
+        my_profile = Profile.objects.get(user=self.request.user) #obtiene el usuario propio
+
         # <Follow button>
         view_profile = self.get_object()
-        my_profile = Profile.objects.get(user=self.request.user) #obtiene el perfil propio
-        
-        user_profile = get_object_or_404(Profile, id=self.kwargs["pk"])
-
         if view_profile.user in my_profile.following.all():
             follow = True
         else:
@@ -199,9 +203,10 @@ class ShowProfilePageView(DetailView):
         context["follow"] = follow
         # </Follow button>
         
-        context["user_profile"] = user_profile #obtiene el perfil propio
+        context["user_profile"] = user_profile 
         context["my_profile"] = my_profile 
-        context["escritos"] = escritos
+        context["publicados"] = publicados
+        context["borradores"] = borradores
 
         return context
 

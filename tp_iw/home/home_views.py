@@ -37,7 +37,7 @@ def home_page(request):
     escritos.append(escritos_propios)
 
     if len(escritos)>0:
-        queryset = sorted(chain(*escritos), reverse=True, key=lambda obj: obj.created_date)
+        queryset = sorted(chain(*escritos), reverse=True, key=lambda obj: obj.date)
         
     return render(request, 'home_page.html', {'perfil': profile, 'escritos': queryset})
    
