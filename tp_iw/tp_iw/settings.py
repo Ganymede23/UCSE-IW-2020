@@ -168,10 +168,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATICFILES_DIRS = [ 
-    os.path.join(BASE_DIR, 'static'),
-]
-
 LOGIN_REDIRECT_URL = '/home/homepage' # Controla el redirect luego de iniciar sesion con Google
 
 # CONFIGURACION DEL SMTP DE GOOGLE
