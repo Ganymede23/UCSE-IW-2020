@@ -25,7 +25,6 @@ from escritos.models import Escrito
 
 # =====CREACION Y AUTENTICACION DE USUARIOS======
 
-
 def login_user(request):
     if request.method == "POST":
         username = request.POST["username"]  # recibe campo usuario

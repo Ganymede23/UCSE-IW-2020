@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'escritos',
     'home',
     'ckeditor',
+
+    #ERD
+    'django_extensions',
 ]
 
 SITE_ID = 1
@@ -152,6 +155,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+GRAPH_MODELS = {
+    'all-applications': True,
+    'group_models': True,
+}
 
 #Static files (CSS, JavaScript, Images)
 #https://docs.djangoproject.com/en/3.1/howto/static-files/
