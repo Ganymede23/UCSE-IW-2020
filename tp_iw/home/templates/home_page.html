@@ -1,31 +1,37 @@
-{% extends 'base_layout.html' %} {% block content1 %}
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content1 %}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
 
 <div class="d-flex" id="wrapper">
 
   <!-- Sidebar -->
-  <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Leelo</div>
+  <div class="bg-white border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 70% 80%; height: 8vh;"></div>
     <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action bg-light"
+      <a href="#" class="list-group-item list-group-item-action"
         >Home
       </a>
       <a
         href="{%url 'add_escrito' %}"
-        class="list-group-item list-group-item-action bg-light"
+        class="list-group-item list-group-item-action bg-primary text-white"
         >Crear Escrito
       </a>
       <a
         href="{%url 'show_profile_page' user.profile.id %}"
-        class="list-group-item list-group-item-action bg-light"
+        class="list-group-item list-group-item-action"
         >Perfil
       </a>
-      <a href="#" class="list-group-item list-group-item-action bg-light"
+      <a href="#" class="list-group-item list-group-item-action"
         >Grupos
       </a>
-      <a href="#" class="list-group-item list-group-item-action bg-light"
+      <a href="#" class="list-group-item list-group-item-action"
         >Libros
       </a>
-      <a href="/usuario/logout_user" class="list-group-item list-group-item-action bg-light"
+      <a href="/usuario/logout_user" class="list-group-item list-group-item-action"
         >Cerrar Sesion
       </a>
     </div>
@@ -33,7 +39,7 @@
   <!-- /#sidebar-wrapper -->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
+  <div id="page-content-wrapper bg-light">
     <div class="container-fluid">
       <head>
         <title>Leelo - Inicio</title>

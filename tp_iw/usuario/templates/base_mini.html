@@ -1,75 +1,75 @@
 {% load static %}
 <!doctype html>
 <html lang="es">
+    
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    </head>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-  </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--<p></p>
+                    <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 20% 90%; height: 16vh;">
+                        {% block content_jumbotron2 %}
+                        {% endblock %}                    
+                    </div>-->
 
-  <body>
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-md-12">
-                  <!--<p></p>
-                  <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 20% 90%; height: 16vh;">
-                      {% block content_jumbotron2 %}
-                      {% endblock %}                    
-                  </div>-->
+                        <!--<h1 class="display-4">Hello, world!</h1>
+                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                        <hr class="my-4">
+                        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                        <p class="lead">
+                            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                        </p>-->
 
-                      <!--<h1 class="display-4">Hello, world!</h1>
-                      <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                      <hr class="my-4">
-                      <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                      <p class="lead">
-                          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                      </p>-->
+                        <!--style="background-image: url('https://i.imgur.com/uCOv99L.png'); background-size: cover; height: 20vh;">
+                            style="background: url('https://i.imgur.com/uCOv99L.png') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 100vh;-->
 
-                      <!--style="background-image: url('https://i.imgur.com/uCOv99L.png'); background-size: cover; height: 20vh;">
-                          style="background: url('https://i.imgur.com/uCOv99L.png') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height: 100vh;-->
-
-                  <div class="row">
-                      <div class="col-md-4">
-                      <!--CONTENIDO COLUMNA IZQ-->
-                          {% block content_left %}
-                          {% endblock %}                        
-                      </div>
-                      <div class="col-md-4 bg-white" style="text-align:center">
-                          <p></p>
-                          <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 60% 90%; height: 16vh;">
-                              {% block content_jumbotron %}
-                              {% endblock %}                    
-                          </div>                    
-                          {% block content_center %}
-                          {% endblock %}
-                      </div>
-                      <div class="col-md-4">
-                      <!--CONTENIDO COLUMNA DER-->
-                          {% block content_right %}
-                          {% endblock %}                        
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <!--CONTENIDO ROW 2 COMPLETO-->
-              <br></br>
-                  {% block content_row2 %}
-                  {% endblock %}                      
+                    <div class="row">
+                        <div class="col-md-4">
+                        <!--CONTENIDO COLUMNA IZQ-->
+                            {% block content_left %}
+                            {% endblock %}                        
+                        </div>
+                        <div class="col-md-4 bg-white" style="text-align:center">
+                            <p></p>
+                            <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 60% 90%; height: 16vh;">
+                                {% block content_jumbotron %}
+                                {% endblock %}                    
+                            </div>                    
+                            {% block content_center %}
+                            {% endblock %}
+                        </div>
+                        <div class="col-md-4">
+                        <!--CONTENIDO COLUMNA DER-->
+                            {% block content_right %}
+                            {% endblock %}                        
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-      </div>
-    </body>
-    <div class="container">
-      {% block content1 %}
-      {% endblock %}
-    </div>
+            <div class="row">
+                <div class="col-md-12">
+                <!--CONTENIDO ROW 2 COMPLETO-->
+                <br></br>
+                    {% block content_row2 %}
+                    {% endblock %}                      
+                </div>
+            </div>
+        </div>
+        </body>
+        <div class="container">
+        {% block content1 %}
+        {% endblock %}
+        </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

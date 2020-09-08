@@ -1,18 +1,28 @@
-{% extends 'base_layout.html' %}
-{% block content1 %}
+{% extends 'base_mini.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
 
-<div class="container">
-<h1>Editar perfil</h1>
-<br/><br/>
+{% block content_center %}
+    <head>
+        <title>Leelo - Editar perfil </title>
+    </head>
 
-<div class ="form-group">
-    <form method = "POST"?>
-        {% csrf_token %}
-        {{form.as_p}}
-        <button class="btn btn-primary"> Guardar Cambios </button>
-        <a class="btn btn-primary" href="{%url 'show_profile_page' user.profile.id %}"> Cancelar </a> 
-    </form>
-</div>
+    <div class="container">
+        <hr>
+        <h3>Editar perfil</h3>
+        <hr>
 
-</div>
+        <div class ="form-group">
+            <form method = "POST"?>
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-primary"> Guardar Cambios </button>
+                <a class="btn btn-primary" href="{%url 'show_profile_page' user.profile.id %}"> Cancelar </a> 
+            </form>
+        </div>
+    </div>
+    
 {% endblock %}
+
+
+
