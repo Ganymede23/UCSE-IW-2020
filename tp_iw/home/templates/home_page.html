@@ -46,11 +46,11 @@
       </p>
       <br>
 
-      {% for escrito in escritos_home %}
+      {% for escrito in escritos %}
         <ul>
             <hr>
-            <b><a href="{%url 'escritos_details' escrito.pk %}"> {{escrito.title}} </a></b>
-            <div>por {{escrito.author}} - {{escrito.date}}</div>
+            <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+            <div>por <a href="{%url 'show_profile_page' escrito.author.profile.id %}"> {{escrito.author}} </a>- {{escrito.date}} </div>
             <hr>
             <ul>
               {{escrito.body|safe|truncatewords:100  }}    

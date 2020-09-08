@@ -4,13 +4,29 @@
   <h1>{{escrito.title}}</h1>
 </head>
 
-<small>{{ escrito.author}} </small><br />
-<hr/>
-<br/>
+<small>{{ escrito.author}} </small>
+
+<br />
+
+<div class="body">
 {{ escrito.body|safe }}
+</div>
 
-<br /><br />
+{% if escrito.date %}
+    <div class="date">
+        {{ escrito.date }}
+    </div>
+{% else %}
+    <a class="btn btn-default" href="{% url 'escrito_publish' pk=escrito.pk %}">Publish</a>
+{% endif %}
 
+<br>
+
+{% if user.is_authenticated %}
+<a class="btn btn-default" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
+
+<a class="btn btn-default" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar Escrito</a>
+{% endif %}
 
 <!--Esta es la tarjeta que muestra el perfil del autor-->
 
@@ -43,4 +59,5 @@
   </div>
 </div>
 
+<a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 {% endblock %}

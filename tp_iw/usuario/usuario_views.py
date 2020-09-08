@@ -21,6 +21,7 @@ import json
 
 from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm
 from .models import Profile
+from escritos.models import Escrito
 
 # =====CREACION Y AUTENTICACION DE USUARIOS======
 
@@ -183,7 +184,7 @@ class ShowProfilePageView(DetailView):
         users = Profile.objects.all()
         context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
         user = Profile.user
-
+        escritos = Escrito.objects.filter(author=self.request.user).exclude(date=None)
         # <Follow button>
         view_profile = self.get_object()
         my_profile = Profile.objects.get(user=self.request.user) #obtiene el perfil propio
@@ -200,6 +201,7 @@ class ShowProfilePageView(DetailView):
         
         context["user_profile"] = user_profile #obtiene el perfil propio
         context["my_profile"] = my_profile 
+        context["escritos"] = escritos
 
         return context
 

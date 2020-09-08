@@ -33,6 +33,22 @@
     <!--IF no muestra el "Editar Perfil" en perfiles ajenos-->
     {% if my_profile == user_profile %}
         <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
+        <br>
+        Mis escritos:
+        <br>
+        {% for escrito in escritos  %}
+            <ul>
+                <hr>
+                <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+                <div>por  {{escrito.author}} - {{escrito.date}} </div>
+                <hr>
+                <ul>
+                    {{escrito.body|safe|truncatewords:100  }}    
+                    <br>
+                </ul>
+            </ul>  
+        {% endfor %}
+      <br>
     {% endif %}
 {% endif %}
 

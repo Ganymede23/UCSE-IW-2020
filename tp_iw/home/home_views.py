@@ -22,22 +22,22 @@ def home_page(request):
     
     #Verifica a quién sigue el usuario logueado
     users = [user for user in profile.following.all()]
-    escritos_home = []
+    escritos = []
     escritos_propios = []
     escritos_seguidos = []
     queryset = None
 
     #Obtener posts de cuentas seguidas
     for usuarios in users:
-        escritos_seguidos = Escrito.objects.filter(author=usuarios)
-        escritos_home.append(escritos_seguidos)
+        escritos_seguidos = Escrito.objects.filter(author=usuarios).exclude(date = None)
+        escritos.append(escritos_seguidos)
 
     #Obtener posts propios
-    escritos_propios = Escrito.objects.filter(author=profile.user)
-    escritos_home.append(escritos_propios)
+    escritos_propios = Escrito.objects.filter(author=profile.user).exclude(date = None)
+    escritos.append(escritos_propios)
 
-    if len(escritos_home)>0:
-        queryset = sorted(chain(*escritos_home), reverse=True, key=lambda obj: obj.date)
+    if len(escritos)>0:
+        queryset = sorted(chain(*escritos), reverse=True, key=lambda obj: obj.created_date)
         
-    return render(request, 'home_page.html', {'perfil': profile, 'escritos_home': queryset})
+    return render(request, 'home_page.html', {'perfil': profile, 'escritos': queryset})
    
