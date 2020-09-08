@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'escritos',
     'home',
     'ckeditor',
+
+    #ERD
+    'django_extensions',
 ]
 
 SITE_ID = 1
@@ -86,6 +89,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tp_iw.wsgi.application'
 
+GRAPH_MODELS = {
+    'all-applications': True,
+    'group_models': True,
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -103,7 +110,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'Tp_IW_Leelo',
             'USER': 'postgres',
-            'PASSWORD': 'LucasCopes',
+            'PASSWORD': 'abc2234',
             'HOST': '127.0.0.1',
             'DATABASE_PORT': '5432',
         }

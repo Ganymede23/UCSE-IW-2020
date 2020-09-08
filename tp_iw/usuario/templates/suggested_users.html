@@ -7,9 +7,16 @@
         <title>Leelo - Escritores sugeridos</title>
     </head>
 
+    <hr>
+    <h3><b>Escritores sugeridos</b></h3>
+    <hr>
+
     <body>
         <!-- PROFILES viene de " context_object_name = 'profiles' "
         en ProfileListView en usuario_views.py -->
+        <p>Aquí puedes ver perfiles de usuarios que tienen intereses similares a los tuyos.</p>
+        <p>¡No dejes de leer sus Escritos!</p>
+        <hr class="w-50">
         {% for profile in profiles %} 
             <div class="ui segment">
                 {{profile}}
@@ -17,7 +24,10 @@
                 <a href={% url 'show_profile_page' profile.pk %}
                     <button class="btn btn-primary">Ver perfil</button>
                 </a>
+                <hr class="w-50">
             </div>
         {% endfor %}
+        <br><br>
+        <hr>
     </body>
 {% endblock %}
