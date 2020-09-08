@@ -17,12 +17,13 @@
         {{ escrito.date }}
     </div>
 {% else %}
+    (borrador)
     <a class="btn btn-default" href="{% url 'escrito_publish' pk=escrito.pk %}">Publish</a>
 {% endif %}
 
 <br>
 
-{% if user.is_authenticated %}
+{% if user_logged == escrito.author %}
 <a class="btn btn-default" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
 
 <a class="btn btn-default" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar Escrito</a>

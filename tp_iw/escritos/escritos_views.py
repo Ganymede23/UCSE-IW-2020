@@ -5,24 +5,14 @@ from django.utils import timezone
 
 from .models import Escrito
 from .forms import EscritoForm
-
-'''class Escrito_Detail_View(DetailView):
-    model = Escrito
-    template_name = 'escritos_details.html'  '''
+from usuario.models import Profile
 
 def escrito_detail(request, pk):
     escrito = get_object_or_404(Escrito, pk=pk)
-    return render(request, 'escritos_details.html', {'escrito': escrito})
 
+    user_logged = request.user
 
-'''class add_escrito_view (CreateView):
-    model = Escrito
-    template_name = 'add_escrito.html' 
-    fields = ('title','body') 
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)'''
+    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged })
 
 def escrito_new(request):
     if request.method == "POST":
@@ -63,7 +53,7 @@ def escrito_edit(request, pk):
         if form.is_valid():
             escrito = form.save(commit=False)
             escrito.author = request.user
-            escrito.published_date = timezone.now()
+            escrito.date = None
             escrito.save()
             return redirect('escrito_detail', pk=escrito.pk)
     else:
