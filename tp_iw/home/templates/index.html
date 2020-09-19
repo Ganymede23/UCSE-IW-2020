@@ -1,19 +1,30 @@
-{% extends 'base_layout.html' %}
+{% extends 'base_mini.html' %}
 {% load static %}
 
-{% block content1 %}
+{% block content_row2 %}
     <head>
         <title>Leelo - Inicio</title>
     </head>
-
-    <body>
-        <h1>Bienvenido a Leelo!</h1>
-
-        <form method="get">
-        <input type="submit" class="inline" formaction="/usuario/register" value="Registrarse">
-        <input type="submit" class="inline" formaction="/home/homepage" value="Ingresar">
-        </form>
+    <p></p>
+    <div class="jumbotron bg-white" style="background: url('https://i.imgur.com/5M7XE83.png') no-repeat; background-size: 20% 90%; height: 16vh; margin-left: 2vh"></div>  
+    <div class="row">
+        <div class="col-md-2 bg-primary"></div>
+        <div class="col-md-5 bg-white">
+            <body>
+                <h1>Bienvenido a Leelo!</h1>
         
-        <p>Gracias por visitarnos - v2 Heroku</p>
-    </body>
+                <form method="get">
+                <input type="submit" class="inline" formaction="/usuario/register" value="Registrarse">
+                <input type="submit" class="inline" formaction="/home/homepage" value="Ingresar">
+                </form>
+                
+                <p>Gracias por visitarnos - v2 Heroku</p>
+            </body>
+        </div>
+        <div class="col-md-3 bg-white">
+        
+        </div>
+        <div class="col-md-2 bg-primary"></div>
+    </div>
+
 {% endblock %}

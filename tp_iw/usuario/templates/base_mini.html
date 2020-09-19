@@ -14,7 +14,7 @@
 
     <body>
         <div class="container-fluid">
-            <div class="row">
+            <div class="row"> <!--PRIMER LINEA-->
                 <div class="col-md-12">
                     <!--<p></p>
                     <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 20% 90%; height: 16vh;">
@@ -40,11 +40,7 @@
                             {% endblock %}                        
                         </div>
                         <div class="col-md-4 bg-white" style="text-align:center">
-                            <p></p>
-                            <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 60% 90%; height: 16vh;">
-                                {% block content_jumbotron %}
-                                {% endblock %}                    
-                            </div>                    
+                            <!--Antigua posicion de Jumbotron-->               
                             {% block content_center %}
                             {% endblock %}
                         </div>
@@ -56,20 +52,19 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row"> <!--PRIMER LINEA-->
+                <div class="col-md-12 bg-white">
                 <!--CONTENIDO ROW 2 COMPLETO-->
-                <br></br>
                     {% block content_row2 %}
                     {% endblock %}                      
                 </div>
             </div>
         </div>
         </body>
-        <div class="container">
-        {% block content1 %}
-        {% endblock %}
-        </div>
+    <div class="container">
+    {% block content1 %}
+    {% endblock %}
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

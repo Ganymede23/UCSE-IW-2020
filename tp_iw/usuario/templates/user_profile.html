@@ -3,22 +3,22 @@
 {% block content1 %}
 
 <div class="card mb-3" style="max-width: 540px">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-    {% if user_profile.profile_pic %}
-        <img src="{{MEDIA_URL}}{{user_profile.profile_pic.url}}" class = "card-img"/>
-    {%else%}
-      <img src="https://picsum.photos/200/"class = "card-img"/>
-    {% endif %}
+    <div class="row no-gutters">
+        <div class="col-md-4">
+        {% if user_profile.profile_pic %}
+            <img src="{{MEDIA_URL}}{{user_profile.profile_pic.url}}" class = "card-img"/>
+        {%else%}
+            <img src="https://picsum.photos/200/"class = "card-img"/>
+        {% endif %}
+        </div>
+        <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">{{user_profile}}</h5>
+            <p class="card-text">{{user_profile.bio}}</p>
+            </p>
+        </div>
+        </div>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{user_profile}}</h5>
-        <p class="card-text">{{user_profile.bio}}</p>
-        </p>
-      </div>
-    </div>
-  </div>
 </div>
 
 {% if user.is_authenticated %}
