@@ -1,24 +1,30 @@
-{% extends 'base_layout.html' %}
-{% load static %}
+{% extends 'base_mini.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
 
-{% block content1 %}
+{% block content_center %}
     <head>
-        <title>Leelo - Verificación de Correo</title>
+        <title>Leelo - Editar perfil </title>
     </head>
+    <p></p>
+    <div class="container">
+        <hr>
+        <h3 id="titulo-simple">Verificación de correo<br>electrónico completada</h3>
+        <hr>
+        <body>
 
-    <body>
-        <h1>Verificación de correo electrónico</h1>
+            <p>¡Tu correo electrónico ya ha sido verificado!</p>
 
-        <p>¡Tu correo electrónico ya ha sido verificado!</p>
+            <!--
+            <form method="get">
+            <input type="submit" class="inline" href="http://127.0.0.1:8000//home/homepage" value="Ir al Inicio">
+            </form>
+            -->
 
-        <!--
-        <form method="get">
-        <input type="submit" class="inline" href="http://127.0.0.1:8000//home/homepage" value="Ir al Inicio">
-        </form>
-        -->
-        <p>Ahora podés ingresar con tu nuevo usuario</p>
-        
-        <a class="btn btn-primary" href="/usuario/login"> ¡Ingresá! </a> 
-
-    </body>
+            <p>Ahora ya puedes ingresar con tu nuevo usuario.</p>
+            
+            <a class="btn btn-primary" href="/usuario/login">Ingresar al sitio</a> 
+            
+            <hr>
+        </body>
 {% endblock %}

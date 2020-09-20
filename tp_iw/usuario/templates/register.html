@@ -6,36 +6,54 @@
     <head>
         <title>Leelo - Inicio de Sesión </title>
     </head>
-    <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 60% 90%; height: 16vh;"></div>  
     <hr>
     <h3>Ingresa tus datos</h3>
     <hr>
         <form method="POST" action="">
 
             {% csrf_token %}
-            {% for field in form %}
-                <!--{{field.label}}-->
-                {{field}}
-                <p></p>
-            {% endfor %}
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    {% for field in form %}
+                        <!--{{field.label}}-->
+                        {{field}}
+                        <p></p>
+                    {% endfor %}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
 
             <div class="text-center">
                 <div class="g-recaptcha" data-sitekey="6Ldx7ccZAAAAABRWw1IUUycfMY2hrHhH38KutCtP" style="text-align:center"></div>
             </div>
             <p></p>
-
-            <input type= "submit" class="btn btn-primary" name= "create_user" value= "Crear cuenta">
+            <input type= "submit" class="btn btn-primary btn-lg font-weight-bold" name= "create_user" value= "Crear cuenta">
         </form>
 
         <p></p>
-        <a href="{% provider_login_url "google" %}"> O registrate con Google </a> 
+        <hr>
+        
+        <!-- Inicio de sesion con API de Google Gmail -->
+        <div class="row">
+            <div class="col-md-12" style="text-align:center">
+                <a class="btn btn-outline-secondary" href="{% provider_login_url "google" %}" role="button" style="text-transform:none">
+                <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                Registrarse con Google
+                </a>
+            </div>
+        </div>
+                
+        <!--<a href="{% provider_login_url "google" %}"> O registrate con Google </a> -->
         <p></p>
 
             {{form.errors}}
 
         <p></p>
+        <hr>
         <a href="/usuario/login"> ¿Ya tienes cuenta? Ingresa aquí.</a>
         <p></p>
+        <hr>
 
 
         <!--Ciclo que muestra cada mensaje de error/advertencia-->

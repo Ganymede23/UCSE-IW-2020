@@ -6,19 +6,43 @@
     <head>
         <title>Leelo - Editar perfil </title>
     </head>
-    <p></p>
-    <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 60% 90%; height: 16vh;"></div>  
+    <p></p> 
     <div class="container">
         <hr>
-        <h3>Editar perfil</h3>
+        <h3 id="titulo-simple">Editar perfil</h3>
         <hr>
 
         <div class ="form-group">
             <form method = "POST"?>
                 {% csrf_token %}
-                {{form.as_p}}
+                <p>{{form.username.label}}:</p>
+                <p>{{form.username}}</p>
+
+                <p>{{form.first_name.label}}:</p>
+                <p>{{form.first_name}}</p>
+
+                <p>{{form.last_name.label}}:</p>
+                <p>{{form.last_name}}</p>
+
+                <p>{{form.email.label}}:</p>
+                <p>{{form.email}}</p>
+
+                <div class="row bg-light border border-secondary p-3 m-1">
+                    <div class="col-md-12">
+                        <b class="text-center">Si desea cambiar su contraseña, haga <a href="/usuario/password">click aquí</a></b>
+                    </div>
+                </div>
+
+                <!--{% for field in form %}
+                    {{field.label}}
+                    {{field}}
+                    <p></p>
+                {% endfor %}
+                {{form.as_p}}-->
+                <hr>
                 <button class="btn btn-primary"> Guardar Cambios </button>
-                <a class="btn btn-primary" href="{%url 'show_profile_page' user.profile.id %}"> Cancelar </a> 
+                <a class="btn btn-danger" href="{%url 'show_profile_page' user.profile.id %}">Cancelar</a> 
+                <hr>
             </form>
         </div>
     </div>

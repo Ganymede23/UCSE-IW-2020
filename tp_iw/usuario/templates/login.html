@@ -7,7 +7,6 @@
         <title>Leelo - Inicio de Sesión </title>
     </head>
     <p></p>
-    <div class="jumbotron" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 60% 90%; height: 16vh;"></div>  
     <hr>
     <h3>Ingresa tus datos</h3>
     <hr>
@@ -15,20 +14,29 @@
 
         {% csrf_token %}
         
-        <div>
-            <label><input type="text" name="username" placeholder="Nombre de usuario" class="form-control"></label>
-            <p></p>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" name="username" placeholder="Nombre de usuario" class="form-control">
+                    <p></p>
+                </div>
 
-            <input type="password" name="password" placeholder="Contraseña" class="form-control"></label>
-            <p></p>
+                <input type="password" name="password" placeholder="Contraseña" class="form-control sm-3">
+                <p></p>
 
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Recuerdame</label>
-            </div>            
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Recuerdame</label>
+                </div>            
 
-            <p></p>
-            <input type="submit" class="btn btn-primary" value="Entrar" />
+                <p></p>
+                <input type="submit" class="btn btn-primary btn-lg font-weight-bold" value="Entrar" />
+            </div>
+            <div class="col-md-2"></div>
         </div>
     </form>
 
@@ -37,23 +45,23 @@
     <p></p>
     <hr>
     
-    <!--iniciar sesion usando API de Google gmail --> 
-    <a href="{% provider_login_url "google" %}" style="text-align:center">Inicia sesion con tu cuenta de Google</a>
-
-    <!-- BOTON A IMPLEMENTAR
+    <!-- Inicio de sesion con API de Google Gmail -->
     <div class="row">
         <div class="col-md-12" style="text-align:center">
-            <a class="btn btn-outline-dark" href="{% provider_login_url "google" %}" role="button" style="text-transform:none">
+            <a class="btn btn-outline-secondary" href="{% provider_login_url "google" %}" role="button" style="text-transform:none">
             <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
             Ingresar con Google
             </a>
         </div>
     </div>
-    -->
+    
+    <!--iniciar sesion usando API de Google gmail 
+    <a href="{% provider_login_url "google" %}" style="text-align:center">Inicia sesion con tu cuenta de Google</a>--> 
+
     <hr>
 
     <!--REESTABLECIMIENTO DE CONTRASEÑA-->
-    <a  href="/usuario/reset_password"> ¿Has olvidado tu contraseña? </a> 
+    <a href="/usuario/reset_password"> ¿Has olvidado tu contraseña? </a> 
     <hr>
     
     <!--Ciclo que muestra cada mensaje de error/advertencia-->
