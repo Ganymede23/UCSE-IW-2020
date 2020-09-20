@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'escritos',
     'home',
     'ckeditor',
+    'libros',
 
     #ERD
     'django_extensions',
@@ -110,7 +111,6 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'Tp_IW_Leelo',
             'USER': 'postgres',
-            'PASSWORD': 'abc2234',
             'HOST': '127.0.0.1',
             'DATABASE_PORT': '5432',
         }

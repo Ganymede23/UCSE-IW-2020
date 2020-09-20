@@ -7,14 +7,14 @@ from .models import Escrito
 from .forms import EscritoForm
 from usuario.models import Profile
 
-def escrito_detail(request, pk):
+def escrito_detail(request, pk): # Detelle de escritos
     escrito = get_object_or_404(Escrito, pk=pk)
 
     user_logged = request.user
 
     return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged })
 
-def escrito_new(request):
+def escrito_new(request): # Crear nuevo escrito
     if request.method == "POST":
         form = EscritoForm(request.POST)
         if form.is_valid():
@@ -27,26 +27,26 @@ def escrito_new(request):
 
     return render(request, 'add_escrito.html', {'form': form})
 
-def escritos_draft_list(request):
+def escritos_draft_list(request): # Lista borradores (no se si se usa)
     escritos = Escrito.objects.filter(date__isnull=True).order_by('created_date')
     return render(request, 'escritos_draft_list.html', {'escritos': escritos})
 
-def escrito_publish(request, pk):
+def escrito_publish(request, pk): # Publicar escrito
     escrito = get_object_or_404(Escrito, pk=pk)
     escrito.publish()
     
     return redirect('escrito_detail', pk=pk)
 
-def publish(self):
+def publish(self): # funcion publicar
     self.date = timezone.now()
     self.save()
 
-def escrito_remove(request, pk):
+def escrito_remove(request, pk): # borrar escrito
     escrito = get_object_or_404(Escrito, pk=pk)
     escrito.delete()
     return redirect('/home/homepage')
 
-def escrito_edit(request, pk):
+def escrito_edit(request, pk): # funcion para editar escrito
     escrito = get_object_or_404(Escrito, pk=pk)
     if request.method == "POST":
         form = EscritoForm(request.POST, instance=escrito)

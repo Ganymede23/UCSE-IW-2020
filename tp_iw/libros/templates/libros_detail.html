@@ -1,0 +1,23 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content1 %}
+<title>{{libro.title}} - {{libro.author}}</title>
+
+<head><h1>{{libro.title}}</h1></head>
+
+<body>
+    <div>
+        <img src="https://picsum.photos/200" class="rounded float-left" alt="...">
+    </div>
+    <div>
+        
+        
+
+        <p> <small> {{ libro.author}} </small> </p>
+
+        <p>{{ libro.desc|safe }}</p>
+
+        <a class="btn btn-primary" href="edit_review"> Hacer Reseña </a>
+    </div>
+</body>
+{% endblock %}

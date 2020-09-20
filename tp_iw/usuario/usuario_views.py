@@ -169,7 +169,7 @@ class UserEditView(generic.UpdateView):  # editar usuario
 
 class password_change(PasswordChangeView):
     form_class = PasswordChangingForm
-    success_url = "/usuario/password_changed" #sigue rompiendo!!!!
+    success_url = "/usuario/password_changed" 
 
 
 def password_changed(request):

@@ -36,7 +36,7 @@ class ChangeUserForm(UserChangeForm):  # creacion de formulario de editar usuari
         model = User
         fields = ["username", "first_name", "last_name", "email", "password" ]
 
-class PasswordChangingForm(PasswordChangeForm):  # creacion de formulario de editar usuarios
+class PasswordChangingForm(PasswordChangeForm):  # creacion de cambiar contraseña
 
     old_password = forms.CharField (max_length=100, widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
     new_password1 = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))

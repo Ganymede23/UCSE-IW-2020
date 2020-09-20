@@ -34,6 +34,9 @@ urlpatterns = [
     #usuario
     path('usuario/', include('usuario.urls')),
 
+    #libros
+    path('libros/', include('libros.urls')),
+
     #allauth
     path('accounts/', include('allauth.urls')),
 
