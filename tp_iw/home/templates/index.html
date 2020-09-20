@@ -4,27 +4,58 @@
 {% block content_row2 %}
     <head>
         <title>Leelo - Inicio</title>
+        
+        <!--Sobreescribe el color gris definido en el main.css para el body-->
+        <style> 
+            body {
+                background: rgba(0, 123, 255, 1)
+            }
+        </style>
+
     </head>
     <p></p>
-    <div class="jumbotron bg-white" style="background: url('https://i.imgur.com/5M7XE83.png') no-repeat; background-size: 20% 90%; height: 16vh; margin-left: 2vh"></div>  
+    <div class="jumbotron bg-white" style="background: url('https://i.imgur.com/5M7XE83.png') left center no-repeat; background-size: 20% 90%; height: 16vh; margin-left: 2vh">
+
+    </div>  
     <div class="row">
-        <div class="col-md-2 bg-primary"></div>
-        <div class="col-md-5 bg-white">
+        <div class="col-md-2 border-top border-primary bg-primary"></div>
+        <div class="shadow col-md-5 border-top border-grey p-5 bg-white">
             <body>
-                <h1>Bienvenido a Leelo!</h1>
-        
-                <form method="get">
-                <input type="submit" class="inline" formaction="/usuario/register" value="Registrarse">
-                <input type="submit" class="inline" formaction="/home/homepage" value="Ingresar">
-                </form>
-                
-                <p>Gracias por visitarnos - v2 Heroku</p>
+                <div class="text-justify" style="margin: 10px;"> 
+                    <h1><b>Bienvenido a Leelo!</b></h1>
+                    <hr align="left" class="w-100">
+            
+                    <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia, lacus vitae commodo egestas, elit metus blandit eros, 
+                        eu laoreet augue libero eget ex. Mauris elementum finibus auctor. Aliquam pellentesque suscipit est, nec bibendum libero cursus vel. Nullam maximus ipsum 
+                        risus, nec dapibus velit laoreet sit amet. Ut porta massa eget nisl bibendum ultricies. Nam et est ut tellus ullamcorper eleifend pulvinar dapibus arcu. 
+                        Maecenas nec tellus tellus. </p>
+                    
+                    <p>Gracias por visitarnos - v2 Heroku</p>                   
+                </div>
+
             </body>
         </div>
-        <div class="col-md-3 bg-white">
-        
+        <div class="shadow col-md-3 border-top p-5 bg-light text-center">
+            <form method="get">
+                <p>¿Es tu primera vez ingresando a <b>Leelo</b>?</p>
+                <input type="submit" class="btn btn-primary rounded-pill btn-lg btn-block font-weight-bold" formaction="/usuario/register" value="Registrarse">
+                <br>
+                <hr class="w-75">
+                <p>¿Ya tienes cuenta?</p>
+                <input type="submit" class="btn btn-primary rounded-pill btn-lg btn-block font-weight-bold" formaction="/home/homepage" value="Ingresar">
+                <br>
+                <hr class="w-75">
+                <div>
+                    <p>O, también puedes
+                    <br>
+                    <a href="">ingresar como visitante</a></p>
+                </div>
+                
+
+                
+            </form>
         </div>
-        <div class="col-md-2 bg-primary"></div>
+        <div class="col-md-2 border-top border-primary bg-primary"></div>
     </div>
 
 {% endblock %}
