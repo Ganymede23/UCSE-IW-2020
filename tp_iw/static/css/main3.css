@@ -3,6 +3,11 @@ body {
     /*background: rgba(0, 123, 255, 1) - BLUE PRIMARY */
 }
 
+#titulo-simple {
+    font-weight: normal;
+}
+
+
 .text-center {
     text-align: center;
 }
