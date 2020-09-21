@@ -1,0 +1,16 @@
+{% extends 'base_layout.html' %}        
+        
+{% block content1 %}
+
+    <head>
+        <h1>Crea una nueva review</h1>
+    </head>
+
+    <form method="POST" class"post-form">\
+        {% csrf_token %}
+        {{form.media}}
+        {{form.as_p }}
+        <button type="submit" class="save btn btn-default">Terminar</button>
+    </form>
+
+{% endblock %}

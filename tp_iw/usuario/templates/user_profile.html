@@ -20,7 +20,7 @@
         </div>
     </div>
 </div>
-
+<a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 {% if user.is_authenticated %}
     {% if follow %}
         <form action="{% url 'follow_unfollow_profile' %}" method="POST">
@@ -45,30 +45,33 @@
         <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
         <br>
     {% endif %}
+{% endif %}
 
-    {% if my_profile == user_profile  %}
-    <br>
-    Mis borradores:
-    <br>
-    {% for escrito in borradores %}
+<h3>Escritos: </h3>
+
+{% if my_profile == user_profile  %}
+<br>
+Mis borradores:
+</br>
+<br>
+{% for escrito in borradores %}
+    <ul>
+        <hr>
+        <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+        <div> {{escrito.date}} </div>
+        <hr>
         <ul>
-            <hr>
-            <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-            <div> {{escrito.date}} </div>
-            <hr>
-            <ul>
-                {{escrito.body|safe|truncatewords:100  }}    
-                <br>
-            </ul>
-        </ul>  
-    {% endfor %}
-    <br>
-    {% endif %}
-
+            {{escrito.body|safe|truncatewords:100  }}    
+            <br>
+        </ul>
+    </ul>  
+{% endfor %}
+</br>
 {% endif %}
 
 <br>
 Escritos publicados:
+</br>
 <br>
 {% for escrito in publicados %}
     <ul>
@@ -82,7 +85,45 @@ Escritos publicados:
         </ul>
     </ul>  
 {% endfor %}
+
+<h3>Reviews: </h3>
+
+{% if my_profile == user_profile  %}
+    <br>
+    Borradores:
+    </br>
+    <br>
+    {% for review in rborradores %}
+        <ul>
+            <hr>
+            <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+            <div> {{review.date}} </div>
+            <hr>
+            <ul>
+                {{review.body|safe|truncatewords:100  }}    
+                <br>
+            </ul>
+        </ul>  
+    {% endfor %}
+    </br>
+{% endif %}
+
 <br>
-<a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
+Publicados:
+</br>
+<br>
+{% for review in rpublicados %}
+    <ul>
+        <hr>
+        <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+        <div> {{review.date}} </div>
+        <hr>
+        <ul>
+            {{review.body|safe|truncatewords:100  }}    
+            <br>
+        </ul>
+    </ul>  
+{% endfor %}
+</br>
 
 {% endblock %}

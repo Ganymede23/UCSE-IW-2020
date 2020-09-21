@@ -15,11 +15,11 @@ class Libro(models.Model):
         return self.title + ' | ' + str(self.author)
 
 class Review(models.Model):
-    title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Libro, on_delete=models.CASCADE)
-    rate = models.FloatField()
-    desc = RichTextField(blank=True, null=True)
+    title = models.CharField(max_length=255)
+    rate = models.IntegerField(blank=True, null=True)
+    body = RichTextField(blank=True, null=True)
     created_date = models.DateTimeField(
         default=timezone.now)
     date = models.DateTimeField(blank=True, null=True )

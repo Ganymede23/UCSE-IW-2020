@@ -9,15 +9,31 @@
     <div>
         <img src="https://picsum.photos/200" class="rounded float-left" alt="...">
     </div>
-    <div>
-        
-        
-
+    <div>        
         <p> <small> {{ libro.author}} </small> </p>
 
-        <p>{{ libro.desc|safe }}</p>
+        <p>{{libro.desc|safe}}</p>
 
-        <a class="btn btn-primary" href="edit_review"> Hacer Reseña </a>
+        <a class="btn btn-primary" href="{% url 'add_review' pk_libro=libro.pk  %}"> Hacer Reseña </a>
     </div>
 </body>
+
+<br></br>
+<br></br>
+<h3>Reviews:</h3>
+
+{% for review in reviews %}
+    <ul>
+        <hr>
+        <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+        <div> {{review.date}} </div>
+        <hr>
+        <ul>
+            {{review.body|safe|truncatewords:100}}    
+            <br>
+        </ul>
+    </ul>  
+{% endfor %}
+
+
 {% endblock %}

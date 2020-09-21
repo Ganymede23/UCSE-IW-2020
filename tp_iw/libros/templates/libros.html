@@ -5,18 +5,18 @@
 
 
 <div class="row row-cols-1 row-cols-md-3">
-{% for libro in libros %}
-  <div class="col mb-4">
-    <div class="card">
-        <img src="https://picsum.photos/200" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"> <a href="{%url 'book_detail' pk=libro.pk %}"> {{libro.title}} </a> </h5>
-          <p class="card-text"> {{libro.desc|safe}} </p>
-          <p class="card-text"><small class="text-muted">{{libro.author}}</small></p>
-        </div>
+  {% for libro in libros %}
+    <div class="col mb-4">
+      <div class="card">
+          <img src="https://picsum.photos/200" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"> <a href="{%url 'book_detail' pk=libro.pk %}"> {{libro.title}} </a> </h5>
+            <p class="card-text"> {{libro.desc|safe}} </p>
+            <p class="card-text"><small class="text-muted">{{libro.author}}</small></p>
+          </div>
+      </div>
     </div>
-  </div>
-{% endfor %}
+  {% endfor %}
 </div>
 
 

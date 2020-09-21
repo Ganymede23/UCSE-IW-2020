@@ -1,0 +1,60 @@
+{% extends 'base_layout.html' %} {% load static %} {% block content1 %}
+
+<head>
+  <h1>{{review.title}}</h1>
+</head>
+
+<h4> libro reseñado: {{review.book.title}} </h4>
+<h4> autor: {{review.book.author}}</h4>
+
+<br>
+
+<div class="body">
+{{ review.body|safe }}
+</div>
+
+{% if review.date %}
+    <div class="date">
+        {{ review.date }}
+    </div>
+{% else %}
+    (borrador)
+    <a class="btn btn-default" href="{% url 'review_publish' pk=review.pk %}">Publish</a>
+{% endif %}
+
+{% if user_logged == review.author %}
+<a class="btn btn-default" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
+
+<a class="btn btn-default" href="{% url 'review_remove' pk=review.pk %}">Eliminar review</a>
+{% endif %}
+
+</br>
+
+<!--Esta es la tarjeta que muestra el perfil del autor-->
+
+<div class="card mb-3" style="max-width: 540px">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+    {% if review.author.profile.profile_pic %}
+        <img src="{{MEDIA_URL}}{{review.author.profile.profile_pic.url}}" class = "card-img"/>
+    {%else%}
+      <img src="https://picsum.photos/200/"class = "card-img"/>
+    {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{review.author}}</h5>
+        <p class="card-text">{{review.author.profile.bio}}</p>
+        <p class="card-text">
+          <a
+            href="{%url 'show_profile_page' review.author.profile.id %}"
+            class="text-muted"
+            >ir al perfil</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

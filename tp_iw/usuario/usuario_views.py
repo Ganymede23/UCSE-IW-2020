@@ -22,6 +22,7 @@ import json
 from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm
 from .models import Profile
 from escritos.models import Escrito
+from libros.models import Review
 
 # =====CREACION Y AUTENTICACION DE USUARIOS======
 
@@ -190,7 +191,8 @@ class ShowProfilePageView(DetailView):
 
         publicados = Escrito.objects.filter(author=user, date__isnull=False).order_by('date') #filtra los escritos publicados
         borradores = Escrito.objects.filter(author=user, date__isnull=True).order_by('created_date') #filtra los escritos borradores
-
+        r_publicadas = Review.objects.filter(author=user, date__isnull=False).order_by('date')
+        r_borradores = Review.objects.filter(author=user, date__isnull=True).order_by('created_date')
         my_profile = Profile.objects.get(user=self.request.user) #obtiene el usuario propio
 
         # <Follow button>
@@ -207,7 +209,8 @@ class ShowProfilePageView(DetailView):
         context["my_profile"] = my_profile 
         context["publicados"] = publicados
         context["borradores"] = borradores
-
+        context["rpublicados"] = r_publicadas
+        context["rborradores"] = r_borradores
         return context
 
     # Follow button
