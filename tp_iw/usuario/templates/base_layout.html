@@ -13,12 +13,42 @@
     </head>
 
     <body>
+    
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-white border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 70% 80%; height: 8vh;"></div>
+            <div class="list-group list-group-flush">
+            <a href="{%url 'homepage' %}" class="list-group-item list-group-item-action"
+                >Home
+            </a>
+            <a href="{%url 'add_escrito' %}" class="list-group-item list-group-item-action bg-primary text-white"
+                >Crear Escrito
+            </a>
+            <a href="{%url 'show_profile_page' user.profile.id %}" class="list-group-item list-group-item-action"
+                >Perfil
+            </a>
+            <a href="{%url 'show_books'  %}" class="list-group-item list-group-item-action"
+                >Libros
+            </a>
+            <a href="#" class="list-group-item list-group-item-action"
+                >Grupos
+            </a>
+            <a href="/usuario/logout_user" class="list-group-item list-group-item-action"
+                >Cerrar Sesion
+            </a>
+            </div>
+        </div>
 
-        <!--<div class="container">-->
-        {% block content1 %}
-        {% endblock %}
-        <!-- </div>-->
-
+        <div id="page-content-wrapper bg-light">
+            <div class="container-fluid">
+                <!--<div class="container">-->
+                {% block content1 %}
+                {% endblock %}
+                <!-- </div>-->
+            </div>
+        </div>
+    </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

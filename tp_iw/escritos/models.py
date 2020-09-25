@@ -20,6 +20,10 @@ class Escrito(models.Model):
     def publish(self):
         self.date = timezone.now()
         self.save()    
+    
+    def get_detail_url(self): #devuelve url en home
+        url = 'escrito_detail'
+        return url
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)

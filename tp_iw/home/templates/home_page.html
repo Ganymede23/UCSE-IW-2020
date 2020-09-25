@@ -4,70 +4,25 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <title>Leelo - Inicio</title>
 </head>
 
-<div class="d-flex" id="wrapper">
+Empieza siguiendo a otos usuarios haciendo click <a href= "/usuario/suggested_users"> aqui </a>
 
-  <!-- Sidebar -->
-  <div class="bg-white border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 70% 80%; height: 8vh;"></div>
-    <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action"
-        >Home
-      </a>
-      <a
-        href="{%url 'add_escrito' %}"
-        class="list-group-item list-group-item-action bg-primary text-white"
-        >Crear Escrito
-      </a>
-      <a
-        href="{%url 'show_profile_page' user.profile.id %}"
-        class="list-group-item list-group-item-action"
-        >Perfil
-      </a>
-      <a href="{%url 'show_books'  %}" class="list-group-item list-group-item-action"
-        >Libros
-      </a>
-      <a href="#" class="list-group-item list-group-item-action"
-        >Grupos
-      </a>
-      <a href="/usuario/logout_user" class="list-group-item list-group-item-action"
-        >Cerrar Sesion
-      </a>
-    </div>
-  </div>
-  <!-- /#sidebar-wrapper -->
-
-  <!-- Page Content -->
-  <div id="page-content-wrapper bg-light">
-    <div class="container-fluid">
-      <head>
-        <title>Leelo - Inicio</title>
-      </head>
-
-      <h1>Bienvenido a Leelo!</h1>
-
-      <p>
-        Empieza siguiendo a otos usuarios haciendo click <a href= "/usuario/suggested_users"> aqui </a>
-      </p>
-      <br>
-
-      {% for escrito in escritos %}
-        <ul>
-            <hr>
-            <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-            <div>por <a href="{%url 'show_profile_page' escrito.author.profile.id %}"> {{escrito.author}} </a>- {{escrito.date}} </div>
-            <hr>
-            <ul>
-              {{escrito.body|safe|truncatewords:100  }}    
-              <br>
-            </ul>
-        </ul>  
-      {% endfor %}
-      <br>
-    </div>
-  </div>
-  <!-- /#page-content-wrapper -->
-</div>
+<br>
+{% for post in posts %}
+  <ul>
+      <hr>
+      <b><a href= "{% url post.get_detail_url post.pk %}"> {{post.title}} </a></b>
+      <div>por <a href="{%url 'show_profile_page' post.author.profile.id %}"> {{post.author}} </a>- {{post.date}} </div>
+      <hr>
+      <ul>
+        <br>
+        {{post.body|safe|truncatewords:100}}    
+        </br>
+      </ul>
+  </ul>  
+{% endfor %}
+</br>
 
 {% endblock %}

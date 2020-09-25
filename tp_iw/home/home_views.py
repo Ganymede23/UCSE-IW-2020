@@ -45,7 +45,7 @@ def home_page(request):
     posts.append(reviews_propios)
 
     if len(posts)>0:
-        queryset = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date)
+        queryset = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date)  #armar lista ordenada por fecha
         
-    return render(request, 'home_page.html', {'perfil': profile, 'escritos': queryset})
+    return render(request, 'home_page.html', {'perfil': profile, 'posts': queryset})
    

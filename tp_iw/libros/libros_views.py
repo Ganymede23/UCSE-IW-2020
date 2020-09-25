@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from itertools import chain
 
 from .models import Libro, Review
 from .forms import ReviewForm
@@ -11,19 +10,14 @@ def show_books(request):
 
     return render(request, 'libros.html', {'libros': libros})
 
-def book_detail(request, pk):
-    queryset=None
-
+def book_detail(request, pk): #detalle de libros
     reviews=[]
-
     book = get_object_or_404(Libro, pk=pk)
-
     reviews = Review.objects.filter(book=book, date__isnull=False).order_by('date')
 
     return render(request, 'libros_detail.html', {'libro':book, 'reviews':reviews})
 
 def review_new(request,pk_libro): # Crear nuevo review
-    queryset = None
     if request.method == "POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
