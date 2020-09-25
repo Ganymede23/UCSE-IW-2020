@@ -56,5 +56,22 @@
   </div>
 </div>
 
+<br/><br/>
+<form action="{% url 'escrito_like' escrito.pk %}" method="POST">
+{% csrf_token %}
+{% if user.is_authenticated %}
+  {% if liked %}
+    <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn-danger btn-sm">No me gusta</button> 
+  {% else %}
+    <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn-primary btn-sm">Me gusta</button> 
+  {% endif %}
+{% else %}
+  <small>Debes estar logueado para dar Me gusta</small>
+{% endif %}
+  - {{ total_likes }} Me gusta 
+</form>
+<br/>
+<br/>
+
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 {% endblock %}
