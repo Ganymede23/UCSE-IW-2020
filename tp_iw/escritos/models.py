@@ -32,4 +32,14 @@ class Escrito(models.Model):
     def __str__(self):
         return self.title + ' | ' + str(self.author)
 
+class Comment(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = RichTextField()
+    date = models.DateTimeField(default=timezone.now)
+    escrito = models.ForeignKey(Escrito, related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s - %s' % (self.escrito.title, self.usuario)
+
+
 

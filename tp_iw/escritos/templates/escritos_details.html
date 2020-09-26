@@ -72,6 +72,30 @@
 </form>
 <br/>
 <br/>
+<h3>Comentarios..</h3>
+<br/>
+{% if not escrito.comments.all %}
+  Aún no hay comentarios en sobre este Escrito.
+{% else %}
+  {% for comment in escrito.comments.all %}
+    <strong> {{ comment.usuario }} - {{ comment.date }} </strong>
+    <br/>
+    {{ comment.body|safe }}
+    <br/><br/>
+  {% endfor %}
+{% endif %}
+<br/><br/>
+
+<br/>
+
+<form method="POST" class"comment-form">
+  {% csrf_token %}
+  <!--{{ form.media }}-->
+  {{ form.as_p }}
+  <button type="submit", name="post_id", value="{{ escrito.id }}", class="save btn-primary btn-default">Comentar</button>
+</form>
+
+<br/>
 
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 {% endblock %}
