@@ -80,7 +80,9 @@
   {% for comment in escrito.comments.all %}
     <strong> {{ comment.usuario }} - {{ comment.date }} </strong>
     <br/>
-    {{ comment.body|safe }}
+        <div class="form-group">
+          <textarea class="form-control" rows="3">{{ comment.body|safe }}</textarea>
+        </div>
     <br/><br/>
   {% endfor %}
 {% endif %}

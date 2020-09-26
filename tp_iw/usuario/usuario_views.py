@@ -174,7 +174,7 @@ class password_change(PasswordChangeView):
 def password_changed(request):
     return render(request, 'password_success.html')
 
-def edit_profile(request, pk):
+def edit_profile(request, pk): #editar bio y avatar
     profile = get_object_or_404(Profile, pk=pk)
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=profile)

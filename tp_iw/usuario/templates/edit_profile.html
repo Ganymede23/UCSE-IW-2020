@@ -17,8 +17,8 @@
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <label for="bio">{{form.bio.label}}</label>
-                    <textarea class="form-control" rows="3">{{form.bio}}</textarea>
+                    <label for="bio">{{form.bio.label|safe}}</label>
+                    <textarea class="form-control" rows="3">{{form.bio|safe}}</textarea>
                 </div>
 
                 <p>{{form.profile_pic.label}}:</p>

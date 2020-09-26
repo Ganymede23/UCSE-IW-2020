@@ -68,3 +68,6 @@ def review_edit(request, pk): # funcion para editar review
         form = ReviewForm(instance=review)
         
     return render(request, 'add_review.html', {'form': form})
+
+def rate_review (request,pk):
+   pass 

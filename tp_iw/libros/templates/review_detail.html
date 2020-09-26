@@ -3,29 +3,24 @@
 <head>
     <meta charset="utf-8">
     <h1>{{review.title}}</h1>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/stars.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stars2.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
-</head>
 
 <body>
-    <h4> libro reseñado: {{review.book.title}} </h4>
-    <h4> autor: {{review.book.author}}</h4>
+    <h4> Libro reseñado: {{review.book.title}} </h4>
+    <h4> Autor2: {{review.book.author}}</h4>
 
-    <div class="ratings">
-        <input type = "radio" name = "star" id="star1"><label for="star1">
-        </label>
-        <input type = "radio" name = "star" id="star2"><label for="star2">
-        </label>
-        <input type = "radio" name = "star" id="star3"><label for="star3">
-        </label>
-        <input type = "radio" name = "star" id="star4"><label for="star4">
-        </label>
-        <input type = "radio" name = "star" id="star5"><label for="star5">
-        </label>
-    </div>
+  <form method="POST" class"post-form">
 
+        <div class="rating rating2"><!--
+            --><a href="#5" title="Give 5 stars">★</a><!--
+            --><a href="#4" title="Give 4 stars">★</a><!--
+            --><a href="#3" title="Give 3 stars">★</a><!--
+            --><a href="#2" title="Give 2 stars">★</a><!--
+            --><a href="#1" title="Give 1 star">★</a>
+        </div>
 
-    <br>
+  </form>
 
     <div class="body">
     {{ review.body|safe }}

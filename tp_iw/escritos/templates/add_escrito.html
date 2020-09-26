@@ -6,7 +6,7 @@
         <h1>Crea un nuevo Escrito</h1>
     </head>
 
-    <form method="POST" class"post-form">\
+    <form method="POST" class"post-form">
         {% csrf_token %}
         {{form.media}}
         {{ form.as_p }}
