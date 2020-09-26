@@ -98,3 +98,10 @@ def like_escrito(request, pk):
 #             #return redirect('escrito_detail', pk=escrito.pk)
 
 #     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
+
+def delete_comment(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    pk = comment.escrito.pk
+    comment.delete()
+
+    return redirect('escrito_detail', pk=pk)
