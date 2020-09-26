@@ -80,9 +80,14 @@
   {% for comment in escrito.comments.all %}
     <strong> {{ comment.usuario }} - {{ comment.date }} </strong>
     <br/>
-        <div class="form-group">
-          <textarea class="form-control" rows="3">{{ comment.body|safe }}</textarea>
-        </div>
+    {{ comment.body|safe }} 
+    {% if comment.usuario == request.user %}
+      -
+      <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-default"
+      onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+      <strong>Eliminar comentario</strong>
+      </a>
+    {% endif %}
     <br/><br/>
   {% endfor %}
 {% endif %}
