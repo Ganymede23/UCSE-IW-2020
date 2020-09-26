@@ -80,10 +80,14 @@
   {% for comment in escrito.comments.all %}
     <strong> {{ comment.usuario }} - {{ comment.date }} </strong>
     <br/>
-    {{ comment.body|safe }}  - <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-default"
-    onClick="return confirm('¿Seguro que quieres borrar el comentario?');">
-    <strong>Eliminar comentario</strong>
-    </a>
+    {{ comment.body|safe }} 
+    {% if comment.usuario == request.user %}
+      -
+      <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-default"
+      onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+      <strong>Eliminar comentario</strong>
+      </a>
+    {% endif %}
     <br/><br/>
   {% endfor %}
 {% endif %}
