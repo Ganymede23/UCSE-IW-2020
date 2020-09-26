@@ -29,7 +29,6 @@ def escrito_detail(request, pk): # Detelle de escritos
             return redirect('escrito_detail', pk=escrito.pk)
     else:
         form = CommentForm()
-        #form.body = ""
 
     return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes, 'liked': liked, 'comments': comments, 'form': form })
 
@@ -87,21 +86,20 @@ def like_escrito(request, pk):
 
     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
 
-# def comment_escrito(request, pk):
-#     escrito = get_object_or_404(Escrito, id=request.POST.get('post_id'))
-#     if request.method == "POST":
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.usuario = request.user
-#             comment.save()
-#             #return redirect('escrito_detail', pk=escrito.pk)
-
-#     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
-
 def delete_comment(request, pk):
     comment = Comment.objects.get(pk=pk)
     pk = comment.escrito.pk
     comment.delete()
 
+    return redirect('escrito_detail', pk=pk)
+
+def denuncia_comment(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    pk = comment.escrito.pk
+    denunciado = False
+    if not comment.denuncias.filter(id=request.user.id).exists():
+        comment.denuncias.add(request.user)
+        if comment.total_denuncias() >= 2:
+            comment.delete()
+    
     return redirect('escrito_detail', pk=pk)

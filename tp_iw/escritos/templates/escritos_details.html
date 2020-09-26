@@ -87,6 +87,16 @@
       onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
       <strong>Eliminar comentario</strong>
       </a>
+    {% else %}
+      {% if user.is_authenticated %}
+        {% if comment.denuncias.filter(comment.ususario) %}
+          -
+          <a href="/escritos/comment/{{ comment.id }}/denuncia/" class="btn btn-default"
+          onClick="return confirm('¿Desea denunciar el comentario?');">
+          <strong>Denunciar comentario</strong>
+          </a>
+        {% endif %}
+      {% endif %}
     {% endif %}
     <br/><br/>
   {% endfor %}
@@ -106,3 +116,5 @@
 
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
 {% endblock %}
+
+

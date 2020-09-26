@@ -37,6 +37,10 @@ class Comment(models.Model):
     body = RichTextField()
     date = models.DateTimeField(default=timezone.now)
     escrito = models.ForeignKey(Escrito, related_name='comments', on_delete=models.CASCADE)
+    denuncias = models.ManyToManyField(User, related_name='comments_escritos')
+
+    def total_denuncias(self):
+        return self.denuncias.count()
 
     def __str__(self):
         return '%s - %s' % (self.escrito.title, self.usuario)
