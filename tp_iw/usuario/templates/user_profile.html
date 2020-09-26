@@ -20,7 +20,7 @@
         </div>
     </div>
 </div>
-<a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
+
 {% if user.is_authenticated %}
     {% if follow %}
         <form action="{% url 'follow_unfollow_profile' %}" method="POST">
@@ -42,17 +42,20 @@
     <!--EDITAR PERFIL-->
     <!--IF no muestra el "Editar Perfil" en perfiles ajenos-->
     {% if my_profile == user_profile  %}
-        <a class="btn btn-primary" href="/usuario/edit_profile"> Editar Mi Perfil </a> 
         <br>
+        <a class="btn btn-primary" href="/usuario/edit_user"> Editar usuario </a> 
+        </br>
+        <br>
+        <a class="btn btn-primary" href="{% url 'edit_profile' user_profile.pk %}"> Editar perfil </a>
+        </br>
     {% endif %}
 {% endif %}
 
-<h3>Escritos: </h3>
-
-{% if my_profile == user_profile  %}
 <br>
-Mis borradores:
+<h3>Escritos: </h3>
 </br>
+{% if my_profile == user_profile  %}
+Mis borradores:
 <br>
 {% for escrito in borradores %}
     <ul>

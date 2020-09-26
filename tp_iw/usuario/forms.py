@@ -1,9 +1,8 @@
 from django import forms
-from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
-
+from .models import Profile
 
 class CreateUserForm(UserCreationForm):  # creacion de formulario de registracion a partir de UserCreationForm
 
@@ -30,8 +29,8 @@ class ChangeUserForm(UserChangeForm):  # creacion de formulario de editar usuari
 
     username = forms.CharField (label='Nombre de usuario',max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(label='Correo electr√≥nico',max_length=200, widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField (label='Nombre',max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField (label='Apellido',max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField (required=False, label='Nombre',max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField (required=False, label='Apellido',max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     
     class Meta:
         model = User
@@ -46,4 +45,11 @@ class PasswordChangingForm(PasswordChangeForm):  # creacion de cambiar contrase√
     class Meta:
         model = User
         fields = ["old_password", "new_password1", "new_password2" ]
+
+class EditProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ("bio", "profile_pic")
+
 

@@ -17,7 +17,7 @@ from django.views import generic
 import requests
 import json
 
-from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm
+from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm, EditProfileForm
 from .models import Profile
 from escritos.models import Escrito
 from libros.models import Review
@@ -160,7 +160,7 @@ def email_confirmation_sent(request):
 
 class UserEditView(generic.UpdateView):  # editar usuario
     form_class = ChangeUserForm
-    template_name = "edit_profile.html"
+    template_name = "edit_user.html"
     success_url = "/home/homepage"
 
     def get_object(self):
@@ -174,6 +174,18 @@ class password_change(PasswordChangeView):
 def password_changed(request):
     return render(request, 'password_success.html')
 
+def edit_profile(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.save()
+            return redirect('show_profile_page', pk=profile.pk)
+    else:
+        form = EditProfileForm(instance=profile)
+        
+    return render(request, 'edit_profile.html', {'form': form})
 
 class ShowProfilePageView(DetailView):
     model = Profile

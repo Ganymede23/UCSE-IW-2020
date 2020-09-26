@@ -4,8 +4,7 @@ from django.utils import timezone
 from .models import Libro, Review
 from .forms import ReviewForm
 
-def show_books(request):
-
+def show_books(request): #vista de paginas libros
     libros = Libro.objects.all()
 
     return render(request, 'libros.html', {'libros': libros})
@@ -35,7 +34,6 @@ def review_new(request,pk_libro): # Crear nuevo review
 
 def review_detail(request, pk): # Detelle de reviews
     review = get_object_or_404(Review, pk=pk)
-
     user_logged = request.user
 
     return render(request, 'review_detail.html', {'review': review, 'user_logged': user_logged })
@@ -53,6 +51,7 @@ def publish(self): # funcion publicar
 def review_remove(request, pk): # borrar review
     review = get_object_or_404(Review, pk=pk)
     review.delete()
+
     return redirect('/libros/show_books')
 
 def review_edit(request, pk): # funcion para editar review
@@ -67,4 +66,5 @@ def review_edit(request, pk): # funcion para editar review
             return redirect('review_detail', pk=review.pk)
     else:
         form = ReviewForm(instance=review)
+        
     return render(request, 'add_review.html', {'form': form})

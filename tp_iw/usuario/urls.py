@@ -3,7 +3,7 @@ from django.urls import path, include, re_path, reverse_lazy
 from django.contrib.auth import views as auth_views
 
 from.usuario_views import (login_user,  register, logout_user, activate, email_confirmation_sent, 
-        UserEditView,password_change,password_changed,
+        UserEditView,password_change,password_changed, edit_profile,
         ShowProfilePageView, ProfileListView, follow_unfollow_profile)
 
 urlpatterns = [
@@ -24,8 +24,9 @@ urlpatterns = [
     path('password_changed/', password_changed),
 
 
-    path('edit_profile/', UserEditView.as_view(), name='edit_profile'),
+    path('edit_user/', UserEditView.as_view(), name='edit_user'),
     path('<int:pk>/profile/', ShowProfilePageView.as_view(), name='show_profile_page'),
+    path('<int:pk>/edit_profile/', edit_profile, name='edit_profile'),
 
     path('suggested_users/', ProfileListView.as_view(), name='profile_list_view'),
     path('switch_follow/', follow_unfollow_profile, name='follow_unfollow_profile')
