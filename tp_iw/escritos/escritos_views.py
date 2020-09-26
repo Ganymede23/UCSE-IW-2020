@@ -19,6 +19,11 @@ def escrito_detail(request, pk): # Detelle de escritos
 
     comments = Comment.objects.filter(escrito = escrito)
 
+    comments_denunciados = []
+    for comment in comments:
+        if comment.denuncias.filter(id=request.user.id).exists():
+            comments_denunciados.append(comment)
+
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -30,7 +35,7 @@ def escrito_detail(request, pk): # Detelle de escritos
     else:
         form = CommentForm()
 
-    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes, 'liked': liked, 'comments': comments, 'form': form })
+    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes, 'liked': liked, 'comments': comments, 'form': form, 'comments_denunciados': comments_denunciados })
 
 def escrito_new(request): # Crear nuevo escrito
     if request.method == "POST":

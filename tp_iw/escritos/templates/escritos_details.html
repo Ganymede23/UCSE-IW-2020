@@ -83,15 +83,15 @@
     {{ comment.body|safe }} 
     {% if comment.usuario == request.user %}
       -
-      <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-default"
+      <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
       onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
       <strong>Eliminar comentario</strong>
       </a>
     {% else %}
       {% if user.is_authenticated %}
-        {% if comment.denuncias.filter(comment.ususario) %}
+        {% if not comment in comments_denunciados %}
           -
-          <a href="/escritos/comment/{{ comment.id }}/denuncia/" class="btn btn-default"
+          <a href="/escritos/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
           onClick="return confirm('¿Desea denunciar el comentario?');">
           <strong>Denunciar comentario</strong>
           </a>
