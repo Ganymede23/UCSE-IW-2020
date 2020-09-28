@@ -9,19 +9,30 @@
 <body>
     <h4> Libro reseñado: {{review.book.title}} </h4>
     <h4> Autor2: {{review.book.author}}</h4>
+    {%for obj in avg %}
+       <strong> puntuación media : {{obj.average_stars}} </strong>
+       <br>
+    {%endfor%}
 
-  <form method="POST" class"post-form">
+    {% if user.is_authenticated %}
+        {% if not user_logged in rates_usuarios %}
+            {% if user_logged.id is not review.author.id %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="rating">
+                        <input name="rate" id="e5" type="radio" value= '5'></a><label for="e5">★</label>
+                        <input name="rate" id="e4" type="radio" value= '4'></a><label for="e4">★</label>
+                        <input name="rate" id="e3" type="radio" value= '3'></a><label for="e3">★</label>
+                        <input name="rate" id="e2" type="radio" value= '2'></a><label for="e2">★</label>
+                        <input name="rate" id="e1" type="radio" value= '1'></a><label for="e1">★</label> 
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Votar</button>
+                </form>
+            {%endif%}
+        {%endif%}
+    {%endif%} 
 
-        <div class="rating rating2"><!--
-            --><a href="#5" title="Give 5 stars">★</a><!--
-            --><a href="#4" title="Give 4 stars">★</a><!--
-            --><a href="#3" title="Give 3 stars">★</a><!--
-            --><a href="#2" title="Give 2 stars">★</a><!--
-            --><a href="#1" title="Give 1 star">★</a>
-        </div>
-
-  </form>
-
+    <br>
     <div class="body">
     {{ review.body|safe }}
     </div>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from .libros_views import show_books, book_detail, review_new, review_edit, review_publish, review_remove, review_detail
+from .libros_views import show_books, book_detail, review_new, review_edit, review_publish, review_remove, review_detail, rate_review
 
 urlpatterns = [
     path('show_books/', show_books, name='show_books'),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('review/<pk>/remove/', review_remove, name='review_remove'),
     path('review/<pk>/publish/', review_publish, name='review_publish'),
     path('review/<int:pk>/edit/', review_edit, name='edit_review'),
+    path('rate_review/<int:pk>/', rate_review, name='rate_review'),
 ]
