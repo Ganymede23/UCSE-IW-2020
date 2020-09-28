@@ -4,11 +4,13 @@ from .models import Escrito, Comment
 from .forms import EscritoForm, CommentForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from usuario.models import Profile
 
 
 def escrito_detail(request, pk): # Detelle de escritos
     escrito = get_object_or_404(Escrito, pk=pk)
-
+    body = escrito.body.split(' ')
+    tiempo = ((len(body)*60)/320)*1000
     user_logged = request.user
 
     total_likes = escrito.total_likes()
@@ -18,6 +20,11 @@ def escrito_detail(request, pk): # Detelle de escritos
         liked = True
 
     comments = Comment.objects.filter(escrito = escrito)
+
+    comments_denunciados = []
+    for comment in comments:
+        if comment.denuncias.filter(id=request.user.id).exists():
+            comments_denunciados.append(comment)
 
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -29,9 +36,8 @@ def escrito_detail(request, pk): # Detelle de escritos
             return redirect('escrito_detail', pk=escrito.pk)
     else:
         form = CommentForm()
-        #form.body = ""
 
-    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes, 'liked': liked, 'comments': comments, 'form': form })
+    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes, 'liked': liked, 'comments': comments, 'form': form, 'comments_denunciados': comments_denunciados, 'tiempo': tiempo })
 
 def escrito_new(request): # Crear nuevo escrito
     if request.method == "POST":
@@ -87,21 +93,37 @@ def like_escrito(request, pk):
 
     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
 
-# def comment_escrito(request, pk):
-#     escrito = get_object_or_404(Escrito, id=request.POST.get('post_id'))
-#     if request.method == "POST":
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.usuario = request.user
-#             comment.save()
-#             #return redirect('escrito_detail', pk=escrito.pk)
-
-#     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
-
 def delete_comment(request, pk):
     comment = Comment.objects.get(pk=pk)
     pk = comment.escrito.pk
     comment.delete()
 
     return redirect('escrito_detail', pk=pk)
+
+def denuncia_comment(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    pk = comment.escrito.pk
+    denunciado = False
+    if not comment.denuncias.filter(id=request.user.id).exists():
+        comment.denuncias.add(request.user)
+        if comment.total_denuncias() >= 2:
+            comment.delete()
+    
+    return redirect('escrito_detail', pk=pk)
+
+def escrito_leido(request):
+    if request.POST:
+        pk = request.POST['pk']
+        userid = request.POST['userid']
+        escrito = get_object_or_404(Escrito, pk=pk)
+        profile = get_object_or_404(Profile, pk=userid)
+        # AGREGAR EL ESCRITO LEIDO AL USUARIO
+        if not profile.escritos_leidos.filter(id=userid).exists():
+            profile.escritos_leidos.add(request.pk)
+    else:
+        mensaje = 'No POST'
+
+    return JsonResponse({
+        'mensaje': mensaje,
+        'url': reverse('escrito_detail'),
+    })
