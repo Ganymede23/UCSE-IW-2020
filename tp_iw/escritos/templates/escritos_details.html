@@ -115,6 +115,50 @@
 <br/>
 
 <a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
+
+
+<script type="text/javascript">
+  var time = {{ tiempo }};
+  window.onload = function () {
+    
+    setTimeout('ctrlTiempo()', 5000); 
+    
+      //Si el usuario mueve el ratón cambiamos la variable a 0.
+      //$(this).mousemove(function (e) {
+      //    contadorAfk = 0;
+      //});
+      //Si el usuario presiona alguna tecla cambiamos la variable a 0.
+      //$(this).keypress(function (e) {
+      //    contadorAfk = 0;
+      //});
+  };
+
+  function ctrlTiempo() {
+      
+      (function($) {
+          
+          var pk = "{{ escrito.pk }}";
+          var userid = "{{ request.user.id }}";
+          
+          $.ajax({
+              method: "POST",
+              url: "{% url 'escrito_leido' %}",
+              data: { pk: pk, userid: userid, csrfmiddlewaretoken: '{{ csrf_token }}' }
+          })
+          .done(function( datos ) {
+              location.reload();
+          })
+          .fail(function( jqXHR, textStatus ) {
+              alert('Oops!!', 'Encontramos un problema: ' + jqXHR + ' estado: ' + textStatus, 'danger');
+          });
+      });
+    //}
+    alert('Prueba!');
+  };
+</script>  
+
 {% endblock %}
+
+
 
 
