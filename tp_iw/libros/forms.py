@@ -1,9 +1,6 @@
 from django import forms
 from ckeditor.fields import RichTextField
-from .models import Review, Rate
-
-
-
+from .models import Review, Rate, Comment_r
 
 class ReviewForm(forms.ModelForm):
 
@@ -19,7 +16,13 @@ class RateForm(forms.ModelForm):
     (4, "4"),
     (5, "5")
     )
-    rating = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class': 'rating'}), choices=estrellas)
+    rating = forms.ChoiceField( widget=forms.RadioSelect(attrs={'class': 'rating'}), choices=estrellas, required = True)
     class Meta:
         model = Rate
         fields = ['rating']
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment_r
+        fields = ['body']

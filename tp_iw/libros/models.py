@@ -43,3 +43,16 @@ class Rate (models.Model):
 
     def __str__(self):
         return str(self.review.title) + ' | '+ str(self.usuario.username) + ' | ' + str(self.rating)
+
+class Comment_r(models.Model):
+    usuario_r = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = RichTextField()
+    date = models.DateTimeField(default=timezone.now)
+    review = models.ForeignKey(Review, related_name='comments', on_delete=models.CASCADE)
+    denuncias = models.ManyToManyField(User, related_name='comments_review')
+
+    def total_denuncias(self):
+        return self.denuncias.count()
+
+    def __str__(self):
+        return '%s - %s' % (self.review.title, self.usuario_r)

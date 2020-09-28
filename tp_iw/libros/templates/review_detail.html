@@ -17,20 +17,20 @@
     {% if user.is_authenticated %}
         {% if not user_logged in rates_usuarios %}
             {% if user_logged.id is not review.author.id %}
-                <form method="POST">
+                <form method="POST" class="rating-stars">
                     {% csrf_token %}
                     <div class="rating">
-                        <input name="rate" id="e5" type="radio" value= '5'></a><label for="e5">★</label>
-                        <input name="rate" id="e4" type="radio" value= '4'></a><label for="e4">★</label>
-                        <input name="rate" id="e3" type="radio" value= '3'></a><label for="e3">★</label>
-                        <input name="rate" id="e2" type="radio" value= '2'></a><label for="e2">★</label>
-                        <input name="rate" id="e1" type="radio" value= '1'></a><label for="e1">★</label> 
+                        <input name="rating" id="e5" type="radio" value= '5'></a><label for="e5">★</label>
+                        <input name="rating" id="e4" type="radio" value= '4'></a><label for="e4">★</label>
+                        <input name="rating" id="e3" type="radio" value= '3'></a><label for="e3">★</label>
+                        <input name="rating" id="e2" type="radio" value= '2'></a><label for="e2">★</label>
+                        <input name="rating" id="e1" type="radio" value= '1'></a><label for="e1">★</label> 
                     </div>
                     <button type="submit" class="btn btn-outline-success">Votar</button>
                 </form>
             {%endif%}
         {%endif%}
-    {%endif%} 
+    {%endif%}
 
     <br>
     <div class="body">
@@ -78,4 +78,49 @@
     </div>
   </div>
 </body>
+
+<!-- Seccion comentarios-->
+
+<h3>Comentarios..</h3>
+<br/>
+{% if not review.comments.all %}
+  Aún no hay comentarios en sobre este Escrito.
+{% else %}
+  {% for comment in review.comments.all %}
+    <strong> {{ comment.usuario_r }} - {{ comment.date }} </strong>
+    <br/>
+    {{ comment.body|safe }} 
+    {% if comment.usuario_r == request.user %}
+      -
+      <a href="/libros/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
+      onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+      <strong>Eliminar comentario</strong>
+      </a>
+    {% else %}
+      {% if user.is_authenticated %}
+        {% if not comment in comments_denunciados %}
+          -
+          <a href="/libros/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
+          onClick="return confirm('¿Desea denunciar el comentario?');">
+          <strong>Denunciar comentario</strong>
+          </a>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+    <br/><br/>
+  {% endfor %}
+{% endif %}
+<br/><br/>
+
+<br/>
+
+<form method="POST" class="comment-form">
+  {% csrf_token %}
+  {{ form_c.as_p }}
+  <button type="submit", name="post_id", value="{{ review.id }}", class="save btn-primary btn-default">Comentar</button>
+</form>
+
+<br/>
+
+
 {% endblock %}

@@ -2,8 +2,8 @@ from django.db.models.aggregates import Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
-from .models import Libro, Review, Rate
-from .forms import ReviewForm, RateForm
+from .models import Libro, Review, Rate, Comment_r
+from .forms import ReviewForm, RateForm, CommentForm
 
 def show_books(request): #vista de paginas libros
     libros = Libro.objects.all()
@@ -37,6 +37,13 @@ def review_detail(request, pk): # Detelle de reviews
     review = get_object_or_404(Review, pk=pk)
     user_logged = request.user
 
+    comments = Comment_r.objects.filter(review = review)
+
+    comments_denunciados = []
+    for comment in comments:
+        if comment.denuncias.filter(id=request.user.id).exists():
+            comments_denunciados.append(comment)
+
     rates= Rate.objects.filter( review = review)
     rates_usarios = []
     for rate in rates:
@@ -44,20 +51,35 @@ def review_detail(request, pk): # Detelle de reviews
             rates_usarios.append(rate.usuario)
 
     if request.method == "POST":
-        form = RateForm(request.POST)
-        if form.is_valid():
-            rate = form.save(commit=False)
+        form_c = CommentForm(request.POST)
+        form_r = RateForm(request.POST)
+        if form_r.is_valid():
+            rate = form_r.save(commit=False)
             rate.review = review
             rate.usuario = user_logged
             rate.save()
             return redirect('review_detail', pk=review.pk)
+        else:
+            form_r = RateForm()
+
+        if form_c.is_valid():
+            comment = form_c.save(commit=False)
+            comment.review = review
+            comment.usuario_r = request.user
+            comment.save()
+            return redirect('review_detail', pk=review.pk) 
+        else:
+            form_c = CommentForm()
+
     else:
-        form = RateForm()    
+        form_r = RateForm()  
+        form_c = CommentForm()  
 
     avg = Rate.objects.values('review').order_by('review').annotate(average_stars=Avg('rating')).filter(review=review)
 
-    return render(request, 'review_detail.html', {'review': review, 'user_logged': user_logged, 'form':form,
-     'rates_usuarios':rates_usarios, 'avg':avg })
+    return render(request, 'review_detail.html', {'review': review, 'user_logged': user_logged, 'form_r':form_r,
+     'rates_usuarios':rates_usarios, 'avg':avg,'comments': comments, 'comments_denunciados': comments_denunciados,
+     'form_c':form_c})
 
 def review_publish(request, pk): # Publicar review
     review = get_object_or_404(Review, pk=pk)
@@ -90,5 +112,22 @@ def review_edit(request, pk): # funcion para editar review
         
     return render(request, 'add_review.html', {'form': form})
 
-def rate_review (request,pk):
-    pass
+#comentarios 
+
+def delete_comment(request, pk):
+    comment = Comment_r.objects.get(pk=pk)
+    pk = comment.review.pk
+    comment.delete()
+
+    return redirect('review_detail', pk=pk)
+
+def denuncia_comment(request, pk):
+    comment = Comment_r.objects.get(pk=pk)
+    pk = comment.review.pk
+    denunciado = False
+    if not comment.denuncias.filter(id=request.user.id).exists():
+        comment.denuncias.add(request.user)
+        if comment.total_denuncias() >= 2:
+            comment.delete()
+    
+    return redirect('review_detail', pk=pk)
