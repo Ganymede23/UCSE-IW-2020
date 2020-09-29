@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from .models import Escrito, Comment
 from .forms import EscritoForm, CommentForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from usuario.models import Profile
 
@@ -114,12 +114,13 @@ def denuncia_comment(request, pk):
 def escrito_leido(request):
     if request.POST:
         pk = request.POST['pk']
-        userid = request.POST['userid']
+        userid = request.user.id
         escrito = get_object_or_404(Escrito, pk=pk)
         profile = get_object_or_404(Profile, pk=userid)
         # AGREGAR EL ESCRITO LEIDO AL USUARIO
         if not profile.escritos_leidos.filter(id=userid).exists():
-            profile.escritos_leidos.add(request.pk)
+            profile.escritos_leidos.add(escrito)
+            mensaje = 'Ok!'
     else:
         mensaje = 'No POST'
 

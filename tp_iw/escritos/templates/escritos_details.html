@@ -121,7 +121,7 @@
   var time = {{ tiempo }};
   window.onload = function () {
     
-    setTimeout('ctrlTiempo()', 5000); 
+    setTimeout('ctrlTiempo()', time); 
     
       //Si el usuario mueve el ratón cambiamos la variable a 0.
       //$(this).mousemove(function (e) {
@@ -134,27 +134,22 @@
   };
 
   function ctrlTiempo() {
-      
-      (function($) {
-          
-          var pk = "{{ escrito.pk }}";
-          var userid = "{{ request.user.id }}";
-          
-          $.ajax({
-              method: "POST",
-              url: "{% url 'escrito_leido' %}",
-              data: { pk: pk, userid: userid, csrfmiddlewaretoken: '{{ csrf_token }}' }
-          })
-          .done(function( datos ) {
-              location.reload();
-          })
-          .fail(function( jqXHR, textStatus ) {
-              alert('Oops!!', 'Encontramos un problema: ' + jqXHR + ' estado: ' + textStatus, 'danger');
-          });
-      });
-    //}
-    alert('Prueba!');
-  };
+    var csrftoken = "{{ csrf_token }}";
+    var pk = "{{ escrito.pk }}";
+    $.post({
+        headers: {"X-CSRFToken": csrftoken},
+        url: "/escritos/escrito_leido/",
+        data: { pk: pk },
+    })
+    .done(function( datos ) {
+        datos.url;
+        location.reload();
+    })
+    //.fail(function( jqXHR, textStatus ) {
+    //    alert('Oops!!', 'Encontramos un problema: ' + jqXHR + ' estado: ' + textStatus, 'danger');
+    //});
+  alert('Hola profes! Detectamos el tiempo que se necesita para leer este escrito.');
+};
 </script>  
 
 {% endblock %}
