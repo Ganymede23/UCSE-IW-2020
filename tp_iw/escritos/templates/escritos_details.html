@@ -1,157 +1,184 @@
-{% extends 'base_layout.html' %} {% load static %} {% block content1 %}
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content1 %}
 
-<head>
-  <h1>{{escrito.title}}</h1>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stars.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+    </head>
 
-<small>{{ escrito.author}} </small>
+    <body>
 
-<br />
+    <div id="correccion-container-perfil" class="container-fluid text-center">
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{escrito.title}}</h1>
+                    <hr class="w-75">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    por <b>@{{escrito.author}}</b> <!--PENDIENTE IMPLEMENTAR FOTO DE PERFIL-->
+                    <!--<div class="row">
+                        <div class="col-md-3">
+                            <div class="current-profile-v3">
+                                {% if review.author.profile.profile_pic %}
+                                <div class="user-pic" style="background: url({{MEDIA_URL}}{{user_profile.profile_pic.url}}) no-repeat">&nbsp;
+                                </div>
+                                {%else%}
+                                <div class="user-pic" style="background: url(https://picsum.photos/200/200/) no-repeat">&nbsp;</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-9 text-left">
 
-<div class="body">
-{{ escrito.body|safe }}
-</div>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="col-md-6 text-center">
+                    {% if escrito.date %}
+                        <div class="date">
+                            {{ escrito.date }}
+                        </div>
+                    {% else %}
+                        PLACEHOLDER
+                    {% endif %}
+                </div>
+            </div>
+            <hr class="w-75">
+            <div class="col-md-12">
+                {{ escrito.body|safe }}
+            </div>
+        </div>
 
-{% if escrito.date %}
-    <div class="date">
-        {{ escrito.date }}
-    </div>
-{% else %}
-    (borrador)
-    <a class="btn btn-default" href="{% url 'escrito_publish' pk=escrito.pk %}">Publish</a>
-{% endif %}
-
-<br>
-
-{% if user_logged == escrito.author %}
-<a class="btn btn-default" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
-
-<a class="btn btn-default" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar Escrito</a>
-{% endif %}
-
-<!--Esta es la tarjeta que muestra el perfil del autor-->
-
-<div class="card mb-3" style="max-width: 540px">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-    {% if escrito.author.profile.profile_pic %}
-        <img src="{{MEDIA_URL}}{{escrito.author.profile.profile_pic.url}}" class = "card-img"/>
-    {%else%}
-      <img src="https://picsum.photos/200/"class = "card-img"/>
-    {% endif %}
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{escrito.author}}</h5>
-        <p class="card-text">{{escrito.author.profile.bio}}</p>
-        <p class="card-text">
-          <a
-            href="{%url 'show_profile_page' escrito.author.profile.id %}"
-            class="text-muted"
-            >ir al perfil</a
-          >
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<br/><br/>
-<form action="{% url 'escrito_like' escrito.pk %}" method="POST">
-{% csrf_token %}
-{% if user.is_authenticated %}
-  {% if liked %}
-    <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn-danger btn-sm">No me gusta</button> 
-  {% else %}
-    <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn-primary btn-sm">Me gusta</button> 
-  {% endif %}
-{% else %}
-  <small>Debes estar logueado para dar Me gusta</small>
-{% endif %}
-  - {{ total_likes }} Me gusta 
-</form>
-<br/>
-<br/>
-<h3>Comentarios..</h3>
-<br/>
-{% if not escrito.comments.all %}
-  Aún no hay comentarios en sobre este Escrito.
-{% else %}
-  {% for comment in escrito.comments.all %}
-    <strong> {{ comment.usuario }} - {{ comment.date }} </strong>
-    <br/>
-    {{ comment.body|safe }} 
-    {% if comment.usuario == request.user %}
-      -
-      <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
-      onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
-      <strong>Eliminar comentario</strong>
-      </a>
-    {% else %}
-      {% if user.is_authenticated %}
-        {% if not comment in comments_denunciados %}
-          -
-          <a href="/escritos/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
-          onClick="return confirm('¿Desea denunciar el comentario?');">
-          <strong>Denunciar comentario</strong>
-          </a>
+        <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
+        {% if user_logged == escrito.author %}
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="row">
+                        {% if escrito.date %}
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-block" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-danger btn-block" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar</a>
+                            </div>
+                        {%else%}
+                            <div class="col-md-4">
+                                <a class="btn btn-success btn-block" href="{% url 'escrito_publish' pk=escrito.pk %}">Publicar</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-primary btn-block" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-danger btn-block" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar</a>
+                            </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
         {% endif %}
-      {% endif %}
-    {% endif %}
-    <br/><br/>
-  {% endfor %}
-{% endif %}
-<br/><br/>
 
-<br/>
+        <!--LIKE-->
+        <form action="{% url 'escrito_like' escrito.pk %}" method="POST">
+            {% csrf_token %}
+                {% if user.is_authenticated %}
+                    {% if liked %}
+                        <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn-danger btn-sm">No me gusta</button> 
+                    {% else %}
+                        <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn-primary btn-sm">Me gusta</button> 
+                    {% endif %}
+                {% else %}
+                    <small>Debes estar logueado para dar Me gusta</small>
+            {% endif %}
+            - {{ total_likes }} Me gusta 
+        </form>
 
-<form method="POST" class"comment-form">
-  {% csrf_token %}
-  <!--{{ form.media }}-->
-  {{ form.as_p }}
-  <button type="submit", name="post_id", value="{{ escrito.id }}", class="save btn-primary btn-default">Comentar</button>
-</form>
+        <!--COMENTARIOS-->
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <h3>Comentarios</h3>
+            <hr class="w-75">
+            {% if not escrito.comments.all %}
+            Aún no hay comentarios en sobre este escrito. ¡Sé el primero!
+            {% else %}
+                {% for comment in escrito.comments.all %}
+                    <strong> {{ comment.usuario }} - {{ comment.date }} </strong>
+                    <br/>
+                    {{ comment.body|safe }} 
+                    {% if comment.usuario == request.user %}
+                        -
+                        <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
+                        onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+                        <strong>Eliminar comentario</strong>
+                        </a>
+                    {% else %}
+                        {% if user.is_authenticated %}
+                            {% if not comment in comments_denunciados %}
+                                -
+                                <a href="/escritos/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
+                                onClick="return confirm('¿Desea denunciar el comentario?');">
+                                <strong>Denunciar comentario</strong>
+                                </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        <br/><br/>
+                {% endfor %}
+            {% endif %}
+            <hr class="w-75">
 
-<br/>
+            <form method="POST" class"comment-form">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <button type="submit", name="post_id", value="{{ escrito.id }}", class="save btn-primary btn-default">Comentar</button>
+            </form>
+            <br/>
+        </div>
+    </div>
+        
+    <!--FUNCIONES NICO-->
+    <script type="text/javascript">
+        var time = {{ tiempo }};
+        window.onload = function () {
+            
+            setTimeout('ctrlTiempo()', time); 
+            
+            //Si el usuario mueve el ratón cambiamos la variable a 0.
+            //$(this).mousemove(function (e) {
+            //    contadorAfk = 0;
+            //});
+            //Si el usuario presiona alguna tecla cambiamos la variable a 0.
+            //$(this).keypress(function (e) {
+            //    contadorAfk = 0;
+            //});
+        };
 
-<a class="btn btn-primary" href="/home/homepage"> Inicio </a> 
-
-
-<script type="text/javascript">
-  var time = {{ tiempo }};
-  window.onload = function () {
-    
-    setTimeout('ctrlTiempo()', time); 
-    
-      //Si el usuario mueve el ratón cambiamos la variable a 0.
-      //$(this).mousemove(function (e) {
-      //    contadorAfk = 0;
-      //});
-      //Si el usuario presiona alguna tecla cambiamos la variable a 0.
-      //$(this).keypress(function (e) {
-      //    contadorAfk = 0;
-      //});
-  };
-
-  function ctrlTiempo() {
-    var csrftoken = "{{ csrf_token }}";
-    var pk = "{{ escrito.pk }}";
-    $.post({
-        headers: {"X-CSRFToken": csrftoken},
-        url: "/escritos/escrito_leido/",
-        data: { pk: pk },
-    })
-    .done(function( datos ) {
-        datos.url;
-        location.reload();
-    })
-    //.fail(function( jqXHR, textStatus ) {
-    //    alert('Oops!!', 'Encontramos un problema: ' + jqXHR + ' estado: ' + textStatus, 'danger');
-    //});
-  alert('Hola profes! Detectamos el tiempo que se necesita para leer este escrito.');
-};
-</script>  
-
+    function ctrlTiempo() {
+        var csrftoken = "{{ csrf_token }}";
+        var pk = "{{ escrito.pk }}";
+        $.post({
+            headers: {"X-CSRFToken": csrftoken},
+            url: "/escritos/escrito_leido/",
+            data: { pk: pk },
+        })
+        .done(function( datos ) {
+            datos.url;
+            location.reload();
+        })
+        //.fail(function( jqXHR, textStatus ) {
+        //    alert('Oops!!', 'Encontramos un problema: ' + jqXHR + ' estado: ' + textStatus, 'danger');
+        //});
+    alert('Hola profes! Detectamos el tiempo que se necesita para leer este escrito.');
+    };
+    </script> 
 {% endblock %}
 
 

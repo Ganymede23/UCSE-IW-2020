@@ -9,7 +9,7 @@
 <div class="container-fluid"">
     <div class="row">
         <div id="profile-main-column" class="col-lg-12">
-            <div id="cover-profile" class="jumbotron rounded-0" style="background: url(https://picsum.photos/1200/300/) no-repeat;"></div>
+            <div id="cover-profile" class="jumbotron rounded-0" style="background: url(https://picsum.photos/1200/300/) no-repeat; background-size: cover;"></div>
             
             <!--Foto de perfil-->
             <div class="current-profile-v2">
@@ -164,11 +164,22 @@
                 </div>
                 {% endif %}
             </div>
+
+            <hr>
+            
+            <!--Colapsable con escritos y reviews-->
+            <div>
+                <h3>Escritos leidos</h3>
+                {% for escrito in escritos_leidos %}
+                    <li>
+                        {{escrito.title}}
+                    </li>
+                {% endfor %}
+                <br>
+                (placeholder)
+            </div>
+
         </div>
-    </div>
-    <div class="row">
-
-
     </div>
 </div>
 

@@ -205,6 +205,13 @@ class ShowProfilePageView(DetailView):
         r_borradores = Review.objects.filter(author=user, date__isnull=True).order_by('created_date')
         my_profile = Profile.objects.get(user=self.request.user) #obtiene el usuario propio
 
+        escritos = Escrito.objects.all()
+
+        escritos_leidos = []
+        for escrito in escritos:
+            if my_profile.escritos_leidos.filter(id=escrito.id).exists():
+                escritos_leidos.append(escrito)
+
         # <Follow button>
         view_profile = self.get_object()
         if view_profile.user in my_profile.following.all():
@@ -225,6 +232,8 @@ class ShowProfilePageView(DetailView):
         context["count_escritos"] = publicados.count()
         context["count_reviews"] = r_publicadas.count()
         context["count_following"] = my_profile.following.count()
+
+        context["escritos_leidos"] = escritos_leidos
 
         return context
 

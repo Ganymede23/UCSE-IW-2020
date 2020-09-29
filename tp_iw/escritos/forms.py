@@ -16,6 +16,12 @@ class EscritoForm(forms.ModelForm):
         fields = ('title', 'body')
 
 class CommentForm(forms.ModelForm):
+    
+    def __init__(self,*args,**kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+        #self.fields['title'].label = "Titulo"
+        self.fields['body'].label = ""
 
     class Meta:
         model = Comment
