@@ -47,6 +47,13 @@ class PasswordChangingForm(PasswordChangeForm):  # creacion de cambiar contrase√
         fields = ["old_password", "new_password1", "new_password2" ]
 
 class EditProfileForm(forms.ModelForm):
+    bio = forms.CharField(label='Biograf√≠a', widget=forms.Textarea)
+    
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['profile_pic'].label = "Foto de perfil"
+        self.fields['bio'].widget.attrs['rows'] = 3
+        #self.fields['bio'].widget.attrs['columns'] = 15
 
     class Meta:
         model = Profile

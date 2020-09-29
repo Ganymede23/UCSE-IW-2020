@@ -95,6 +95,21 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 912,
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    },
+}
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 '''
@@ -110,7 +125,7 @@ DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'Tp_IW_Leelo',
-            'PASSWORD': 'admin',
+            'PASSWORD': 'abc2234',
             'USER': 'postgres',
             'HOST': '127.0.0.1',
             'DATABASE_PORT': '5432',

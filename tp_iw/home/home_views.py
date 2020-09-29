@@ -13,6 +13,9 @@ def index(request):
     else:
         return render(request, "index.html")
 
+def placeholder(request):
+    return render(request,"placeholder.html")
+
 @login_required(
     login_url="/usuario/login"
 )  # el decorador te envia al login si intentas entrar sin loguearte a home

@@ -1,25 +1,184 @@
-{% extends 'base_layout.html' %}        
-        
-{% block content1 %}
+{% extends 'base_layout.html' %}     
+{% load static %}
 
-<div class="card mb-3" style="max-width: 540px">
-    <div class="row no-gutters">
-        <div class="col-md-4">
-        {% if user_profile.profile_pic %}
-            <img src="{{MEDIA_URL}}{{user_profile.profile_pic.url}}" class = "card-img"/>
-        {%else%}
-            <img src="https://picsum.photos/200/"class = "card-img"/>
-        {% endif %}
-        </div>
-        <div class="col-md-8">
-        <div class="card-body">
-            <h5 class="card-title">{{user_profile}}</h5>
-            <p class="card-text">{{user_profile.bio}}</p>
-            </p>
-        </div>
+{% block content1 %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+</head>
+
+<div class="container-fluid"">
+    <div class="row">
+        <div id="profile-main-column" class="col-lg-12">
+            <div id="cover-profile" class="jumbotron rounded-0" style="background: url(https://picsum.photos/1200/300/) no-repeat;"></div>
+            
+            <!--Foto de perfil-->
+            <div class="current-profile-v2">
+                {% if user_profile.profile_pic %}
+                <div class="user-pic" style="background: url({{MEDIA_URL}}{{user_profile.profile_pic.url}}) no-repeat">&nbsp;</div>
+                {%else%}
+                <div class="user-pic" style="background: url(https://picsum.photos/200/200/) no-repeat">&nbsp;</div>
+                {% endif %}
+            </div>
+            
+            <!--Usuario y Bio-->
+            <div class="user-details">
+                <h4 class="user-name">{{user_profile}}</h4>
+                <p></p>
+                <h6 class="description"><i>{{user_profile.bio}}</i></h6>
+            </div>
+
+            <!--Seguidores-->
+            <hr>
+            <div class="social-list">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3 center-align-text">
+                                <h3>{{count_escritos}}</h3>
+                                Escritos
+                            </div>
+                            <div class="col-md-3 center-align-text">
+                                <h3>{{count_reviews}}</h3>
+                                Críticas
+                            </div>
+                            <div class="col-md-3 center-align-text">
+                                <h3>122</h3>
+                                Seguidores
+                            </div>
+                            <div class="col-md-3 center-align-text">
+                                <h3>{{count_following}}</h3>
+                                Seguidos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+            <hr>
+            
+            <!--Colapsable con escritos y reviews-->
+            <div id="accordion">
+                <div class="card">
+                    <!--ESCRITOS-->
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="false" aria-controls="collapseOne">
+                                <h4>Escritos publicados</h4>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for escrito in publicados %}
+                            <hr>
+                            <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+                            <div> {{escrito.date}} </div>
+                            <hr>
+                            <ul>
+                                {{escrito.body|safe|truncatewords:100  }}
+                                <br>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <!--REVIEWS-->
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                aria-expanded="true" aria-controls="collapseTwo">
+                                <h4>Críticas</h4>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for review in rpublicados %}
+                            <hr>
+                            <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+                            <div> {{review.date}} </div>
+                            <hr>
+                            <ul>
+                                {{review.body|safe|truncatewords:100}}
+                                <br>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% if my_profile == user_profile  %}
+                <hr>
+                <div id="accordion">
+                    <!--BORRADORES-->
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree"
+                                    aria-expanded="true" aria-controls="collapseThree">
+                                    <h4>Mis borradores de escritos</h4>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                {% for escrito in borradores %}
+                                <hr>
+                                <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+                                <div> {{escrito.created_date}} </div>
+                                <hr>
+                                <ul>
+                                    {{escrito.body|safe|truncatewords:100  }}
+                                    <br>
+                                </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
+                                    aria-controls="collapseFour">
+                                    <h4>Mis borradores de reseñas</h4>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                            <div class="card-body">
+                                {% for review in rborradores %}
+                                <hr>
+                                <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+                                <div> {{review.date}} </div>
+                                <hr>
+                                <ul>
+                                    {{review.body|safe|truncatewords:100  }}
+                                    <br>
+                                </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
+    <div class="row">
+
+
+    </div>
 </div>
+
+<!--FOTO DE PERFIL - OLD
+{% if user_profile.profile_pic %}
+<img src="{{MEDIA_URL}}{{user_profile.profile_pic.url}}" class="card-img" />
+{%else%}
+<img src="https://picsum.photos/200/" class="card-img" />
+{% endif %}
+-->
 
 {% if user.is_authenticated %}
     {% if follow %}
@@ -50,83 +209,5 @@
         </br>
     {% endif %}
 {% endif %}
-
-<br>
-<h3>Escritos: </h3>
-</br>
-{% if my_profile == user_profile  %}
-Mis borradores:
-<br>
-{% for escrito in borradores %}
-    <ul>
-        <hr>
-        <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-        <div> {{escrito.date}} </div>
-        <hr>
-        <ul>
-            {{escrito.body|safe|truncatewords:100  }}    
-            <br>
-        </ul>
-    </ul>  
-{% endfor %}
-</br>
-{% endif %}
-
-<br>
-Escritos publicados:
-</br>
-<br>
-{% for escrito in publicados %}
-    <ul>
-        <hr>
-        <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-        <div> {{escrito.date}} </div>
-        <hr>
-        <ul>
-            {{escrito.body|safe|truncatewords:100  }}    
-            <br>
-        </ul>
-    </ul>  
-{% endfor %}
-
-<h3>Reviews: </h3>
-
-{% if my_profile == user_profile  %}
-    <br>
-    Borradores:
-    </br>
-    <br>
-    {% for review in rborradores %}
-        <ul>
-            <hr>
-            <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
-            <div> {{review.date}} </div>
-            <hr>
-            <ul>
-                {{review.body|safe|truncatewords:100  }}    
-                <br>
-            </ul>
-        </ul>  
-    {% endfor %}
-    </br>
-{% endif %}
-
-<br>
-Publicados:
-</br>
-<br>
-{% for review in rpublicados %}
-    <ul>
-        <hr>
-        <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
-        <div> {{review.date}} </div>
-        <hr>
-        <ul>
-            {{review.body|safe|truncatewords:100  }}    
-            <br>
-        </ul>
-    </ul>  
-{% endfor %}
-</br>
 
 {% endblock %}

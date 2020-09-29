@@ -3,14 +3,25 @@
 {% block content1 %}
 
     <head>
-        <h1>Crea una nueva review</h1>
+        <title>Leelo - Escribir reseña</title>
     </head>
 
-    <form method="POST" class"post-form">\
-        {% csrf_token %}
-        {{form.media}}
-        {{form.as_p }}
-        <button type="submit" class="save btn btn-default">Terminar</button>
-    </form>
+    <div class="row">
+        <div class="col-md-10 m-3 p-3">
+            <h1>Crea una nueva reseña</h1>
+            <hr align="left" class="w-50">
+            
+            <form method="POST" class="post-form">
+                {% csrf_token %}
+                {{form.media}}
+                <p>Recuerda leer las <a href="/home/placeholder">reglas de la comunidad</a> antes de publicar contenido.</p>
 
+                {{form.as_p }}
+                <div style="text-align:right">
+                    <!--<button type="submit" class="save btn btn-primary" href="/home/home_page">Guardar Borrador</button>-->
+                    <button type="submit" class="save btn btn-success btn-lg">Terminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

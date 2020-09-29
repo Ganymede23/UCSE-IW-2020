@@ -15,21 +15,19 @@
         <div class ="form-group">
             <form method = "POST"?>
                 {% csrf_token %}
+                <!--<textarea class="form-control" rows="3">{{form.bio.value}}</textarea> -->
 
-                <div class="form-group">
-                    <label for="bio">{{form.bio.label|safe}}</label>
-                    <textarea class="form-control" rows="3">{{form.bio|safe}}</textarea>
-                </div>
+                <p>{{form.bio.label}}</p>
+                <p>{{form.bio}}</p>
 
                 <p>{{form.profile_pic.label}}:</p>
                 <p>{{form.profile_pic}}</p>
 
                 <hr>
-                <button class="btn btn-primary"> Guardar Cambios </button>
+                <button class="btn btn-primary" href="{%url 'show_profile_page' user.profile.id %}"> Guardar Cambios </button>
                 <a class="btn btn-danger" href="{%url 'show_profile_page' user.profile.id %}">Cancelar</a> 
                 <hr>
             </form>
         </div>
     </div>
-    
 {% endblock %}

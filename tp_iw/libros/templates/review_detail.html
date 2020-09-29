@@ -1,36 +1,174 @@
-{% extends 'base_layout.html' %} {% load static %} {% block content1 %}
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content1 %}
 
-<head>
-    <meta charset="utf-8">
-    <h1>{{review.title}}</h1>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/stars2.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stars.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+    </head>
+    <body>
+        
+    <div id="correccion-container-perfil" class="container-fluid text-center">
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{review.title}}</h1>
+                    <hr class="w-75">
+                    <h6> Libro reseñado: <i>{{review.book.title}}</i> </h6>
+                    <h6> Autor: <i>{{review.book.author}}</i></h6>
+                    <hr class="w-75">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    por <b>@{{review.author}}</b> <!--PENDIENTE IMPLEMENTAR FOTO DE PERFIL-->
+                    <!--<div class="row">
+                        <div class="col-md-3">
+                            <div class="current-profile-v3">
+                                {% if review.author.profile.profile_pic %}
+                                <div class="user-pic" style="background: url({{MEDIA_URL}}{{user_profile.profile_pic.url}}) no-repeat">&nbsp;
+                                </div>
+                                {%else%}
+                                <div class="user-pic" style="background: url(https://picsum.photos/200/200/) no-repeat">&nbsp;</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-9 text-left">
+
+                        </div>
+                    </div>-->
+                </div>
+                <div class="col-md-6 text-center">
+                    {% if review.date %}
+                        <div class="date">
+                            {{ review.date }}
+                        </div>
+                    {% else %}
+                        PLACEHOLDER
+                    {% endif %}
+                </div>
+
+            </div>
+            <hr class="w-75">
+            <div class="col-md-12">
+                {{ review.body|safe }}
+            </div>
+        </div>
+
+        {% if review.date %}      
+        <div class="shadow bg-white col-md-12 m-3 p-3 text-center">
+            {%for obj in avg %}
+                <strong> Puntuacion media: {{obj.average_stars}} </strong>
+                <br>
+            {%endfor%}
+            
+            {% if user.is_authenticated %}
+                {% if not user_logged in rates_usuarios %}
+                    {% if user_logged.id is not review.author.id %}
+                        <form method="POST" class="rating-stars">
+                            {% csrf_token %}
+                            <div class="rating"> <!--CENTRAR ESTRELLAS-->
+                                <input name="rating" id="e5" type="radio" value='5'></a><label for="e5">★</label>
+                                <input name="rating" id="e4" type="radio" value='4'></a><label for="e4">★</label>
+                                <input name="rating" id="e3" type="radio" value='3'></a><label for="e3">★</label>
+                                <input name="rating" id="e2" type="radio" value='2'></a><label for="e2">★</label>
+                                <input name="rating" id="e1" type="radio" value='1'></a><label for="e1">★</label>
+                            </div>
+                            <button type="submit" class="btn btn-outline-success">Votar</button>
+                        </form>
+                    {%endif%}
+                {%endif%}
+            {%endif%}
+        </div>
+        {% endif %}
+        
+        <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
+        {% if user_logged == review.author %}
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="row">
+                        {% if review.date %}
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-block" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-danger btn-block" href="{% url 'review_remove' pk=review.pk %}">Eliminar review</a>
+                            </div>
+                        {%else%}
+                            <div class="col-md-4">
+                                <a class="btn btn-success btn-block" href="{% url 'review_publish' pk=review.pk %}">Publicar</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-primary btn-block" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-danger btn-block" href="{% url 'review_remove' pk=review.pk %}">Eliminar review</a>
+                            </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!--COMENTARIOS-->
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <h3>Comentarios</h3>
+            <hr class="w-75">
+            {% if not review.comments.all %}
+            Aún no hay comentarios en sobre esta reseña. ¡Sé el primero!
+            {% else %}
+                {% for comment in review.comments.all %}
+                    <strong> {{ comment.usuario_r }} - {{ comment.date }} </strong>
+                    <br/>
+                    {{ comment.body|safe }} 
+                    {% if comment.usuario_r == request.user %}
+                        -
+                        <a href="/libros/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
+                        onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+                        <strong>Eliminar comentario</strong>
+                        </a>
+                    {% else %}
+                        {% if user.is_authenticated %}
+                            {% if not comment in comments_denunciados %}
+                            -
+                            <a href="/libros/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
+                            onClick="return confirm('¿Desea denunciar el comentario?');">
+                            <strong>Denunciar comentario</strong>
+                            </a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <br/><br/>
+                {% endfor %}
+            {% endif %}
+            <hr class="w-75">
+            
+            <form method="POST" class="comment-form">
+            {% csrf_token %}
+            {{form_c.media}}
+            {{form_c.as_p}}
+            <button type="submit", name="post_id", value="{{ review.id }}", class="save btn-primary btn-default">Comentar</button>
+            </form>
+
+            <br/>
+        </div>
+
+
+
+
+    </div>
+    </body>
 
 <body>
     <h4> Libro reseñado: {{review.book.title}} </h4>
     <h4> Autor2: {{review.book.author}}</h4>
-    {%for obj in avg %}
-       <strong> puntuación media : {{obj.average_stars}} </strong>
-       <br>
-    {%endfor%}
 
-    {% if user.is_authenticated %}
-        {% if not user_logged in rates_usuarios %}
-            {% if user_logged.id is not review.author.id %}
-                <form method="POST" class="rating-stars">
-                    {% csrf_token %}
-                    <div class="rating">
-                        <input name="rating" id="e5" type="radio" value= '5'></a><label for="e5">★</label>
-                        <input name="rating" id="e4" type="radio" value= '4'></a><label for="e4">★</label>
-                        <input name="rating" id="e3" type="radio" value= '3'></a><label for="e3">★</label>
-                        <input name="rating" id="e2" type="radio" value= '2'></a><label for="e2">★</label>
-                        <input name="rating" id="e1" type="radio" value= '1'></a><label for="e1">★</label> 
-                    </div>
-                    <button type="submit" class="btn btn-outline-success">Votar</button>
-                </form>
-            {%endif%}
-        {%endif%}
-    {%endif%}
 
     <br>
     <div class="body">
@@ -57,26 +195,26 @@
 
   <!--Esta es la tarjeta que muestra el perfil del autor-->
 
-  <div class="card mb-3" style="max-width: 540px">
-    <div class="row no-gutters">
-      <div class="col-md-4">
-      {% if review.author.profile.profile_pic %}
-          <img src="{{MEDIA_URL}}{{review.author.profile.profile_pic.url}}" class = "card-img"/>
-      {%else%}
-        <img src="https://picsum.photos/200/"class = "card-img"/>
-      {% endif %}
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{review.author}}</h5>
-          <p class="card-text">{{review.author.profile.bio}}</p>
-          <p class="card-text">
-            <a href="{%url 'show_profile_page' review.author.profile.id %}" class="text-muted"> ir al perfil </a>
-          </p>
+    <div class="card mb-3" style="max-width: 540px">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+            {% if review.author.profile.profile_pic %}
+                <img src="{{MEDIA_URL}}{{review.author.profile.profile_pic.url}}" class = "card-img"/>
+            {%else%}
+                <img src="https://picsum.photos/200/"class = "card-img"/>
+            {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">{{review.author}}</h5>
+                <p class="card-text">{{review.author.profile.bio}}</p>
+                <p class="card-text">
+                    <a href="{%url 'show_profile_page' review.author.profile.id %}" class="text-muted"> ir al perfil </a>
+                </p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </body>
 
 <!-- Seccion comentarios-->

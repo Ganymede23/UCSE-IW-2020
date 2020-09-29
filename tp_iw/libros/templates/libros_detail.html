@@ -1,39 +1,59 @@
 {% extends 'base_layout.html' %}
 {% load static %}
 {% block content1 %}
-<title>{{libro.title}} - {{libro.author}}</title>
+    
+    <head>
+        <title>{{libro.title}} - {{libro.author}}</title>
+    </head>
 
-<head><h1>{{libro.title}}</h1></head>
+    <div id="correccion-container-perfil" class="container-fluid">
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <h1>{{libro.title}}</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="https://picsum.photos/263/396" class="float-left" alt="...">
+                </div>
+                <div class="col-md-8 text-justify">
+                    <div id="data-libro">
+                        <div id="author">
+                            <a class="btn btn-primary float-right" href="{% url 'add_review' pk_libro=libro.pk %}"> Hacer Reseña </a>
+                            <small><i>Autor:&nbsp;
+                                    {{libro.author}}</i></small>
+                            <br>
+                            <small><i>Categorias:&nbsp;Ciencia Ficción</i></small>
+                        </div>
+                        <hr align="left" class="w-25">
+                        {{libro.desc|safe}}
+                    </div>
 
-<body>
-    <div>
-        <img src="https://picsum.photos/200" class="rounded float-left" alt="...">
+                </div>
+            </div>
+        </div>
+
+        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <h2>Reseñas</h2>
+            <hr>
+            <div class="card-columns">
+                {% for review in reviews %}
+                <div class="card text-white bg-primary">
+                    <div class="card-header">
+                        <div>
+                            {{review.author}}
+                        </div>
+                        <div>
+                            <small>{{review.date}}</small>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"> <a class="text-white" href="{%url 'review_detail' pk=review.pk %}">
+                                {{review.title}} </a></h5>
+                        <hr>
+                        <p class="card-text"> {{review.body|safe|truncatewords:30}} </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <div>        
-        <p> <small> {{ libro.author}} </small> </p>
-
-        <p>{{libro.desc|safe}}</p>
-
-        <a class="btn btn-primary" href="{% url 'add_review' pk_libro=libro.pk  %}"> Hacer Reseña </a>
-    </div>
-</body>
-
-<br></br>
-<br></br>
-<h3>Reviews:</h3>
-
-{% for review in reviews %}
-    <ul>
-        <hr>
-        <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
-        <div> {{review.date}} </div>
-        <hr>
-        <ul>
-            {{review.body|safe|truncatewords:100}}    
-            <br>
-        </ul>
-    </ul>  
-{% endfor %}
-
-
 {% endblock %}

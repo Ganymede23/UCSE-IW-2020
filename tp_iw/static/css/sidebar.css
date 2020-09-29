@@ -4,6 +4,14 @@
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
 
+#container-fluid-profile {
+  width:82.5vw;
+}
+
+#correccion-container-perfil{
+    margin-left: -3.4vw;
+}
+
 #wrapper {
   overflow-x: hidden;
 }
@@ -23,11 +31,11 @@
 }
 
 #sidebar-wrapper .list-group {
-  width: 15rem;
+  width: 14rem;
 }
 
 #page-content-wrapper {
-  min-width: 100vw;
+  width: 100vw; 
 }
 
 #wrapper.toggled #sidebar-wrapper {

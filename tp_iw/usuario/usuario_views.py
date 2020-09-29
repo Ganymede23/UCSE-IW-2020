@@ -199,8 +199,8 @@ class ShowProfilePageView(DetailView):
 
         user = Profile.profiles_usuario(user_profile) #obtengo usuario del perfil
 
-        publicados = Escrito.objects.filter(author=user, date__isnull=False).order_by('date') #filtra los escritos publicados
-        borradores = Escrito.objects.filter(author=user, date__isnull=True).order_by('created_date') #filtra los escritos borradores
+        publicados = Escrito.objects.filter(author=user, date__isnull=False).order_by('-date') #filtra los escritos publicados
+        borradores = Escrito.objects.filter(author=user, date__isnull=True).order_by('-created_date') #filtra los escritos borradores
         r_publicadas = Review.objects.filter(author=user, date__isnull=False).order_by('date')
         r_borradores = Review.objects.filter(author=user, date__isnull=True).order_by('created_date')
         my_profile = Profile.objects.get(user=self.request.user) #obtiene el usuario propio
@@ -221,6 +221,11 @@ class ShowProfilePageView(DetailView):
         context["borradores"] = borradores
         context["rpublicados"] = r_publicadas
         context["rborradores"] = r_borradores
+
+        context["count_escritos"] = publicados.count()
+        context["count_reviews"] = r_publicadas.count()
+        context["count_following"] = my_profile.following.count()
+
         return context
 
     # Follow button

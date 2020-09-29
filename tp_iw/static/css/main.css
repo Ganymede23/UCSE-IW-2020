@@ -15,3 +15,14 @@ body {
 .g-recaptcha {
     display: inline-block;
 }
+
+/*LIBROS DETAIL*/
+
+#data-libro{
+    margin-left: -5vw;
+}
+
+#author{
+    font-size: 18px;
+}
+
