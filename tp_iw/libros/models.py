@@ -36,7 +36,7 @@ class Review(models.Model):
 
 
 
-class Rate (models.Model):
+class Rate (models.Model): #modelo para ratear reviews
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     rating = models.IntegerField(blank=True, null=True)

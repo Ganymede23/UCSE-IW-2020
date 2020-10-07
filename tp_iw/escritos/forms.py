@@ -1,5 +1,4 @@
 from django import forms
-from ckeditor.fields import RichTextField
 from .models import Escrito, Comment
 
 class EscritoForm(forms.ModelForm):
@@ -8,7 +7,6 @@ class EscritoForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(EscritoForm, self).__init__(*args, **kwargs)
 
-        #self.fields['title'].label = "Titulo"
         self.fields['body'].label = ""
 
     class Meta:
@@ -20,7 +18,6 @@ class CommentForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
 
-        #self.fields['title'].label = "Titulo"
         self.fields['body'].label = ""
 
     class Meta:

@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from .libros_views import (show_books, book_detail, review_new, review_edit,
 review_publish, review_remove, review_detail, delete_comment, denuncia_comment)

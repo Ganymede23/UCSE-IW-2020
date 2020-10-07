@@ -1,6 +1,4 @@
-from django.contrib import admin
-from django.urls import path, include, re_path
-
+from django.urls import path
 from .escritos_views import escrito_remove,escrito_publish, escrito_detail, escrito_new, escrito_edit, like_escrito, delete_comment, denuncia_comment, escrito_leido
 
 urlpatterns = [

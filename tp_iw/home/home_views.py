@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from usuario.models import Profile
 from itertools import chain
 
 from escritos.models import Escrito
 from libros.models import Review
+from usuario.models import Profile
 
 def index(request):
     if request.user.is_authenticated:

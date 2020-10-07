@@ -81,7 +81,7 @@ def escrito_edit(request, pk): # funcion para editar escrito
         form = EscritoForm(instance=escrito)
     return render(request, 'add_escrito.html', {'form': form})
 
-def like_escrito(request, pk):
+def like_escrito(request, pk): #funcion like
     escrito = get_object_or_404(Escrito, id=request.POST.get('post_id'))
     liked = False
     if escrito.likes.filter(id=request.user.id).exists():
@@ -93,31 +93,30 @@ def like_escrito(request, pk):
 
     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
 
-def delete_comment(request, pk):
+def delete_comment(request, pk): #borrar comentario
     comment = Comment.objects.get(pk=pk)
     pk = comment.escrito.pk
     comment.delete()
 
     return redirect('escrito_detail', pk=pk)
 
-def denuncia_comment(request, pk):
+def denuncia_comment(request, pk): #denunciar comentario
     comment = Comment.objects.get(pk=pk)
     pk = comment.escrito.pk
     denunciado = False
     if not comment.denuncias.filter(id=request.user.id).exists():
         comment.denuncias.add(request.user)
-        if comment.total_denuncias() >= 2:
+        if comment.total_denuncias() >= 10:
             comment.delete()
     
     return redirect('escrito_detail', pk=pk)
 
-def escrito_leido(request):
+def escrito_leido(request): #marca escrito como leido y lo agrega a la lista de leidos
     if request.POST:
         pk = request.POST['pk']
         userid = request.user.id
         escrito = get_object_or_404(Escrito, pk=pk)
         profile = get_object_or_404(Profile, pk=userid)
-        # AGREGAR EL ESCRITO LEIDO AL USUARIO
         if not profile.escritos_leidos.filter(id=userid).exists():
             profile.escritos_leidos.add(escrito)
             mensaje = 'Ok!'

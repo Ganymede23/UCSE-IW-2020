@@ -1,13 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse
 from ckeditor.fields import RichTextField
-import datetime
 from django.utils import timezone
 
 
 #este es el modelo de los escritos 
-
 class Escrito(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,7 +18,7 @@ class Escrito(models.Model):
         return self.likes.count()
 
 
-    def publish(self):
+    def publish(self): #cambia el datetime de publicacion cuando se clickea en publicar 
         self.date = timezone.now()
         self.save()    
     
@@ -32,6 +29,8 @@ class Escrito(models.Model):
     def __str__(self):
         return self.title + ' | ' + str(self.author)
 
+
+#modelo de comenntarios
 class Comment(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField()

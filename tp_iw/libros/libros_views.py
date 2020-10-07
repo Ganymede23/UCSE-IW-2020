@@ -44,7 +44,9 @@ def review_detail(request, pk): # Detelle de reviews
         if comment.denuncias.filter(id=request.user.id).exists():
             comments_denunciados.append(comment)
 
-    rates= Rate.objects.filter( review = review)
+    # Dentro de review detail tambien se realiza el post de los Rates 
+
+    rates= Rate.objects.filter( review = review) #crea una lista para saber que usuarios ya votaron la review
     rates_usarios = []
     for rate in rates:
         if Rate.objects.filter( usuario=user_logged).exists():
@@ -53,7 +55,7 @@ def review_detail(request, pk): # Detelle de reviews
     if request.method == "POST":
         form_c = CommentForm(request.POST)
         form_r = RateForm(request.POST)
-        if form_r.is_valid():
+        if form_r.is_valid(): #form del rate
             rate = form_r.save(commit=False)
             rate.review = review
             rate.usuario = user_logged
@@ -62,7 +64,7 @@ def review_detail(request, pk): # Detelle de reviews
         else:
             form_r = RateForm()
 
-        if form_c.is_valid():
+        if form_c.is_valid(): # form de los comentarios
             comment = form_c.save(commit=False)
             comment.review = review
             comment.usuario_r = request.user
@@ -70,11 +72,11 @@ def review_detail(request, pk): # Detelle de reviews
             return redirect('review_detail', pk=review.pk) 
         else:
             form_c = CommentForm()
-
     else:
         form_r = RateForm()  
         form_c = CommentForm()  
 
+    #aca se hace el promedio de todas los rate, la nota promediada de la review
     avg = Rate.objects.values('review').order_by('review').annotate(average_stars=Avg('rating')).filter(review=review)
 
     return render(request, 'review_detail.html', {'review': review, 'user_logged': user_logged, 'form_r':form_r,

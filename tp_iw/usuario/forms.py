@@ -53,8 +53,6 @@ class EditProfileForm(forms.ModelForm):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields['profile_pic'].label = "Foto de perfil"
         self.fields['bio'].widget.attrs['rows'] = 3
-        #self.fields['bio'].widget.attrs['columns'] = 15
-
     class Meta:
         model = Profile
         fields = ("bio", "profile_pic")

@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.urls import path, include, re_path, reverse_lazy
+from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from.usuario_views import (login_user,  register, logout_user, activate, email_confirmation_sent, 
