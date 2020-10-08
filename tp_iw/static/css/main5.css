@@ -1,0 +1,73 @@
+body {
+    background: rgba(248, 249, 250, 1)
+    /*background: rgba(0, 123, 255, 1) - BLUE PRIMARY */
+}
+
+#titulo-simple {
+    font-weight: normal;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.g-recaptcha {
+    display: inline-block;
+}
+
+/*LIBROS DETAIL*/
+
+#links-libros{
+    position:absolute;
+    bottom: 1rem;
+    width: 100%;
+}
+
+#img-libro{
+    height: auto;
+    width: auto;
+}
+
+#libro-card{
+    margin-right: -1rem;
+    max-height: 535px;
+}
+
+#author{
+    font-size: 18px;
+}
+
+
+
+#btn-amazon{
+    background-color: rgb(35, 47, 62);
+    color: white;
+}
+
+#btn-tematika{
+    background-color: rgb(0, 73, 131);
+    color: white;
+}
+
+#btn-buscalibre{
+    background-color: rgb(255, 111, 0);
+    color: white;
+}
+
+#btn-ml{
+    background-color: rgb(255, 230, 0);
+    color: rgb(45, 50, 119);
+}
+
+#data-libro{
+    margin-left: 0rem;
+}
+
+#img-wrapper{
+    display: inline-block;  /*change the default display type to inline-block */
+    overflow: hidden;      /* hide the overflow */
+}
+
+
+

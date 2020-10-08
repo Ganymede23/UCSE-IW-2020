@@ -7,13 +7,14 @@
     </head>
 
     <div id="correccion-container-perfil" class="container-fluid">
-        <div id="libro-card" class="card shadow bg-white ml-3 mt-3 rounded-0" style="max-height: 577px">
+        <div id="libro-card" class="card shadow bg-white ml-3 mt-3 rounded-0">
             <div class="row no-gutters">
-                <div id="img-wrapper" class="col-md-3">
+                <div id="img-wrapper" class="col-md-auto"> <!--col-md-3-->
                     <img id="img-libro" src="https://picsum.photos/354/533" class="card-img rounded-0"/>
                 </div>
-                <div id="data-libro" class="col-md-9 text-justify">
+                <div id="data-libro" class="col text-justify"> <!--col-md-9-->
                     <div class="card-body">
+
                         <h2 class="card-title">{{libro.title}}</h2>
                         <hr align="left">
                         <a class="btn btn-primary float-right" href="{% url 'add_review' pk_libro=libro.pk %}"> Hacer Reseña </a>
@@ -21,6 +22,29 @@
                         <p class="card-text"><i>Categoría:&nbsp;Ciencia Ficción</i></p>
                         <hr align="left" class="w-25">
                         {{libro.desc|safe}}
+                        
+                        <div id="links-libros" class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div id="links-libros2" class="row">
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-ml" class="btn btn-block rounded-0" href="https://listado.mercadolibre.com.ar/{{libro.title}}"> <b>MercadoLibre</b> </a>
+                                    </div>
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-amazon" class="btn btn-block rounded-0" href="https://www.amazon.com/s?k={{libro.title}}&i=stripbooks"> <b>Amazon</b> </a>
+                                    </div>
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-tematika" class="btn btn-block rounded-0" href="https://www.tematika.com/catalogsearch/result/?q={{libro.title}}"> <b>Tematika</b> </a>
+                                    </div>
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-buscalibre" class="btn btn-block rounded-0" href="https://www.buscalibre.com.ar/libros/search?q={{libro.title}}"> <b>BuscaLibre.com</b> </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
