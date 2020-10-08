@@ -16,11 +16,22 @@ body {
     display: inline-block;
 }
 
-/*LIBROS DETAIL
+/*LIBROS DETAIL*/
 
 #data-libro{
-    margin-left: -227px;
-}*/
+    margin-left: -1rem;
+}
+
+#img-wrapper{
+    display: inline-block;  /*change the default display type to inline-block */
+    overflow: hidden;      /* hide the overflow */
+}
+
+#img-libro{
+
+    height: auto;
+    width: auto;
+}
 
 #libro-card{
     margin-right: -1rem;
