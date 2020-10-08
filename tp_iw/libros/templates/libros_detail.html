@@ -7,15 +7,17 @@
     </head>
 
     <div id="correccion-container-perfil" class="container-fluid">
-        <div id="libro-card" class="card shadow bg-white ml-3 mt-3 rounded-0">
+        <div id="libro-card" class="card shadow bg-white ml-3 mt-3 rounded-0" style="max-height: 577px">
             <div class="row no-gutters">
                 <div class="col-md-3">
                     <img src="https://picsum.photos/354/533" class = "card-img rounded-0"/>
                 </div>
-                <div class="col-md-0">
+                <div class="col-md-9 text-justify">
                     <div class="card-body">
                         <h2 class="card-title">{{libro.title}}</h2>
-                        <p class="card-text">{{libro.author}}</p>
+                        <hr align="left" class="w-25">
+                        <p class="card-text"><i>Autor:&nbsp;{{libro.author}}</i></p>
+                        <p class="card-text"><i>Categoría:&nbsp;Ciencia Ficción</i></p>
                         <hr align="left" class="w-25">
                         {{libro.desc|safe}}
                     </div>
