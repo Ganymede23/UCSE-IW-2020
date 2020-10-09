@@ -1,0 +1,25 @@
+{% extends 'base_layout.html' %}        
+        
+{% block content1 %}
+    
+    <head>
+        <title>Denunciar comentario</title>
+    </head>
+    <h2>Denunciar comentario</h2>
+    <br>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{form.media}}
+        <p>Recuerda leer las <a href="/home/placeholder">reglas de la comunidad</a> antes de denunciar el comentario.</p>
+        <br>
+        <p>Selecciona el motivo de la denuncia:</p>
+        <p>{{form.motivo}}</p>
+        <br>
+        <p>Descripcion extra:</p>
+        <p>{{form.descripcion}}</p>
+        <br>
+        <button type="submit" class="save btn btn-primary btn-sm" onClick="return confirm('¿Desea denunciar el comentario?');">Denunciar</button>
+        <button type="submit" class="save btn btn-danger btn-sm">Cancelar</button>
+
+
+{% endblock %}
