@@ -55,6 +55,9 @@ INSTALLED_APPS = [
 
     #ERD
     'django_extensions',
+
+    #HAYSTACK
+    'haystack',
 ]
 
 SITE_ID = 1
@@ -125,12 +128,31 @@ DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'Tp_IW_Leelo',
-            'PASSWORD': 'admin',
+            'PASSWORD': 'LucasCopes',
             'USER': 'postgres',
             'HOST': '127.0.0.1',
             'DATABASE_PORT': '5432',
         }
 }
+
+if os.environ.get('SEARCHBOX_URL'):
+    # estoy corriendo en heroku
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'URL': os.environ.get('SEARCHBOX_URL'),
+            'INDEX_NAME': 'documents',
+        },
+    }
+else:
+    # estoy corriendo en mi maquina (o en heroku y me olvide de agregar
+    # el addon de searchbox)
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+            'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+        },
+    }
 
 
 # Password validation

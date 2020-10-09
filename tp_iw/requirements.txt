@@ -39,3 +39,8 @@ traitlets==4.3.3
 urllib3==1.25.10
 wcwidth==0.2.5
 whitenoise==5.2.0
+# django-haystack  # cuando hagan el release que anda con django 3.0.
+# Mientras:
+git+https://github.com/django-haystack/django-haystack.git@08dd9471a0137ba87b8145cf1ec5ff9d8d498a2e
+elasticsearch
+whoosh
