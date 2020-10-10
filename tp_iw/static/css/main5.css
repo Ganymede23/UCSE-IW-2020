@@ -22,7 +22,7 @@ body {
     position:absolute;
     bottom: 1rem;
     width: 100%;
-}
+} /*deja los botones al fondo*/
 
 #img-libro{
     height: auto;

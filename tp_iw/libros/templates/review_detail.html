@@ -58,6 +58,7 @@
         </div>
 
         <!--ESTRELLAS-->
+
         {% if review.date %}      
         <div class="shadow bg-white col-md-12 m-3 p-3 text-center">
             {%for obj in avg %}
@@ -84,6 +85,7 @@
             {%endif%}
         </div>
         {% endif %}
+
         
         <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
         {% if user_logged == review.author %}

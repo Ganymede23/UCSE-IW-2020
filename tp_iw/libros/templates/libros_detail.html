@@ -24,8 +24,8 @@
                         {{libro.desc|safe}}
                         
                         <div id="links-libros" class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
                                 <div id="links-libros2" class="row">
                                     <div class="col border-top border-grey p-2">
                                         <a id="btn-ml" class="btn btn-block rounded-0" href="https://listado.mercadolibre.com.ar/{{libro.title}}"> <b>MercadoLibre</b> </a>
@@ -41,10 +41,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-1"></div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -79,26 +77,34 @@
         <div class="shadow bg-white col-md-12 m-3 p-3">
             <h2>Reseñas</h2>
             <hr>
-            <div class="card-columns">
-                {% for review in reviews %}
-                <div class="card text-white bg-primary">
-                    <div class="card-header">
-                        <div>
-                            {{review.author}}
+            {% if reviews %}
+                <div class="card-columns">
+                    {% for review in reviews %}
+                    <div class="card text-white bg-primary">
+                        <div class="card-header">
+                            <div>
+                                {{review.author}}
+                            </div>
+                            <div>
+                                <small>{{review.date}}</small>
+                            </div>
                         </div>
-                        <div>
-                            <small>{{review.date}}</small>
+                        <div class="card-body">
+                            <h5 class="card-title"> <a class="text-white" href="{%url 'review_detail' pk=review.pk %}">
+                                    {{review.title}} </a></h5>
+                            <hr>
+                            <p class="card-text"> {{review.body|safe|truncatewords:30}} </p>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title"> <a class="text-white" href="{%url 'review_detail' pk=review.pk %}">
-                                {{review.title}} </a></h5>
-                        <hr>
-                        <p class="card-text"> {{review.body|safe|truncatewords:30}} </p>
-                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
+            {% else %}
+                <div align="center">
+                    <b>Todavía nadie hizo una reseña sobre este libro. ¡Sé el primero!</b>
+                    <br><br>
+                    <a class="btn btn-primary" href="{% url 'add_review' pk_libro=libro.pk %}"> Hacer Reseña </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
