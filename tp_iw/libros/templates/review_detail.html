@@ -17,29 +17,14 @@
                 <div class="col-md-12">
                     <h1>{{review.title}}</h1>
                     <hr class="w-75">
-                    <h6> Libro reseñado: <i>{{review.book.title}}</i> </h6>
+                    <h6> Libro reseñado: <a class="links-contenido-2" href="{% url 'book_detail' pk=review.book.pk %}"><i>{{review.book.title}}</i></a> </h6>
                     <h6> Autor: <i>{{review.book.author}}</i></h6>
                     <hr class="w-75">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    por <b>@{{review.author}}</b> <!--PENDIENTE IMPLEMENTAR FOTO DE PERFIL-->
-                    <!--<div class="row">
-                        <div class="col-md-3">
-                            <div class="current-profile-v3">
-                                {% if review.author.profile.profile_pic %}
-                                <div class="user-pic" style="background: url({{MEDIA_URL}}{{user_profile.profile_pic.url}}) no-repeat">&nbsp;
-                                </div>
-                                {%else%}
-                                <div class="user-pic" style="background: url(https://picsum.photos/200/200/) no-repeat">&nbsp;</div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-md-9 text-left">
-
-                        </div>
-                    </div>-->
+                    por <b>@<a class="links-contenido-1" href="{% url 'show_profile_page' pk=review.author.pk %}">{{review.author}}</a></b>
                 </div>
                 <div class="col-md-6 text-center">
                     {% if review.date %}
@@ -65,7 +50,6 @@
                 <strong> Puntuacion media: {{obj.average_stars}} </strong>
                 <br>
             {%endfor%}
-            
             {% if user.is_authenticated %}
                 {% if not user_logged in rates_usuarios %}
                     {% if user_logged.id is not review.author.id %}
@@ -80,13 +64,17 @@
                             </div>
                             <button type="submit" class="btn btn-outline-success">Votar</button>
                         </form>
+                    {% else %}
+                        {% if not avg %}
+                            <strong> Tu reseña no ha sido puntuada por otros usuarios todavía. </strong>
+                            <br>
+                        {% endif %}
                     {%endif%}
                 {%endif%}
             {%endif%}
         </div>
         {% endif %}
-
-        
+       
         <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
         {% if user_logged == review.author %}
         <div class="shadow bg-white col-md-12 m-3 p-3">
@@ -119,46 +107,89 @@
         </div>
         {% endif %}
 
+        <!--CARD DEL AUTOR-->
+        <div id="user-card" class="card shadow bg-white ml-3 mt-3 ">
+            <div class="row no-gutters">
+                <div id="img-wrapper" class="col-md-auto">
+                    <!--col-md-3-->
+                    {% if review.author.profile.profile_pic %}
+                        <img id="img-user" src={{MEDIA_URL}}{{review.author.profile.profile_pic.url}} class="card-img rounded-pill" />
+                    {%else%}
+                        <img id="img-user" src="https://picsum.photos/200/200" class="card-img rounded-pill" />
+                    {% endif %}
+
+                    
+                </div>
+                <div id="data-user" class="col text-justify">
+                    <!--col-md-9-->
+                    <div class="card-body">
+                        <h2 class="card-title"><b>@<a class="links-contenido-1"
+                                    href="{% url 'show_profile_page' pk=review.author.pk %}">{{review.author}}</a></b></h2>
+                        <hr align="left">
+
+                        <p class="card-text"><i>{{review.author.profile.bio}}</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--COMENTARIOS-->
         <div class="shadow bg-white col-md-12 m-3 p-3">
             <h3>Comentarios</h3>
             <hr class="w-75">
-            {% if not review.comments.all %}
-            Aún no hay comentarios en sobre esta reseña. ¡Sé el primero!
-            {% else %}
-                {% for comment in review.comments.all %}
-                    <strong> {{ comment.usuario_r }} - {{ comment.date }} </strong>
-                    <br/>
-                    {{ comment.body|safe }} 
-                    {% if comment.usuario_r == request.user %}
-                        -
-                        <a href="/libros/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
-                        onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
-                        <strong>Eliminar comentario</strong>
-                        </a>
-                    {% else %}
-                        {% if user.is_authenticated %}
-                            {% if not comment in comments_denunciados %}
-                            -
-                            <a href="/libros/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
-                            onClick="return confirm('¿Desea denunciar el comentario?');">
-                            <strong>Denunciar comentario</strong>
-                            </a>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                    <br/><br/>
-                {% endfor %}
+
+            <!--CAJA DE COMENTARIOS-->
+            {% if not review.comments.all %} <!--SI NO HAY COMENTARIOS-->
+                Aún no hay comentarios sobre esta reseña. ¡Sé el primero!
+                <hr class="w-75">
             {% endif %}
-            <hr class="w-75">
-            
+
             <form method="POST" class="comment-form">
                 {% csrf_token %}
                 {{form_c.media}}
                 {{form_c.as_p}}
                 <button type="submit", name="post_id", value="{{ review.id }}", class="save btn-primary btn-default">Comentar</button>
             </form>
-            <br/>
+
+            <!--LISTA DE COMENTARIOS-->
+            <hr class="w-75">
+            {% if review.comments.all %} <!--SI NO HAY COMENTARIOS-->
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 text-left p-3">
+                        {% for comment in review.comments.all %}
+                            <strong> {{ comment.usuario_r }} - {{ comment.date }} </strong>
+                            {{ comment.body|safe }} 
+                            <hr>
+                            <div class="row text-right">
+                            {% if comment.usuario_r == request.user %}
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4">
+                                    <a href="/libros/comment/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
+                                    onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+                                    <strong>Eliminar comentario</strong>
+                                    </a>
+                                </div>
+                            {% else %}
+                                {% if user.is_authenticated %}
+                                    {% if not comment in comments_denunciados %}
+                                        <div class="col-md-8"></div>
+                                        <div class="col-md-4">
+                                            <a href="/libros/comment/{{ comment.id }}/denuncia/" class="btn btn-outline-secondary btn-sm"
+                                            onClick="return confirm('¿Desea denunciar el comentario?');">
+                                            <strong>Denunciar comentario</strong>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            </div>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            {% endif %}
         </div>
     </div>
 

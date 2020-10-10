@@ -3,6 +3,33 @@ body {
     /*background: rgba(0, 123, 255, 1) - BLUE PRIMARY */
 }
 
+/* LINKS DE REDIRECCION A ESCRITOS, PERFILES, ETC */
+    /* CONTENIDO-1: LINK EN NEGRO, SIN SUBRAYADO, AZUL CON HOVER */
+    a:link.links-contenido-1 {
+            text-decoration: none;
+            color: black;
+            
+        }
+
+    a:visited.links-contenido-1 {
+            text-decoration: none;
+            color: black;
+        }
+
+    a:hover.links-contenido-1 {
+            text-decoration: none;
+            color: rgb(0, 86, 179);
+        }
+
+    a:active.links-contenido-1 {
+            text-decoration: none;
+        }
+
+    /* CONTENIDO-2: LINK EN AZUL, SIN SUBRAYADO */
+    a:hover.links-contenido-2 {
+        text-decoration: none;
+    }
+
 #titulo-simple {
     font-weight: normal;
 }
@@ -24,7 +51,7 @@ body {
     width: 100%;
 } /*deja los botones al fondo*/
 
-#img-libro{
+#img-libro #img-user{
     height: auto;
     width: auto;
 }
@@ -34,11 +61,17 @@ body {
     max-height: 535px;
 }
 
+#user-card{
+    border-top-left-radius: 75pt 75pt;
+    border-bottom-left-radius: 75pt 75pt;
+    margin-right: -1rem;
+    min-height: 200px;
+    max-height: 535px;
+}
+
 #author{
     font-size: 18px;
 }
-
-
 
 #btn-amazon{
     background-color: rgb(35, 47, 62);
@@ -60,7 +93,7 @@ body {
     color: rgb(45, 50, 119);
 }
 
-#data-libro{
+#data-libro #data-user{
     margin-left: 0rem;
 }
 
