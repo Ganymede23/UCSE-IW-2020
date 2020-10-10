@@ -54,6 +54,8 @@ class Denuncia(models.Model):
     motivo = models.ForeignKey(MotivoDenuncia, on_delete=models.CASCADE)
     descripcion = RichTextField(blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
+    aceptada = models.BooleanField(default=False)
+    vista = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.usuario) + ' | ' + str(self.motivo)

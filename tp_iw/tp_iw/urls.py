@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 #para cargar  imagenes y statics
 from django.conf import settings
@@ -40,5 +41,9 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     #Escritos
-    path('escritos/', include('escritos.urls'))
+    path('escritos/', include('escritos.urls')),
+
+    #Robots
+    path('robots.txt/', include('robots.urls')),
+    
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

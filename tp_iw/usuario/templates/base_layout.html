@@ -35,6 +35,13 @@
             <a href="#" class="list-group-item list-group-item-action"
                 >Grupos
             </a>
+            {% for group in request.user.groups.all %}
+                {% if group.name == 'Admins' %}
+                    <a href="{% url 'mostrar_denuncias'  %}" class="list-group-item list-group-item-action"
+                    >Administrar Denuncias
+                    </a>
+                {% endif %}
+            {% endfor %}
             <a href="/usuario/logout_user" class="list-group-item list-group-item-action"
                 >Cerrar Sesion
             </a>

@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
@@ -13,14 +13,16 @@ from django.core.mail import EmailMessage
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.views import generic
+from itertools import chain
 
 import requests
 import json
 
 from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm, EditProfileForm
 from .models import Profile
-from escritos.models import Escrito
+from escritos.models import Escrito, Comment, Denuncia, MotivoDenuncia
 from libros.models import Review
+from escritos.forms import DenunciaForm
 
 # =====CREACION Y AUTENTICACION DE USUARIOS======
 
@@ -137,6 +139,8 @@ def activate(request, uidb64, token):
         if user.is_active:
             return render(request, "email_activation.html")
         user.is_active = True  # lo cambia activo para que se pueda logear
+        grupo = Group.objects.get(name='Users') # Lo agrega al grupo de Users 'normales'
+        user.groups.add(grupo)
         user.save()
 
         # messages.success(request,'La cuenta se activo correctamente') # es es mensaje que tenemos que hacer aparecer
@@ -268,3 +272,35 @@ def follow_unfollow_profile(request):
             my_profile.following.add(obj.user)
         return redirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect('/usuario/suggested_user')
+
+from django.db.models.aggregates import Count
+
+
+
+def mostrar_denuncias(request):
+    denuncias_comments = Denuncia.objects.all()
+    comments =[]
+    for denuncia in denuncias_comments:
+        comments.append(denuncia.comment)
+    cantidad_denuncias = Denuncia.objects.values('comment').annotate(dcount=Count('comment'))
+    cantidad_motivos = Denuncia.objects.values('motivo', 'comment').annotate(dcount=Count('motivo'))
+    comments = set(comments)
+    motivos = MotivoDenuncia.objects.all()
+    return render(request, 'mostrar_denuncias.html', {'denuncias_comments': denuncias_comments, 'comments':comments,
+     'cantidad_d': cantidad_denuncias, 'cantidad_m':cantidad_motivos, 'motivos': motivos})
+
+def delete_comment(request, pk): #borrar comentario
+    comment = Comment.objects.get(pk=pk)
+    pk = comment.escrito.pk
+    comment.delete()
+
+    return redirect('mostrar_denuncias')
+
+def delete_denuncias(request, pk): #borrar comentario
+    #comment.delete()
+    comment = Comment.objects.get(pk=pk)
+    denuncias_comments = Denuncia.objects.all()
+    denuncias_comments= denuncias_comments.filter(comment=comment)
+    denuncias_comments.delete()
+
+    return redirect('mostrar_denuncias')

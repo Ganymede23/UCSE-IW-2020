@@ -23,6 +23,12 @@ def placeholder(request):
 def home_page(request):
     #Obtiene el perfil del user logueado
     profile = Profile.objects.get(user=request.user)
+
+    #Obtiene el 'grupo' al que pertenece el usuario
+    if profile.user.groups.filter(name = 'Admins').exists():
+        grupo = 'Admin'
+    else:
+        grupo = 'User'
     
     #Verifica a quién sigue el usuario logueado
     users = [user for user in profile.following.all()]
@@ -50,5 +56,5 @@ def home_page(request):
     if len(posts)>0:
         queryset = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date)  #armar lista ordenada por fecha
         
-    return render(request, 'home_page.html', {'perfil': profile, 'posts': queryset})
+    return render(request, 'home_page.html', {'perfil': profile, 'posts': queryset, 'grupo': grupo})
    
