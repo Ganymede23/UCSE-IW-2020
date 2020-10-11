@@ -21,11 +21,6 @@ def escrito_detail(request, pk): # Detelle de escritos
 
     comments = Comment.objects.filter(escrito = escrito)
 
-    #comments_denunciados = []
-    #for comment in comments:
-    #    if comment.denuncias.filter(id=request.user.id).exists():
-    #        comments_denunciados.append(comment)
-
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -37,7 +32,8 @@ def escrito_detail(request, pk): # Detelle de escritos
     else:
         form = CommentForm()
 
-    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes, 'liked': liked, 'comments': comments, 'form': form, 'tiempo': tiempo })
+    return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes,
+     'liked': liked, 'comments': comments, 'form': form, 'tiempo': tiempo })
 
 def escrito_new(request): # Crear nuevo escrito
     if request.method == "POST":
@@ -100,16 +96,10 @@ def delete_comment(request, pk): #borrar comentario
 
     return redirect('escrito_detail', pk=pk)
 
-def denuncia_comment(request, pk): #denunciar comentario
+def denuncia_comment(request, pk): #denuncia un comentario y lo agrega a una lista de denuncias
     comment = Comment.objects.get(pk=pk)
     pk = comment.escrito.pk
-    #denunciado = False
-    #if not comment.denuncias.filter(id=request.user.id).exists():
-    #    comment.denuncias.add(request.user)
-    #    if comment.total_denuncias() >= 10:
-    #       comment.delete()
-    denuncias = Denuncia.objects.all()
-    
+    denuncias = Denuncia.objects.all()    
     if request.method == "POST":
         form = DenunciaForm(request.POST)
         if form.is_valid():
@@ -140,3 +130,4 @@ def escrito_leido(request): #marca escrito como leido y lo agrega a la lista de 
         'mensaje': mensaje,
         'url': reverse('escrito_detail'),
     })
+

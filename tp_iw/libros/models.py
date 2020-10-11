@@ -56,3 +56,23 @@ class Comment_r(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.review.title, self.usuario_r)
+
+#motivos de las denuncias
+class MotivoDenuncia_r(models.Model):
+    motivo = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.motivo 
+
+#denuncias
+class Denuncia_r(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment_r, on_delete=models.CASCADE)
+    motivo = models.ForeignKey(MotivoDenuncia_r, on_delete=models.CASCADE)
+    descripcion = RichTextField(blank=True, null=True)
+    date = models.DateTimeField(default=timezone.now)
+    aceptada = models.BooleanField(default=False)
+    vista = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.usuario) + ' | ' + str(self.motivo)

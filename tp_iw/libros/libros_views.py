@@ -2,8 +2,8 @@ from django.db.models.aggregates import Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
-from .models import Libro, Review, Rate, Comment_r
-from .forms import ReviewForm, RateForm, CommentForm
+from .models import Libro, Review, Rate, Comment_r, Denuncia_r
+from .forms import ReviewForm, RateForm, CommentForm, DenunciaForm_r
 
 def show_books(request): #vista de paginas libros
     libros = Libro.objects.all()
@@ -38,11 +38,6 @@ def review_detail(request, pk): # Detelle de reviews
     user_logged = request.user
 
     comments = Comment_r.objects.filter(review = review)
-
-    comments_denunciados = []
-    for comment in comments:
-        if comment.denuncias.filter(id=request.user.id).exists():
-            comments_denunciados.append(comment)
 
     # Dentro de review detail tambien se realiza el post de los Rates 
 
@@ -80,7 +75,7 @@ def review_detail(request, pk): # Detelle de reviews
     avg = Rate.objects.values('review').order_by('review').annotate(average_stars=Avg('rating')).filter(review=review)
 
     return render(request, 'review_detail.html', {'review': review, 'user_logged': user_logged, 'form_r':form_r,
-     'rates_usuarios':rates_usarios, 'avg':avg,'comments': comments, 'comments_denunciados': comments_denunciados,
+     'rates_usuarios':rates_usarios, 'avg':avg,'comments': comments,
      'form_c':form_c})
 
 def review_publish(request, pk): # Publicar review
@@ -114,8 +109,7 @@ def review_edit(request, pk): # funcion para editar review
         
     return render(request, 'add_review.html', {'form': form})
 
-#comentarios 
-
+#comentarios
 def delete_comment(request, pk):
     comment = Comment_r.objects.get(pk=pk)
     pk = comment.review.pk
@@ -123,13 +117,20 @@ def delete_comment(request, pk):
 
     return redirect('review_detail', pk=pk)
 
-def denuncia_comment(request, pk):
+def denuncia_comment(request, pk): #denuncia un comentario y lo agrega a una lista de denuncias
     comment = Comment_r.objects.get(pk=pk)
     pk = comment.review.pk
-    denunciado = False
-    if not comment.denuncias.filter(id=request.user.id).exists():
-        comment.denuncias.add(request.user)
-        if comment.total_denuncias() >= 2:
-            comment.delete()
-    
-    return redirect('review_detail', pk=pk)
+    denuncias = Denuncia_r.objects.all()    
+    if request.method == "POST":
+        form = DenunciaForm_r(request.POST)
+        if form.is_valid():
+            denuncia = form.save(commit=False)
+            denuncia.usuario = request.user
+            denuncia.comment = comment
+            if not denuncias.filter(usuario=request.user.id, comment=comment).exists():
+                denuncia.save()
+            return redirect('review_detail', pk=pk)
+    else:
+        form = DenunciaForm_r()
+
+    return render(request, 'add_denuncia.html', {'form': form})

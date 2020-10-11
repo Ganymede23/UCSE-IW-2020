@@ -6,7 +6,7 @@
   <title>Administrar Denuncias</title>
 </head>
 
-<h3>Denuncias</h3>
+<h3>Denuncias Escritos</h3>
 
 <br>
 
@@ -43,12 +43,41 @@
 
 </br>
 
-{% endblock %}
+<h3>Denuncias Reviews</h3>
 
-        <!--{{ denuncia_comment.descripcion|safe }}
-        </br>
-        <b> Comentario: </b>
-        </br>
-        {{ denuncia_comment.comment.body|safe }}
-        </br>
-        <a href= "{% url denuncia_comment.comment.escrito.get_detail_url denuncia_comment.comment.escrito.pk %}"> Ver el contexto del comentario..</a>-->
+<br>
+
+{% for comment in comments_r %}
+  <b>{{ comment.usuario }}</b> dijo:
+  {{comment.body|safe}}
+  {%for id_comentario in cantidad_d_r %}
+    {% if id_comentario.comment == comment.pk %}
+      <b> Cantidad de veces denunciado: </b>
+      {{id_comentario.dcount}}
+      </br>
+      {% for motivo in motivos_r %}
+        {% for id_motivo in cantidad_m_r%}
+          {% if id_motivo.motivo == motivo.pk and id_motivo.comment == comment.pk%}
+            <b>{{ motivo|safe }}
+            : </b>
+            {{id_motivo.dcount}}
+          {% endif %}
+        {%endfor%}
+      {%endfor%}
+    {% endif %}
+  {%endfor%}
+  </br></br>
+    <a href="/usuario/denunciasr/{{ comment.id }}/deleter/" class="btn btn-outline-secondary btn-sm"
+    onClick="return confirm('¿Esta seguro que desea eliminar las denuncias de este comentario?');">
+    <strong>Rechazar Denuncias</strong>
+  </a>
+  <a href="/usuario/commentr/{{ comment.id }}/deleter/" class="btn btn-outline-danger btn-sm"
+    onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+    <strong>Eliminar comentario</strong>
+  </a>
+  <hr>
+{%endfor%}
+
+</br>
+
+{% endblock %}

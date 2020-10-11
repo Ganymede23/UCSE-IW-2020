@@ -3,7 +3,8 @@ from django.contrib.auth import views as auth_views
 
 from.usuario_views import (login_user,  register, logout_user, activate, email_confirmation_sent, 
         UserEditView,password_change,password_changed, edit_profile,
-        ShowProfilePageView, ProfileListView, follow_unfollow_profile, mostrar_denuncias, delete_comment, delete_denuncias)
+        ShowProfilePageView, ProfileListView, follow_unfollow_profile, mostrar_denuncias, delete_comment, delete_denuncias,
+        delete_comment_r,delete_denuncias_r)
 
 urlpatterns = [
     
@@ -33,4 +34,7 @@ urlpatterns = [
     path('denuncias/', mostrar_denuncias, name='mostrar_denuncias'),
     path('comment/<int:pk>/delete/', delete_comment, name='comment_delete'),
     path('denuncias/<int:pk>/delete/', delete_denuncias, name='denuncias_delete'),
+
+    path('commentr/<int:pk>/deleter/', delete_comment_r, name='comment_deleter'),
+    path('denunciasr/<int:pk>/deleter/', delete_denuncias_r, name='denuncias_deleter'),
 ]

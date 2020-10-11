@@ -44,3 +44,4 @@ whitenoise==5.2.0
 git+https://github.com/django-haystack/django-haystack.git@08dd9471a0137ba87b8145cf1ec5ff9d8d498a2e
 elasticsearch
 whoosh
+django-robots

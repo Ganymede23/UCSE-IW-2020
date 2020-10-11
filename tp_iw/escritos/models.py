@@ -29,8 +29,7 @@ class Escrito(models.Model):
     def __str__(self):
         return self.title + ' | ' + str(self.author)
 
-
-#modelo de comenntarios
+#modelo de comentarios
 class Comment(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField()
@@ -40,14 +39,14 @@ class Comment(models.Model):
     def __str__(self):
         return '%s - %s' % (self.escrito.title, self.usuario)
 
-
+#motivos de las denuncias
 class MotivoDenuncia(models.Model):
     motivo = models.CharField(max_length=100)
 
     def __str__(self):
         return self.motivo 
 
-
+#denuncias
 class Denuncia(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
