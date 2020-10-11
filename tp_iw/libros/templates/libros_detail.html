@@ -6,13 +6,56 @@
         <title>{{libro.title}} - {{libro.author}}</title>
     </head>
 
-    <div id="correccion-container-perfil" class="container-fluid">
+    <div class="container-fluid"> <!--id="correccion-container-perfil"-->
+        <div id="libro-card" class="card shadow bg-white mt-3 rounded-0">
+            <div class="row no-gutters">
+                <div id="img-wrapper" class="col-md-auto"> <!--col-md-3-->
+                    <img id="img-libro" src="https://picsum.photos/354/533" class="card-img rounded-0"/>
+                </div>
+                <div id="data-libro" class="col text-justify"> <!--col-md-9-->
+                    <div class="card-body">
+
+                        <h2 class="card-title">{{libro.title}}</h2>
+                        <hr align="left">
+                        <a class="btn btn-primary float-right" href="{% url 'add_review' pk_libro=libro.pk %}"> Hacer Reseña </a>
+                        <p class="card-text"><i>Autor:&nbsp;{{libro.author}}</i></p>
+                        <p class="card-text"><i>Categoría:&nbsp;Ciencia Ficción</i></p>
+                        <hr align="left" class="w-25">
+                        {{libro.desc|safe}}
+                        
+                        <div id="links-libros" class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div id="links-libros2" class="row">
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-ml" class="btn btn-block rounded-0" href="https://listado.mercadolibre.com.ar/{{libro.title}}"> <b>MercadoLibre</b> </a>
+                                    </div>
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-amazon" class="btn btn-block rounded-0" href="https://www.amazon.com/s?k={{libro.title}}&i=stripbooks"> <b>Amazon</b> </a>
+                                    </div>
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-tematika" class="btn btn-block rounded-0" href="https://www.tematika.com/catalogsearch/result/?q={{libro.title}}"> <b>Tematika</b> </a>
+                                    </div>
+                                    <div class="col border-top border-grey p-2">
+                                        <a id="btn-buscalibre" class="btn btn-block rounded-0" href="https://www.buscalibre.com.ar/libros/search?q={{libro.title}}"> <b>BuscaLibre.com</b> </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!--
         <div class="shadow bg-white col-md-12 m-3 p-3">
             <h1>{{libro.title}}</h1>
             <hr>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="https://picsum.photos/263/396" class="float-left" alt="...">
+                    <img src="https://picsum.photos/300/451" class="float-left" alt="...">
                 </div>
                 <div class="col-md-8 text-justify">
                     <div id="data-libro">
@@ -30,30 +73,38 @@
                 </div>
             </div>
         </div>
-
-        <div class="shadow bg-white col-md-12 m-3 p-3">
+-->
+        <div class="shadow bg-white col-md-12 mt-3 p-3">
             <h2>Reseñas</h2>
             <hr>
-            <div class="card-columns">
-                {% for review in reviews %}
-                <div class="card text-white bg-primary">
-                    <div class="card-header">
-                        <div>
-                            {{review.author}}
+            {% if reviews %}
+                <div class="card-columns">
+                    {% for review in reviews %}
+                    <div class="card text-white bg-primary">
+                        <div class="card-header">
+                            <div>
+                                {{review.author}}
+                            </div>
+                            <div>
+                                <small>{{review.date}}</small>
+                            </div>
                         </div>
-                        <div>
-                            <small>{{review.date}}</small>
+                        <div class="card-body">
+                            <h5 class="card-title"> <a class="text-white" href="{%url 'review_detail' pk=review.pk %}">
+                                    {{review.title}} </a></h5>
+                            <hr>
+                            <p class="card-text"> {{review.body|safe|truncatewords:30}} </p>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title"> <a class="text-white" href="{%url 'review_detail' pk=review.pk %}">
-                                {{review.title}} </a></h5>
-                        <hr>
-                        <p class="card-text"> {{review.body|safe|truncatewords:30}} </p>
-                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
+            {% else %}
+                <div align="center">
+                    <b>Todavía nadie hizo una reseña sobre este libro. ¡Sé el primero!</b>
+                    <br><br>
+                    <a class="btn btn-primary" href="{% url 'add_review' pk_libro=libro.pk %}"> Hacer Reseña </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

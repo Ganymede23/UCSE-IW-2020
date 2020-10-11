@@ -11,7 +11,7 @@
             <div class="card-body">
                 <p class="card-text"><small class="text-muted">Ciencia Ficción</small></p>
                 <hr>
-                <h5 class="card-title"> <a href="{%url 'book_detail' pk=libro.pk %}"> {{libro.title}} </a> </h5>
+                <h5 class="card-title"> <a href="{% url 'book_detail' pk=libro.pk %}"> {{libro.title}} </a> </h5>
                 <!--<p class="card-text"> {{libro.desc|safe}} </p>-->
                 <p class="card-text"><small class="text-muted">{{libro.author}}</small></p>
             </div>

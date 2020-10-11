@@ -1,19 +1,7 @@
-{% extends 'base_layout.html' %}        
-        
+{% extends 'base_layout.html' %}
 {% block content1 %}
-    <h2>Buscar:</h2>
 
-    <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Buscar">
-                </td>
-            </tr>
-        </table>
-
+    <form method="get" action="/search/?q="> 
         {% if query %}
             <h3>Resultados:</h3>
 
@@ -33,5 +21,4 @@
             {% endif %}
         {% endif %}
     </form>
-    
 {% endblock %}
