@@ -11,8 +11,8 @@
     
     <body>
         
-    <div id="correccion-container-perfil" class="container-fluid text-center">
-        <div class="shadow bg-white col-md-12 m-3 p-3">
+    <div  class="container-fluid text-center"> <!--id="correccion-container-perfil"-->
+        <div class="shadow bg-white col-md-12 mt-3 p-3">
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{review.title}}</h1>
@@ -37,15 +37,48 @@
                 </div>
             </div>
             <hr class="w-75">
-            <div class="col-md-12">
-                {{ review.body|safe }}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ review.body|safe }}
+                </div>
             </div>
+
+            <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
+            {% if user_logged == review.author %}
+            <hr class="w-75">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="row">
+                        {% if review.date %}
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-block" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-danger btn-block" href="{% url 'review_remove' pk=review.pk %}">Eliminar</a>
+                            </div>
+                        {%else%}
+                            <div class="col-md-4">
+                                <a class="btn btn-success btn-block" href="{% url 'review_publish' pk=review.pk %}">Publicar</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-primary btn-block" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-danger btn-block" href="{% url 'review_remove' pk=review.pk %}">Eliminar</a>
+                            </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            {% endif %}
         </div>
 
         <!--ESTRELLAS-->
 
         {% if review.date %}      
-        <div class="shadow bg-white col-md-12 m-3 p-3 text-center">
+        <div class="shadow bg-white col-md-12 mt-3 p-3 text-center">
             {%for obj in avg %}
                 <strong> Puntuacion media: {{obj.average_stars}} </strong>
                 <br>
@@ -74,41 +107,9 @@
             {%endif%}
         </div>
         {% endif %}
-       
-        <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
-        {% if user_logged == review.author %}
-        <div class="shadow bg-white col-md-12 m-3 p-3">
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div class="row">
-                        {% if review.date %}
-                            <div class="col-md-6">
-                                <a class="btn btn-primary btn-block" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
-                            </div>
-                            <div class="col-md-6">
-                                <a class="btn btn-danger btn-block" href="{% url 'review_remove' pk=review.pk %}">Eliminar</a>
-                            </div>
-                        {%else%}
-                            <div class="col-md-4">
-                                <a class="btn btn-success btn-block" href="{% url 'review_publish' pk=review.pk %}">Publicar</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-primary btn-block" href="{% url 'edit_review' pk=review.pk %}">Editar</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-danger btn-block" href="{% url 'review_remove' pk=review.pk %}">Eliminar</a>
-                            </div>
-                        {%endif%}
-                    </div>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
-        </div>
-        {% endif %}
 
         <!--CARD DEL AUTOR-->
-        <div id="user-card" class="card shadow bg-white ml-3 mt-3 ">
+        <div id="user-card" class="card shadow bg-white border-0 mt-3">
             <div class="row no-gutters">
                 <div id="img-wrapper" class="col-md-auto">
                     <!--col-md-3-->
@@ -134,7 +135,7 @@
         </div>
 
         <!--COMENTARIOS-->
-        <div class="shadow bg-white col-md-12 m-3 p-3">
+        <div class="shadow bg-white col-md-12 mt-3 p-3">
             <h3>Comentarios</h3>
             <hr class="w-75">
 

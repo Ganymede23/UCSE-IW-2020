@@ -57,14 +57,16 @@ body {
 }
 
 #libro-card{
-    margin-right: -1rem;
+    /*margin-right: -1rem;*/
     max-height: 535px;
 }
 
 #user-card{
     border-top-left-radius: 75pt 75pt;
     border-bottom-left-radius: 75pt 75pt;
-    margin-right: -1rem;
+    border-top-right-radius: 0pt 0pt;
+    border-bottom-right-radius: 0pt 0pt;
+
     min-height: 200px;
     max-height: 535px;
 }
