@@ -91,6 +91,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
                 #'django.template.loaders.app_directories.Loader',
+                'home.context_processors.agregar_usuarios_no_seguidos',  
             ],
         },
     },
@@ -133,7 +134,7 @@ DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'Tp_IW_Leelo',
-            'PASSWORD': 'LucasCopes',
+            'PASSWORD': 'admin',
             'USER': 'postgres',
             'HOST': '127.0.0.1',
             'DATABASE_PORT': '5432',
