@@ -34,14 +34,15 @@
                 </div>
             </div>
             <hr class="w-75">
-            <div class="col-md-12">
-                {{ escrito.body|safe }}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ escrito.body|safe }}
+                </div>
             </div>
-        </div>
 
-        <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
-        {% if user_logged == escrito.author %}
-        <div class="shadow bg-white col-md-12 m-3 p-3">
+            <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
+            {% if user_logged == escrito.author %}
+            <hr class="w-75">
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -68,8 +69,8 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
 
         <!--CARD DEL AUTOR-->
         <div id="user-card" class="card shadow bg-white ml-3 mt-3 ">

@@ -45,5 +45,8 @@ urlpatterns = [
 
     #Robots
     path('robots.txt/', include('robots.urls')),
+
+    #Search
+    path('search/', include('haystack.urls')),
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

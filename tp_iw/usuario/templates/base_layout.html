@@ -9,8 +9,8 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main4.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/simple-sidebar3.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main5.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/simple-sidebar2.css' %}">
         <!--<link rel="stylesheet" type="text/css" href="{% static 'css/sidebar2.css' %}">-->
     </head>
 
@@ -18,21 +18,21 @@
     
     <form method="get" action="/search/?q=">
         <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-white border-bottom">
 
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 80% 90%; height: 6.5vh; width: 12vw; margin-left: -1vw;"></a>
 
         <!-- Collapsible content -->
+        &nbsp;&nbsp;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <form class="form-inline ml-auto">
-            <div class="md-form my-0">
-                <input class="form-control" type="text" id="q" name="q" placeholder="Search" aria-label="Search">
-            </div>
-            <button href="#!" class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit">Search</button>
+            <form class="form-inline ml-auto">    
+                <div class="md-form my-0">
+                    <input class="form-control" type="text" id="buscador" name="q" placeholder="Buscar escritos" aria-label="Search">
+                </div>
+            &nbsp; &nbsp;
+            <button href="#!" class="btn btn-outline-primary btn-md my-0 ml-sm-2" type="submit">Buscar</button>
             </form>
-
         </div>
         <!-- Collapsible content -->
 
@@ -45,11 +45,11 @@
         <!-- Left Sidebar -->
         <div id="left-sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">
+                <!--<li class="sidebar-brand">
                     <a href="#">
                         Left Sidebar
                     </a>
-                </li>
+                </li>-->
                 <li>
                     <a href="{%url 'homepage' %}" class="list-group-item list-group-item-action"
                         >Home
@@ -74,6 +74,15 @@
                     <a href="#" class="list-group-item list-group-item-action"
                         >Grupos
                     </a>
+                </li>
+                <li>
+                    {% for group in request.user.groups.all %}
+                        {% if group.name == 'Admins' %}
+                            <a href="{% url 'mostrar_denuncias'  %}" class="list-group-item list-group-item-action"
+                            >Administrar Denuncias
+                            </a>
+                        {% endif %}
+                    {% endfor %}
                 </li>
                 <li>
                     <a href="/usuario/logout_user" class="list-group-item list-group-item-action"

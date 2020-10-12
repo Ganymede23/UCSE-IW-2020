@@ -3,12 +3,15 @@ body {
     /*background: rgba(0, 123, 255, 1) - BLUE PRIMARY */
 }
 
+#buscador{
+    width: 35vw;
+}
+
 /* LINKS DE REDIRECCION A ESCRITOS, PERFILES, ETC */
     /* CONTENIDO-1: LINK EN NEGRO, SIN SUBRAYADO, AZUL CON HOVER */
     a:link.links-contenido-1 {
             text-decoration: none;
             color: black;
-            
         }
 
     a:visited.links-contenido-1 {
