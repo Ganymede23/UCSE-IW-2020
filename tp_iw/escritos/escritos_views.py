@@ -1,9 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from .models import Escrito, Comment, Denuncia
-from .forms import EscritoForm, CommentForm, DenunciaForm
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+
+from .models import Escrito
+from .forms import EscritoForm
+from comentarios.models import Comment
+from comentarios.forms import CommentForm
 from usuario.models import Profile
 
 
@@ -21,6 +24,8 @@ def escrito_detail(request, pk): # Detelle de escritos
 
     comments = Comment.objects.filter(escrito = escrito)
 
+    haycomments= comments.exists()
+
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -33,7 +38,7 @@ def escrito_detail(request, pk): # Detelle de escritos
         form = CommentForm()
 
     return render(request, 'escritos_details.html', {'escrito': escrito, 'user_logged': user_logged, 'total_likes': total_likes,
-     'liked': liked, 'comments': comments, 'form': form, 'tiempo': tiempo })
+     'liked': liked, 'comments': comments, 'form': form, 'tiempo': tiempo, 'haycomments':haycomments })
 
 def escrito_new(request): # Crear nuevo escrito
     if request.method == "POST":
@@ -88,31 +93,6 @@ def like_escrito(request, pk): #funcion like
         liked = True
 
     return HttpResponseRedirect(reverse('escrito_detail', args=[str(pk)]))
-
-def delete_comment(request, pk): #borrar comentario
-    comment = Comment.objects.get(pk=pk)
-    pk = comment.escrito.pk
-    comment.delete()
-
-    return redirect('escrito_detail', pk=pk)
-
-def denuncia_comment(request, pk): #denuncia un comentario y lo agrega a una lista de denuncias
-    comment = Comment.objects.get(pk=pk)
-    pk = comment.escrito.pk
-    denuncias = Denuncia.objects.all()    
-    if request.method == "POST":
-        form = DenunciaForm(request.POST)
-        if form.is_valid():
-            denuncia = form.save(commit=False)
-            denuncia.usuario = request.user
-            denuncia.comment = comment
-            if not denuncias.filter(usuario=request.user.id, comment=comment).exists():
-                denuncia.save()
-            return redirect('escrito_detail', pk=pk)
-    else:
-        form = DenunciaForm()
-
-    return render(request, 'add_denuncia.html', {'form': form})
 
 def escrito_leido(request): #marca escrito como leido y lo agrega a la lista de leidos
     if request.POST:

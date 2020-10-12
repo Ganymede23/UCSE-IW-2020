@@ -20,9 +20,8 @@ import json
 
 from .forms import CreateUserForm, ChangeUserForm, PasswordChangingForm, EditProfileForm
 from .models import Profile
-from escritos.models import Escrito, Comment, Denuncia, MotivoDenuncia
-from libros.models import Review, Comment_r, Denuncia_r, MotivoDenuncia_r
-from escritos.forms import DenunciaForm
+from escritos.models import Escrito
+from libros.models import Review
 
 # =====CREACION Y AUTENTICACION DE USUARIOS======
 
@@ -273,68 +272,5 @@ def follow_unfollow_profile(request):
         return redirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect('/usuario/suggested_user')
 
-from django.db.models.aggregates import Count
 
-# ===== DENUNCIAS ======
 
-#Escritura
-def mostrar_denuncias(request):
-    denuncias_comments = Denuncia.objects.all()
-    comments =[]
-    for denuncia in denuncias_comments:
-        comments.append(denuncia.comment)
-    comments = set(comments)
-
-    cantidad_denuncias = Denuncia.objects.values('comment').annotate(dcount=Count('comment'))
-    cantidad_motivos = Denuncia.objects.values('motivo', 'comment').annotate(dcount=Count('motivo'))
-
-    motivos = MotivoDenuncia.objects.all()
-
-    denuncias_comments_r = Denuncia_r.objects.all()
-    comments_r =[]
-    for denuncia in denuncias_comments_r:
-        comments_r.append(denuncia.comment)
-    comments_r = set(comments_r)
-
-    cantidad_denuncias_r = Denuncia_r.objects.values('comment').annotate(dcount=Count('comment'))
-    cantidad_motivos_r = Denuncia_r.objects.values('motivo', 'comment').annotate(dcount=Count('motivo'))
-
-    motivos_r = MotivoDenuncia_r.objects.all()
-
-    return render(request, 'mostrar_denuncias.html', {'denuncias_comments': denuncias_comments, 'comments':comments,
-     'cantidad_d': cantidad_denuncias, 'cantidad_m':cantidad_motivos, 'motivos': motivos, 'denuncias_comments_r': denuncias_comments_r, 'comments_r':comments_r,
-     'cantidad_d_r': cantidad_denuncias_r, 'cantidad_m_r':cantidad_motivos_r, 'motivos_r': motivos_r})
-
-def delete_comment(request, pk): #borrar comentario
-    comment = Comment.objects.get(pk=pk)
-    pk = comment.escrito.pk
-    comment.delete()
-
-    return redirect('mostrar_denuncias')
-
-def delete_denuncias(request, pk): #borrar comentario
-    #comment.delete()
-    comment = Comment.objects.get(pk=pk)
-    denuncias_comments = Denuncia.objects.all()
-    denuncias_comments= denuncias_comments.filter(comment=comment)
-    denuncias_comments.delete()
-
-    return redirect('mostrar_denuncias')
-
-#reviews
-
-def delete_comment_r(request, pk): #borrar comentario
-    comment = Comment_r.objects.get(pk=pk)
-    pk = comment.review.pk
-    comment.delete()
-
-    return redirect('mostrar_denuncias')
-
-def delete_denuncias_r(request, pk): #borrar comentario
-    #comment.delete()
-    comment = Comment_r.objects.get(pk=pk)
-    denuncias_comments = Denuncia_r.objects.all()
-    denuncias_comments= denuncias_comments.filter(comment=comment)
-    denuncias_comments.delete()
-
-    return redirect('mostrar_denuncias')

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .libros_views import (show_books, book_detail, review_new, review_edit,
-review_publish, review_remove, review_detail, delete_comment, denuncia_comment)
+review_publish, review_remove, review_detail)
 
 urlpatterns = [
     path('show_books/', show_books, name='show_books'),
@@ -12,8 +12,4 @@ urlpatterns = [
     path('review/<pk>/remove/', review_remove, name='review_remove'),
     path('review/<pk>/publish/', review_publish, name='review_publish'),
     path('review/<int:pk>/edit/', review_edit, name='edit_review'),
-
-
-    path('comment/<int:pk>/delete/', delete_comment, name='comment_delete'),
-    path('comment/<int:pk>/denuncia/', denuncia_comment, name='comment_denuncia'),
 ]

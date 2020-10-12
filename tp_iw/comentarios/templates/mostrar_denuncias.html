@@ -1,0 +1,46 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content1 %}
+
+<head>
+  <title>Administrar Denuncias</title>
+</head>
+
+<h3>Comentarios Denunciados</h3>
+
+<br>
+
+{% for comment in comments %}
+  <b>{{ comment.usuario }}</b> dijo:
+  {{comment.body|safe}}
+  {%for id_comentario in cantidad_d %}
+    {% if id_comentario.comment == comment.pk %}
+      <b> Cantidad de veces denunciado: </b>
+      {{id_comentario.dcount}}
+      </br>
+      {% for motivo in motivos %}
+        {% for id_motivo in cantidad_m%}
+          {% if id_motivo.motivo == motivo.pk and id_motivo.comment == comment.pk%}
+            <b>{{ motivo|safe }}
+            : </b>
+            {{id_motivo.dcount}}
+          {% endif %}
+        {%endfor%}
+      {%endfor%}
+    {% endif %}
+  {%endfor%}
+  </br></br>
+    <a href="/comentarios/denuncias/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
+    onClick="return confirm('¿Esta seguro que desea eliminar las denuncias de este comentario?');">
+    <strong>Rechazar Denuncias</strong>
+  </a>
+  <a href="/comentarios/commentdenunciado/{{ comment.id }}/delete/" class="btn btn-outline-danger btn-sm"
+    onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+    <strong>Eliminar comentario</strong>
+  </a>
+  <hr>
+{%endfor%}
+
+</br>
+
+{% endblock %}

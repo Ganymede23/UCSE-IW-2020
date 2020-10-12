@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import Escrito, Comment, Denuncia, MotivoDenuncia
+from .models import Escrito
 
 admin.site.register(Escrito)
-admin.site.register(Comment)
-admin.site.register(Denuncia)
-admin.site.register(MotivoDenuncia)
+

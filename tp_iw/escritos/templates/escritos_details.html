@@ -115,9 +115,9 @@
         <div class="shadow bg-white col-md-12 m-3 p-3">
             <h3>Comentarios</h3>
             <hr class="w-75">
-
+            
             <!--CAJA DE COMENTARIOS-->
-            {% if not escrito.comments.all %} <!--SI NO HAY COMENTARIOS-->
+            {% if not haycomments %} <!--SI NO HAY COMENTARIOS-->
                 Aún no hay comentarios sobre este escrito. ¡Sé el primero!
                 <hr class="w-75">
             {% endif %}
@@ -131,11 +131,11 @@
 
             <!--LISTA DE COMENTARIOS-->
             <hr class="w-75">
-            {% if escrito.comments.all %} <!--SI NO HAY COMENTARIOS-->
+            {% if haycomments %} <!--SI HAY COMENTARIOS-->
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8 text-left p-3">
-                        {% for comment in escrito.comments.all %}
+                        {% for comment in comments %}
                             <b>@<a class="links-contenido-1" href="{% url 'show_profile_page' pk=comment.usuario.pk %}">{{comment.usuario}}</a></b> - {{ comment.date }}
                             
                             {{ comment.body|safe }} 
@@ -144,7 +144,7 @@
                                 {% if comment.usuario == request.user %}
                                     <div class="col-md-8"></div>
                                     <div class="col-md-4">
-                                        <a href="/escritos/comment/{{ comment.id }}/delete/" class="btn btn-block btn-outline-secondary btn-sm"
+                                        <a href="/comentarios/comment/{{ comment.id }}/delete/" class="btn btn-block btn-outline-secondary btn-sm"
                                             onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
                                             <strong>Eliminar comentario</strong>
                                         </a>
@@ -154,7 +154,7 @@
                                         {% if not comment in comments_denunciados %}
                                             <div class="col-md-8"></div>
                                             <div class="col-md-4">
-                                                <a href="/escritos/comment/{{ comment.id }}/denuncia/" class="btn btn-block btn-outline-secondary btn-sm"
+                                                <a href="/comentarios/comment/{{ comment.id }}/denuncia/" class="btn btn-block btn-outline-secondary btn-sm"
                                                 onClick="return confirm('¿Desea denunciar el comentario?');">
                                                 <strong>Denunciar comentario</strong>
                                                 </a>

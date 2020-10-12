@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
 
 #para cargar  imagenes y statics
 from django.conf import settings
@@ -42,6 +41,9 @@ urlpatterns = [
 
     #Escritos
     path('escritos/', include('escritos.urls')),
+
+    #Comentarios
+    path('comentarios/', include('comentarios.urls')),
 
     #Robots
     path('robots.txt/', include('robots.urls')),
