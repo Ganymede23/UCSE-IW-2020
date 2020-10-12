@@ -43,11 +43,19 @@
                                 Críticas
                             </div>
                             <div class="col-md-3 center-align-text">
-                                <h3>122</h3>
-                                Seguidores
+                                {% if my_profile == user_profile  %}
+                                    <h3>{{count_followed}}</h3>
+                                {% else  %}
+                                    <h3>{{count_followed_otherusers}}</h3>
+                                {% endif %}
+                                Seguidores                                
                             </div>
                             <div class="col-md-3 center-align-text">
+                                {% if my_profile == user_profile  %}
                                 <h3>{{count_following}}</h3>
+                                {% else  %}
+                                <h3>{{count_following_otherusers}}</h3>
+                                {% endif %}
                                 Seguidos
                             </div>
                         </div>
@@ -252,5 +260,6 @@
         </br>
     {% endif %}
 {% endif %}
-
+{{my_profile.following}}
+{{count_following}}
 {% endblock %}

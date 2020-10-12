@@ -219,8 +219,10 @@ class ShowProfilePageView(DetailView):
         view_profile = self.get_object()
         if view_profile.user in my_profile.following.all():
             follow = True
+            view_profile.followed.add(my_profile.user)
         else:
             follow = False
+            view_profile.followed.remove(my_profile.user)
         
         context["follow"] = follow
         # </Follow button>
@@ -235,9 +237,10 @@ class ShowProfilePageView(DetailView):
         context["count_escritos"] = publicados.count()
         context["count_reviews"] = r_publicadas.count()
         context["count_following"] = my_profile.following.count()
-
+        context["count_following_otherusers"] = user_profile.following.count()
+        context["count_followed"]= my_profile.followed.count()
+        context["count_followed_otherusers"] = user_profile.followed.count()
         context["escritos_leidos"] = escritos_leidos
-
         return context
 
     # Follow button
@@ -269,6 +272,7 @@ def follow_unfollow_profile(request):
             my_profile.following.remove(obj.user)
         else:
             my_profile.following.add(obj.user)
+            
         return redirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect('/usuario/suggested_user')
 

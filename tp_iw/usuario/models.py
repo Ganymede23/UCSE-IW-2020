@@ -7,6 +7,7 @@ class Profile (models.Model):
     bio = models.TextField(null=True)
     profile_pic = models.ImageField(null= True, blank=True, upload_to="images/profiles")
     following = models.ManyToManyField(User, related_name='following', blank=True)
+    followed = models.ManyToManyField(User, related_name='followed', blank=True)
     escritos_leidos = models.ManyToManyField(Escrito, related_name='escritos_leidos', blank=True)
     
     def profiles_usuario(self):
