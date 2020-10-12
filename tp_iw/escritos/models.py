@@ -12,7 +12,7 @@ class Escrito(models.Model):
     created_date = models.DateTimeField(
         default=timezone.now)
     date = models.DateTimeField(blank=True, null=True )
-    likes = models.ManyToManyField(User, related_name='post_escritos')
+    likes = models.ManyToManyField(User, related_name='post_escritos', blank=True, null=True)
 
     def total_likes(self):
         return self.likes.count()

@@ -32,7 +32,8 @@ def home_page(request):
     
     #Verifica a quién sigue el usuario logueado
     users = [user for user in profile.following.all()]
-    posts = []
+    posts_leidos = []
+    posts_no_leidos = []
     escritos_propios = []
     escritos_seguidos = []
     reviews_propios=[]
@@ -41,20 +42,24 @@ def home_page(request):
 
     #Obtener posts de cuentas seguidas
     for usuarios in users:
-        escritos_seguidos = Escrito.objects.filter(author=usuarios).exclude(date = None)
-        posts.append(escritos_seguidos)
-        reviews_seguidos = Review.objects.filter(author=usuarios).exclude(date = None)
-        posts.append(reviews_seguidos)
-
+        escritos_seguidos = Escrito.objects.filter(author=usuarios).exclude(date = None).order_by("date")
+        for escrito in escritos_seguidos:
+            if  profile.escritos_leidos.filter(id=escrito.pk).exists():
+                posts_leidos.append(escrito)
+            else:
+                posts_no_leidos.append(escrito)
+        reviews_seguidos = Review.objects.filter(author=usuarios).exclude(date = None).order_by("created_date")
+        posts_no_leidos.extend(list(reviews_seguidos))
 
     #Obtener posts propios
-    escritos_propios = Escrito.objects.filter(author=profile.user).exclude(date = None)
-    posts.append(escritos_propios)
-    reviews_propios = Review.objects.filter(author=profile.user).exclude(date = None)
-    posts.append(reviews_propios)
-
-    if len(posts)>0:
-        queryset = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date)  #armar lista ordenada por fecha
+    escritos_propios = Escrito.objects.filter(author=profile.user).exclude(date = None).order_by("date")
+    for escrito in escritos_propios:
+            if profile.escritos_leidos.filter(id=escrito.pk).exists():
+                posts_leidos.append(escrito)
+            else:
+                posts_no_leidos.append(escrito)
+    reviews_propios = Review.objects.filter(author=profile.user).exclude(date = None).order_by("created_date")
+    posts_no_leidos.extend(list(reviews_propios))
         
-    return render(request, 'home_page.html', {'perfil': profile, 'posts': queryset, 'grupo': grupo})
+    return render(request, 'home_page.html', {'perfil': profile, 'posts_leidos': posts_leidos, 'posts_no_leidos': posts_no_leidos, 'grupo': grupo})
    
