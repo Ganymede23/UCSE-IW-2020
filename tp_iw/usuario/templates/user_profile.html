@@ -19,7 +19,7 @@
                 <div class="user-pic" style="background: url(https://picsum.photos/200/200/) no-repeat">&nbsp;</div>
                 {% endif %}
             </div>
-            
+
             <!--Usuario y Bio-->
             <div class="user-details">
                 <h4 class="user-name">{{user_profile}}</h4>
@@ -56,6 +56,58 @@
                 </div>
             </div>
             <hr>
+
+            <!-- BOTONES EDITAR/SEGUIR -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            {% if user.is_authenticated %}
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            {% if follow %}
+                                                <form action="{% url 'follow_unfollow_profile' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="profile_pk" value={{object.pk}}>
+                                                    <button type="submit" class="btn btn-danger btn-block">Dejar de seguir</button>
+                                                </form>
+                                            {% else %}
+                                                <!--IF no muestra el "Seguir" en el perfil logeado-->
+                                                {% if my_profile != user_profile %} 
+                                                    <form action="{% url 'follow_unfollow_profile' %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="profile_pk" value={{object.pk}}>
+                                                        <button type="submit" id="follow-btn" class="btn btn-success btn-block">Seguir</button>
+                                                    </form>
+                                                {% endif %}
+                                            {% endif %}
+                                            <!--EDITAR PERFIL-->
+                                            <!--IF no muestra el "Editar Perfil" en perfiles ajenos-->
+                                            <div class="row">
+                                                {% if my_profile == user_profile  %}
+                                                    <div class="col-md-6">
+                                                        <a class="btn btn-primary btn-block" href="/usuario/edit_user"> Editar usuario </a> 
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a class="btn btn-primary btn-block" href="{% url 'edit_profile' user_profile.pk %}"> Editar perfil </a>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
             
             <!--Colapsable con escritos y reviews-->
             <div id="accordion">
@@ -63,7 +115,7 @@
                     <!--ESCRITOS-->
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseOne"
                                 aria-expanded="false" aria-controls="collapseOne">
                                 <div class="row">
                                     <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
@@ -72,7 +124,7 @@
                                                 d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg></h4> 
                                     &nbsp; &nbsp; 
-                                    <h4>Escritos publicados </h4>
+                                    <h4>Escritos publicados</h4>
                                 </div>
                             </button>
                         </h5>
@@ -81,12 +133,11 @@
                         <div class="card-body">
                             {% for escrito in publicados %}
                             <hr>
-                            <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+                            <b><a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
                             <div> {{escrito.date}} </div>
                             <hr>
                             <ul>
-                                {{escrito.body|safe|truncatewords:100  }}
-                                <br>
+                                {{escrito.body|safe|truncatewords:100}}
                             </ul>
                             {% endfor %}
                         </div>
@@ -96,7 +147,7 @@
                     <!--REVIEWS-->
                     <div class="card-header" id="headingTwo">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo"
                                 aria-expanded="true" aria-controls="collapseTwo">
                                 <div class="row">
                                     <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
@@ -105,7 +156,7 @@
                                                 d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg></h4>
                                     &nbsp; &nbsp;
-                                    <h4>Reseñas</h4>
+                                    <h4>Reseñas publicadas</h4>
                                 </div>
                             </button>
                         </h5>
@@ -114,88 +165,133 @@
                         <div class="card-body">
                             {% for review in rpublicados %}
                             <hr>
-                            <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+                            <b><a class="links-contenido-2" href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
                             <div> {{review.date}} </div>
                             <hr>
                             <ul>
                                 {{review.body|safe|truncatewords:100}}
-                                <br>
                             </ul>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-                {% if my_profile == user_profile  %}
-                <hr>
-                <div id="accordion">
-                    <!--BORRADORES-->
-                    <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree"
-                                    aria-expanded="true" aria-controls="collapseThree">
-                                    <div class="row">
-                                        <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
-                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                            </svg></h4>
-                                        &nbsp; &nbsp;
-                                        <h4>Mis borradores de escritos</h4>
-                                    </div>
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                                {% for escrito in borradores %}
-                                <hr>
-                                <b><a href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-                                <div> {{escrito.created_date}} </div>
-                                <hr>
-                                <ul>
-                                    {{escrito.body|safe|truncatewords:100  }}
-                                    <br>
-                                </ul>
-                                {% endfor %}
-                            </div>
-                        </div>
+            </div>
+
+            {% if my_profile == user_profile  %}
+            <hr>
+            <div id="accordion">
+                <!--BORRADORES-->
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseThree"
+                                aria-expanded="true" aria-controls="collapseThree">
+                                <div class="row">
+                                    <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg></h4>
+                                    &nbsp; &nbsp;
+                                    <h4>Mis borradores de escritos</h4>
+                                </div>
+                            </button>
+                        </h5>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingFour">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
-                                    aria-controls="collapseFour">
-                                    <div class="row">
-                                        <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
-                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                            </svg></h4>
-                                        &nbsp; &nbsp;
-                                        <h4>Mis borradores de reseñas</h4>
-                                    </div>
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                            <div class="card-body">
-                                {% for review in rborradores %}
-                                <hr>
-                                <b><a href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
-                                <div> {{review.date}} </div>
-                                <hr>
-                                <ul>
-                                    {{review.body|safe|truncatewords:100  }}
-                                    <br>
-                                </ul>
-                                {% endfor %}
-                            </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for escrito in borradores %}
+                            <hr>
+                            <b><a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+                            <!--<div> {{escrito.created_date}} </div>-->
+                            <hr>
+                            <ul>
+                                {{escrito.body|safe|truncatewords:100  }}
+                            </ul>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                {% endif %}
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
+                                aria-controls="collapseFour">
+                                <div class="row">
+                                    <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg></h4>
+                                    &nbsp; &nbsp;
+                                    <h4>Mis borradores de reseñas</h4>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for review in rborradores %}
+                            <hr>
+                            <b><a class="links-contenido-2" href="{%url 'review_detail' pk=review.pk %}"> {{review.title}} </a></b>
+                            <!--<div> {{review.date}} </div>-->
+                            <hr>
+                            <ul>
+                                {{review.body|safe|truncatewords:100}}
+                                <p></p>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <hr>
+
+            <div id="accordion">
+                <!--BORRADORES-->
+                <div class="card">
+                    <div class="card-header" id="headingFive">
+                        <h5 class="mb-0">
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseFive"
+                                aria-expanded="true" aria-controls="collapseFive">
+                                <div class="row">
+                                    <h4 class="text-right"><svg classwidth="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg></h4>
+                                    &nbsp; &nbsp;
+                                    <h4>Escritos leidos</h4>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for escrito in escritos_leidos %}
+                            <li>
+                                <a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a>
+                                por por @<a class="links-contenido-1" href="{%url 'show_profile_page' escrito.author.profile.id %}">{{escrito.author}} </a>
+                                <!--{{escrito.title}}, por {{escrito.author}}-->
+                            </li>
+                            {% endfor %}
+
+                            <!--{% for escrito in borradores %}
+                            <hr>
+                            <b><a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
+                            <div> {{escrito.created_date}} </div>
+                            <hr>
+                            <ul>
+                                {{escrito.body|safe|truncatewords:100  }}
+                            </ul>
+                            {% endfor %}-->
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            {% endif %}
 
             <hr>
             
@@ -222,35 +318,5 @@
 <img src="https://picsum.photos/200/" class="card-img" />
 {% endif %}
 -->
-
-{% if user.is_authenticated %}
-    {% if follow %}
-        <form action="{% url 'follow_unfollow_profile' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="profile_pk" value={{object.pk}}>
-            <button type="submit" class="btn btn-danger">Dejar de seguir</button>
-        </form>
-    {% else %}
-        <!--IF no muestra el "Seguir" en el perfil logeado-->
-        {% if my_profile != user_profile %} 
-            <form action="{% url 'follow_unfollow_profile' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="profile_pk" value={{object.pk}}>
-                <button type="submit" id="follow-btn" class="btn btn-success">Seguir</button>
-            </form>
-        {% endif %}
-    {% endif %}
-
-    <!--EDITAR PERFIL-->
-    <!--IF no muestra el "Editar Perfil" en perfiles ajenos-->
-    {% if my_profile == user_profile  %}
-        <br>
-        <a class="btn btn-primary" href="/usuario/edit_user"> Editar usuario </a> 
-        </br>
-        <br>
-        <a class="btn btn-primary" href="{% url 'edit_profile' user_profile.pk %}"> Editar perfil </a>
-        </br>
-    {% endif %}
-{% endif %}
 
 {% endblock %}

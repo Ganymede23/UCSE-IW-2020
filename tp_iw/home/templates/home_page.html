@@ -3,24 +3,24 @@
 {% block content1 %}
 
 <head>
-  <title>Leelo - Inicio</title>
+    <title>Leelo - Inicio</title>
 </head>
 
 Empieza siguiendo a otos usuarios haciendo click <a href= "/usuario/suggested_users"> aqui </a>
 
 <br>
 {% for post in posts %}
-  <ul>
-      <hr>
-      <b><a href= "{% url post.get_detail_url post.pk %}"> {{post.title}} </a></b>
-      <div>por <a href="{%url 'show_profile_page' post.author.profile.id %}"> {{post.author}} </a>- {{post.date}} </div>
-      <hr>
-      <ul>
+  
+    <hr>
+    <b><a class="links-contenido-2" href= "{% url post.get_detail_url post.pk %}"> {{post.title}} </a></b>
+    <div>por @<a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}">{{post.author}} </a>- {{post.date}} </div>
+    <hr>
+    <ul>
         <br>
         {{post.body|safe|truncatewords:100}}    
         </br>
-      </ul>
-  </ul>  
+    </ul>
+  
 {% endfor %}
 </br>
 
