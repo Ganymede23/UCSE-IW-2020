@@ -38,7 +38,9 @@ def denuncia_comment(request, pk): #denuncia un comentario y lo agrega a una lis
     else:
         form = DenunciaForm()
 
-    return render(request, 'add_denuncia.html', {'form': form})
+    pk_escrito = comment.escrito.pk
+
+    return render(request, 'add_denuncia.html', {'form': form, 'pk': pk_escrito})
 
 def mostrar_denuncias(request):
     denuncias_comments = Denuncia.objects.all()

@@ -26,7 +26,7 @@
     {% for post in posts_leidos %}
         <hr>
         <b><a href= "{% url post.get_detail_url post.pk %}"> {{post.title}} </a></b>
-        <div>por <a href="{%url 'show_profile_page' post.author.profile.id %}"> {{post.author}} </a>- {{post.date}} </div>
+        <div>por<a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
         <hr>
         <ul>
             <br>
