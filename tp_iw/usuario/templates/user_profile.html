@@ -277,23 +277,15 @@
                     </div>
                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                         <div class="card-body">
+                            <div class="text-center">>> WIP <<</div>
                             {% for escrito in escritos_leidos %}
-                            <li>
+                            
                                 <a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a>
-                                por por @<a class="links-contenido-1" href="{%url 'show_profile_page' escrito.author.profile.id %}">{{escrito.author}} </a>
+                                por <a class="links-contenido-1" href="{%url 'show_profile_page' escrito.author.profile.id %}">@{{escrito.author}} </a>
                                 <!--{{escrito.title}}, por {{escrito.author}}-->
-                            </li>
+                                <br>
                             {% endfor %}
-
-                            <!--{% for escrito in borradores %}
-                            <hr>
-                            <b><a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></b>
-                            <div> {{escrito.created_date}} </div>
-                            <hr>
-                            <ul>
-                                {{escrito.body|safe|truncatewords:100  }}
-                            </ul>
-                            {% endfor %}-->
+                            <div class="text-center">>> WIP <<</div>
                         </div>
                     </div>
                 </div>
@@ -303,7 +295,7 @@
 
             <hr>
             
-            <!--Colapsable con escritos y reviews-->
+            <!--ESCRITOS LEIDOS OLD
             <div>
                 <h3>Escritos leidos</h3>
                 {% for escrito in escritos_leidos %}
@@ -313,7 +305,7 @@
                 {% endfor %}
                 <br>
                 (placeholder)
-            </div>
+            </div>-->
 
         </div>
     </div>
