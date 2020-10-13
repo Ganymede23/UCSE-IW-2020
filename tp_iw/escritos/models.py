@@ -11,8 +11,8 @@ class Escrito(models.Model):
     body = RichTextField(blank=True, null=True)
     created_date = models.DateTimeField(
         default=timezone.now)
-    date = models.DateTimeField(blank=True, null=True )
-    likes = models.ManyToManyField(User, related_name='post_escritos', blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='post_escritos', blank=True)
 
     def total_likes(self):
         return self.likes.count()

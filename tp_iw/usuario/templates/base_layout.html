@@ -9,8 +9,8 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main5.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/simple-sidebar2.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main6.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/simple-sidebar3.css' %}">
         <!--<link rel="stylesheet" type="text/css" href="{% static 'css/sidebar2.css' %}">-->
     </head>
 
@@ -21,7 +21,7 @@
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-white border-bottom">
 
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 80% 90%; height: 6.5vh; width: 12vw; margin-left: -1vw;"></a>
+        <a class="navbar-brand" href="#" style="background: url('https://i.imgur.com/5M7XE83.png') center center no-repeat; background-size: 75% 90%; height: 6.5vh; width: 12vw; margin-left: -0.5vw;"></a>
 
         <!-- Collapsible content -->
         &nbsp;&nbsp;
@@ -50,32 +50,27 @@
                         Left Sidebar
                     </a>
                 </li>-->
-                <li>
+                    <!---->
                     <a href="{%url 'homepage' %}" class="list-group-item list-group-item-action"
                         >Home
                     </a>
-                </li>
-                <li>
+                    <!---->
                     <a href="{%url 'add_escrito' %}" class="list-group-item list-group-item-action bg-primary text-white"
                         >Crear Escrito
                     </a>
-                </li>
-                <li>
+                    <!---->
                     <a href="{%url 'show_profile_page' user.profile.id %}" class="list-group-item list-group-item-action"
                         >Perfil
                     </a>
-                </li>
-                <li>
+                    <!---->
                     <a href="{%url 'show_books'  %}" class="list-group-item list-group-item-action"
                         >Libros
                     </a>
-                </li>
-                <li>
+                    <!---->
                     <a href="#" class="list-group-item list-group-item-action"
                         >Grupos
                     </a>
-                </li>
-                <li>
+                    <!---->
                     {% for group in request.user.groups.all %}
                         {% if group.name == 'Admins' %}
                             <a href="{% url 'mostrar_denuncias'  %}" class="list-group-item list-group-item-action"
@@ -83,12 +78,11 @@
                             </a>
                         {% endif %}
                     {% endfor %}
-                </li>
-                <li>
+                    <!---->
                     <a href="/usuario/logout_user" class="list-group-item list-group-item-action"
                         >Cerrar Sesion
                     </a>
-                </li>
+                    <!---->
             </ul>
         </div>
         <!-- /#left-sidebar-wrapper -->
@@ -97,10 +91,21 @@
         <div id="right-sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">Right Sidebar</a>
+                    <a href="#">Usuarios a seguir</a>
                 </li>
-
-                <li>
+                <!--
+                {% for profile in lista_usuarios_a_seguir %} 
+                    <div class="ui segment">
+                        {{profile}}
+                        <br>
+                        <a href={% url 'show_profile_page' profile.pk %}
+                            <button class="btn btn-primary">Ver perfil</button>
+                        </a>
+                        <hr class="w-50">
+                    </div>
+                {% endfor %}
+                -->
+                <!--<li>
                     <a data-toggle="collapse" href="#recent-search" aria-expanded="false">Recent Search <span class="caret"></span></a>
                     <div class="collapse in sub-bar" id="recent-search">
                         <a href="#">Keyword 1</a>
@@ -108,7 +113,7 @@
                         <a href="#">Keyword 3</a>
                         <a href="#">Keyword 4</a>
                     </div>
-                </li>
+                </li>-->
         </div>
         <!-- /#right-sidebar-wrapper -->
 

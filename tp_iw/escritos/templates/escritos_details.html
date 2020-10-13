@@ -11,8 +11,8 @@
 
     <body>
 
-    <div id="correccion-container-perfil" class="container-fluid text-center">
-        <div class="shadow bg-white col-md-12 m-3 p-3">
+    <div class="container-fluid text-center">
+        <div class="shadow bg-white col-md-12 mt-3 p-3">
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{escrito.title}}</h1>
@@ -41,39 +41,57 @@
             </div>
 
             <!--BOTONES PUBLICAR, EDITAR, ELIMINAR-->
-            {% if user_logged == escrito.author %}
+            
             <hr class="w-75">
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="row">
-                        {% if escrito.date %}
-                            <div class="col-md-6">
-                                <a class="btn btn-primary btn-block" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
-                            </div>
-                            <div class="col-md-6">
-                                <a class="btn btn-danger btn-block" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar</a>
-                            </div>
-                        {%else%}
-                            <div class="col-md-4">
-                                <a class="btn btn-success btn-block" href="{% url 'escrito_publish' pk=escrito.pk %}">Publicar</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-primary btn-block" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-danger btn-block" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar</a>
-                            </div>
-                        {%endif%}
+                        {% if user_logged == escrito.author %}
+                            {% if escrito.date %}
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary btn-block" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-danger btn-block" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar</a>
+                                </div>
+                            {%else%}
+                                <div class="col-md-4">
+                                    <a class="btn btn-success btn-block" href="{% url 'escrito_publish' pk=escrito.pk %}">Publicar</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="btn btn-primary btn-block" href="{% url 'edit_escrito' pk=escrito.pk %}">Editar</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="btn btn-danger btn-block" href="{% url 'escrito_remove' pk=escrito.pk %}">Eliminar</a>
+                                </div>
+                            {%endif%}
+                        {% endif %}
                     </div>
                 </div>
-                <div class="col-md-3"></div>
+                <div class="col-md-3 text-right">
+
+                    <form action="{% url 'escrito_like' escrito.pk %}" method="POST">
+                        {% csrf_token %}
+                            {% if user.is_authenticated %}
+                                {% if liked %}
+                                    <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn btn-danger">No me gusta</button> 
+                                {% else %}
+                                    <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn btn-primary">Me gusta</button> 
+                                {% endif %}
+                            {% else %}
+                                <small>Debes estar logueado para dar Me gusta</small>
+                        {% endif %}
+                        <a href="#" id="boton-mg" class="btn btn-transparent" tabindex="-1" role="button" aria-disabled="true">{{ total_likes }} Me gusta</a>
+                        <!--- {{ total_likes }} Me gusta -->
+                    </form>
+                </div>
             </div>
             {% endif %}
         </div>
 
         <!--CARD DEL AUTOR-->
-        <div id="user-card" class="card shadow bg-white ml-3 mt-3 ">
+        <div id="user-card" class="card shadow bg-white border-0 mt-3">
             <div class="row no-gutters">
                 <div id="img-wrapper" class="col-md-auto">
                     <!--col-md-3-->
@@ -89,30 +107,14 @@
                         <h2 class="card-title"><b>@<a class="links-contenido-1"
                                     href="{% url 'show_profile_page' pk=escrito.author.pk %}">{{escrito.author}}</a></b></h2>
                         <hr>
-
                         <p class="card-text"><i>{{escrito.author.profile.bio}}</i></p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!--LIKE-->
-        <form action="{% url 'escrito_like' escrito.pk %}" method="POST">
-            {% csrf_token %}
-                {% if user.is_authenticated %}
-                    {% if liked %}
-                        <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn btn-danger btn-sm">No me gusta</button> 
-                    {% else %}
-                        <button type="submit", name="post_id", value="{{ escrito.id }}", class="btn btn-primary btn-sm">Me gusta</button> 
-                    {% endif %}
-                {% else %}
-                    <small>Debes estar logueado para dar Me gusta</small>
-            {% endif %}
-            - {{ total_likes }} Me gusta 
-        </form>
-
         <!--COMENTARIOS-->
-        <div class="shadow bg-white col-md-12 m-3 p-3">
+        <div class="shadow bg-white col-md-12 mt-3 p-3">
             <h3>Comentarios</h3>
             <hr class="w-75">
             
