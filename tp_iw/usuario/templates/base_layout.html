@@ -9,7 +9,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main6.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main2.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/simple-sidebar3.css' %}">
         <!--<link rel="stylesheet" type="text/css" href="{% static 'css/sidebar2.css' %}">-->
     </head>
@@ -90,36 +90,29 @@
         <!-- Right Sidebar -->
         <div id="right-sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">
+                <!--<li class="sidebar-brand">
                     <a href="#">Usuarios a seguir</a>
-                </li>
-                <!--
-                {% for profile in lista_usuarios_a_seguir %} 
-                    <div class="ui segment">
-                        {{profile}}
-                        <br>
-                        <a href={% url 'show_profile_page' profile.pk %}
-                            <button class="btn btn-primary">Ver perfil</button>
-                        </a>
-                        <hr class="w-50">
-                    </div>
-                {% endfor %}
-                -->
-                <!--<li>
-                    <a data-toggle="collapse" href="#recent-search" aria-expanded="false">Recent Search <span class="caret"></span></a>
-                    <div class="collapse in sub-bar" id="recent-search">
-                        <a href="#">Keyword 1</a>
-                        <a href="#">Keyword 2</a>
-                        <a href="#">Keyword 3</a>
-                        <a href="#">Keyword 4</a>
-                    </div>
                 </li>-->
+                
+                <div class="list-group-item list-group-item-action border-0 tex">
+                    Puedes seguir<br>usuarios aquí
+                </div>
+                
+                <div id="lista-usuarios" class="col-md-12 ml-3 mr-3 pl-3 pr-3 pt-1 pb-1 border-left">
+                    <hr align="left" class="w-50">
+                    {% for profile in usuarios_no_seguidos %} 
+                        <li id="test">
+                            <a class="links-contenido-1" href="{% url 'show_profile_page' profile.pk %}">@{{profile}}</a>
+                            <hr align="left" class="w-50">
+                        </li>
+                    {% endfor %}
+                </div>
         </div>
         <!-- /#right-sidebar-wrapper -->
 
-        <!-- Toggle Buttons -->
+        <!-- Toggle Buttons 
         <a href="#left-menu-toggle" class="btn btn-link btn-md" id="left-menu-toggle"><span class="glyphicon glyphicon-chevron-left"></span></a>
-        <a href="#right-menu-toggle" class="btn btn-link btn-md" id="right-menu-toggle"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a href="#right-menu-toggle" class="btn btn-link btn-md" id="right-menu-toggle"><span class="glyphicon glyphicon-chevron-right"></span></a>-->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
