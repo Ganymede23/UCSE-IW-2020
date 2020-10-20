@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .comentarios_views import delete_comment,denuncia_comment,mostrar_denuncias, delete_denuncias, delete_comment_denunciado
+from .comentarios_views import delete_comment,denuncia_comment,mostrar_denuncias, delete_denuncias, delete_comment_denunciado, denuncia_detail
 
 urlpatterns = [
     path('comment/<int:pk>/delete/', delete_comment, name='comment_delete'),
@@ -9,5 +9,7 @@ urlpatterns = [
     path('denuncias/', mostrar_denuncias, name='mostrar_denuncias'),
     path('denuncias/<int:pk>/delete/', delete_denuncias, name='denuncias_delete'),
 
-    path('commentdenunciado/<int:pk>/delete/', delete_comment_denunciado, name='comment_denunciado_delete')
+    path('commentdenunciado/<int:pk>/delete/', delete_comment_denunciado, name='comment_denunciado_delete'),
+
+     path('denuncias/<int:pk>/denuncia_detail/', denuncia_detail, name='denuncia_detail'),
 ]

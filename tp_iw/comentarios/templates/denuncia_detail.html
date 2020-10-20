@@ -1,0 +1,43 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content1 %}
+
+<head>
+  <title>Administrar Denuncias</title>
+</head>
+<h3>Detalle de Denuncias</h3>
+
+<br>
+<h5>Comentario denunciado: </h5> 
+<hr>
+<b>{{ comment.usuario }}</b> dijo:
+{{comment.body|safe}}
+<hr>
+<h5>Denuncias:</h5>
+<hr>
+{% for denuncia in denuncias_comments%}
+  <b>Usuario:</b> {{denuncia.usuario}}
+  <br>
+  <b>Motivo:</b> {{denuncia.motivo}}
+  <br>
+  <b>Descripción:</b> <ul>{{denuncia.descripcion|safe}} </ul>
+  <hr>
+{% endfor %}
+</br>
+<a href="/comentarios/denuncias/{{ comment.id }}/delete/" class="btn btn-outline-secondary btn-sm"
+    onClick="return confirm('¿Esta seguro que desea eliminar las denuncias de este comentario?');">
+    <strong>Rechazar Denuncias</strong>
+  </a>
+  <a href="/comentarios/commentdenunciado/{{ comment.id }}/delete/" class="btn btn-outline-danger btn-sm"
+    onClick="return confirm('¿Esta seguro que desea eliminar el comentario?');">
+    <strong>Eliminar comentario</strong>
+  </a>
+  <a href="{% url 'mostrar_denuncias'  %}" class="btn btn-outline-primary btn-sm">
+    <strong>Volver</strong>
+  </a>
+<hr>
+
+
+
+
+{% endblock %}

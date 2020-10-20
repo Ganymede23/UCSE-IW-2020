@@ -71,3 +71,10 @@ def delete_denuncias(request, pk): #borrar comentario
     denuncias_comments.delete()
 
     return redirect('mostrar_denuncias')
+
+def denuncia_detail(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    denuncias_comments = Denuncia.objects.all()
+    denuncias_comments= denuncias_comments.filter(comment=comment)
+
+    return render(request, 'denuncia_detail.html', {'denuncias_comments': denuncias_comments, 'comment':comment})
