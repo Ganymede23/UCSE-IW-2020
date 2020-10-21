@@ -80,7 +80,7 @@
         {% if review.date %}      
         <div class="shadow bg-white col-md-12 mt-3 p-3 text-center">
             {%for obj in avg %}
-                <strong> Puntuacion media: {{obj.average_stars}} </strong>
+                <strong> Puntuacion media: {{obj.average_stars|floatformat:"2"}} </strong>
                 <br>
             {%endfor%}
             {% if user.is_authenticated %}
