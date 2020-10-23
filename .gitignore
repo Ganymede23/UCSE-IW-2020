@@ -118,3 +118,9 @@ media/
 *.pyc
 *.pyc
 *.pyc
+.vscode/settings.json
+tp_iw/db.sqlite3
+*.sqlite3
+*.toc
+*.seg
+tp_iw/whoosh_index/MAIN_WRITELOCK
