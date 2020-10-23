@@ -3,11 +3,19 @@
 
     <form method="get" action="/search/?q="> 
         {% if query %}
-            <h3>Resultados:</h3>
+            <br>
+            <h4>Resultados:</h4>
 
             {% for result in page.object_list %}
-                <p>{{ result.title }}, {{ result.date }}</p>
-                <p>{{ result.body|safe}}</p>
+                <hr>
+                <b><a class="links-contenido-2" href= "{% url 'escrito_detail' result.pk %}"> {{result.title}} </a></b>
+                <div>por<a class="links-contenido-1" href= ""> @{{result.author}} </a>- {{result.date}} </div>
+                <hr>
+                <ul>
+                    <br>
+                    {{result.body|safe|truncatewords:100}}    
+                    <br>
+                </ul>
             {% empty %}
                 <p>No se encontraron escritos.</p>
             {% endfor %}

@@ -277,46 +277,34 @@
                     </div>
                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                         <div class="card-body">
-                            <div class="text-center">>> WIP <<</div>
-                            {% for escrito in escritos_leidos %}
-                            
-                                <a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a>
-                                por <a class="links-contenido-1" href="{%url 'show_profile_page' escrito.author.profile.id %}">@{{escrito.author}} </a>
-                                <!--{{escrito.title}}, por {{escrito.author}}-->
-                                <br>
-                            {% endfor %}
-                            <div class="text-center">>> WIP <<</div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Titulo</th>
+                                            <th scope="col">Autor</th>
+                                            <th scope="col">Publicado</th>
+                                        </tr>
+                                    </thead>
+                                    {% for escrito in escritos_leidos %}
+                                        <tbody>
+                                            <tr>
+                                                <!--<th scope="row">1</th>-->
+                                                <td><a class="links-contenido-2" href="{%url 'escrito_detail' pk=escrito.pk %}"> {{escrito.title}} </a></td>
+                                                <td><a class="links-contenido-1" href="{%url 'show_profile_page' escrito.author.profile.id %}">@{{escrito.author}} </a></td>
+                                                <td>{{escrito.date}}</td>
+                                            </tr>
+                                        </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div> 
-            
             {% endif %}
-
             <hr>
-            
-            <!--ESCRITOS LEIDOS OLD
-            <div>
-                <h3>Escritos leidos</h3>
-                {% for escrito in escritos_leidos %}
-                    <li>
-                        {{escrito.title}}
-                    </li>
-                {% endfor %}
-                <br>
-                (placeholder)
-            </div>-->
-
         </div>
     </div>
 </div>
-
-<!--FOTO DE PERFIL - OLD
-{% if user_profile.profile_pic %}
-<img src="{{MEDIA_URL}}{{user_profile.profile_pic.url}}" class="card-img" />
-{%else%}
-<img src="https://picsum.photos/200/" class="card-img" />
-{% endif %}
--->
-
 {% endblock %}

@@ -3,3 +3,5 @@
 {{ object.body}}
 
 {{ object.date}}
+
+{{ object.author}}

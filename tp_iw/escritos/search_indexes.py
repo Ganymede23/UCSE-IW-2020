@@ -7,6 +7,7 @@ class EscritoIndex(indexes.SearchIndex, indexes.Indexable):
     title = indexes.CharField(model_attr='title')
     body = indexes.CharField(model_attr='body')
     date = indexes.DateTimeField(model_attr='date')
+    author = indexes.CharField(model_attr='author')
 
     def get_model(self):
         return Escrito

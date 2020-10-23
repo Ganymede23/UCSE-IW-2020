@@ -29,6 +29,37 @@ def home_page(request):
         grupo = 'Admin'
     else:
         grupo = 'User'
+
+    #Verifica a quién sigue el usuario logueado
+    users = [user for user in profile.following.all()]
+    escritos= []
+    escritos_seguidos=[]
+    escritos_propios=[]
+    escritos_leidos=[]
+
+    #Obtener escritos leidos del usuario
+    escritos_leidos = profile.escritos_leidos
+
+    #Obtener posts de cuentas seguidas
+    for usuario in users:
+        escritos_seguidos.extend(Escrito.objects.filter(author=usuario).exclude(date = None))
+
+    escritos_propios.extend(list(Escrito.objects.filter(author=profile.user).exclude(date = None)))
+
+    escritos = sorted(chain(escritos_seguidos,escritos_propios),key=lambda instance: instance.date, reverse=True)
+
+    return render(request, 'home_page.html', {'perfil': profile, 'escritos': escritos, 'grupo': grupo, 'eleidos': escritos_leidos})
+
+'''
+def home_page(request):
+    #Obtiene el perfil del user logueado
+    profile = Profile.objects.get(user=request.user)
+
+    #Obtiene el 'grupo' al que pertenece el usuario
+    if profile.user.groups.filter(name = 'Admins').exists():
+        grupo = 'Admin'
+    else:
+        grupo = 'User'
     
     #Verifica a quién sigue el usuario logueado
     users = [user for user in profile.following.all()]
@@ -49,7 +80,7 @@ def home_page(request):
             else:
                 posts_no_leidos.append(escrito)
         reviews_seguidos = Review.objects.filter(author=usuarios).exclude(date = None).order_by("created_date")
-        posts_no_leidos.extend(list(reviews_seguidos))
+        #posts_no_leidos.extend(list(reviews_seguidos))
 
     #Obtener posts propios
     escritos_propios = Escrito.objects.filter(author=profile.user).exclude(date = None).order_by("date")
@@ -59,7 +90,9 @@ def home_page(request):
             else:
                 posts_no_leidos.append(escrito)
     reviews_propios = Review.objects.filter(author=profile.user).exclude(date = None).order_by("created_date")
-    posts_no_leidos.extend(list(reviews_propios))
+    #posts_no_leidos.extend(list(reviews_propios))
+
+    escritos = Escrito.objects.all()
         
     return render(request, 'home_page.html', {'perfil': profile, 'posts_leidos': posts_leidos, 'posts_no_leidos': posts_no_leidos, 'grupo': grupo})
-   
+'''
