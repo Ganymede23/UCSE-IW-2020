@@ -40,9 +40,8 @@ def home_page(request):
     #Obtener escritos leidos del usuario
     escritos_l = Escrito.objects.all()
     for escrito in escritos_l:
-        if  profile.escritos_leidos.filter(id=escrito.pk).exists():
-                escritos_leidos.append(escrito)
-
+        if profile.escritos_leidos.filter(id=escrito.pk).exists():
+            escritos_leidos.append(escrito)
 
     #Obtener posts de cuentas seguidas
     for usuario in users:

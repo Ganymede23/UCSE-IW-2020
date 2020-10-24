@@ -6,7 +6,7 @@ from ckeditor.fields import RichTextField
 class Libro(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=50)
-    desc = RichTextField(blank=True, null=True)
+    desc = RichTextField(blank=True, null=True, max_length=300)
     date_publish = models.DateTimeField(blank=True, null=True )
     portrait = models.ImageField(null= True, blank=True, upload_to="images/portrait")
 
