@@ -14,9 +14,9 @@
                 <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
                 <hr>
                 <ul>
-                    <br>
+                    
                     {{post.body|safe|truncatewords:100}}    
-                    <br>
+                    
                 </ul>
             {%else%}
                 <hr>
@@ -24,9 +24,9 @@
                 <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
                 <hr>
                 <ul>
-                    <br>
+                    
                     {{post.body|safe|truncatewords:100}}    
-                    <br>
+                    
                 </ul>                        
             {%endif%} 
         {% else %}
@@ -35,9 +35,9 @@
             <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
             <hr>
             <ul>
-                <br>
+                
                 {{post.body|safe|truncatewords:100}}    
-                <br>
+                
             </ul>
         {% endif %}
         
