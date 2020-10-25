@@ -51,7 +51,7 @@ def home_page(request):
 
     escritos = sorted(chain(escritos_seguidos,escritos_propios),key=lambda instance: instance.date, reverse=True)
 
-    return render(request, 'home_page.html', {'perfil': profile, 'escritos': escritos, 'grupo': grupo, 'eleidos': escritos_leidos})
+    return render(request, 'home_page.html', {'perfil': profile, 'escritos': escritos, 'grupo': grupo, 'eleidos': escritos_leidos, 'epropios': escritos_propios})
 
 '''
 def home_page(request):

@@ -6,21 +6,32 @@
     <title>Leelo - Inicio</title>
 </head>
     <!--Empieza siguiendo a otos usuarios haciendo click <a href= "/usuario/suggested_users"> aqui </a>-->
-
     {% for post in escritos %}
-        {% if post in eleidos %} 
-            <hr>
-            <b><a class="links-contenido-2" href= "{% url post.get_detail_url post.pk %}"><span class="badge badge-secondary">Leido</span> {{post.title}} </a></b>
-            <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
-            <hr>
-            <ul>
-                <br>
-                {{post.body|safe|truncatewords:100}}    
-                <br>
-            </ul>
+        {% if post  not in epropios %}
+            {%if post in eleidos%}
+                <hr>
+                <b><a class="links-contenido-2" href= "{% url post.get_detail_url post.pk %}"><span class="badge badge-secondary">Leido</span> {{post.title}} </a></b>
+                <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
+                <hr>
+                <ul>
+                    <br>
+                    {{post.body|safe|truncatewords:100}}    
+                    <br>
+                </ul>
+            {%else%}
+                <hr>
+                <b><a class="links-contenido-2" href= "{% url post.get_detail_url post.pk %}"><span class="badge badge-primary">Nuevo</span> {{post.title}} </a></b>
+                <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
+                <hr>
+                <ul>
+                    <br>
+                    {{post.body|safe|truncatewords:100}}    
+                    <br>
+                </ul>                        
+            {%endif%} 
         {% else %}
             <hr>
-            <b><a class="links-contenido-2" href= "{% url post.get_detail_url post.pk %}"><span class="badge badge-primary">Nuevo</span> {{post.title}} </a></b>
+            <b><a class="links-contenido-2" href= "{% url post.get_detail_url post.pk %}"> {{post.title}} </a></b>
             <div>por <a class="links-contenido-1" href="{%url 'show_profile_page' post.author.profile.id %}"> @{{post.author}} </a>- {{post.date}} </div>
             <hr>
             <ul>
