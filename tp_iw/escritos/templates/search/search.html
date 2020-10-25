@@ -12,9 +12,9 @@
                 <div>por<a class="links-contenido-1" href= ""> @{{result.author}} </a>- {{result.date}} </div>
                 <hr>
                 <ul>
-                    <br>
+                    
                     {{result.body|safe|truncatewords:100}}    
-                    <br>
+                    
                 </ul>
             {% empty %}
                 <p>No se encontraron escritos.</p>
