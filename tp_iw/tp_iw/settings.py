@@ -125,12 +125,46 @@ CKEDITOR_CONFIGS = {
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+if not os.environ.get("EN_DOCKER", False): #Si NO se encuentra en Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
+else: #Si se encuentra en Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, '..', '..', 'data','db.sqlite3'),
+        }
+    }
+    print(os.path.join(BASE_DIR, '..', '..', 'data','db.sqlite3'))
+    MEDIA_ROOT = os.path.join(BASE_DIR, '..', '..', 'data','media')
+    MEDIA_URL = '/data/media/'
+
+'''
+if os.environ.get("IS_DOCKER", False): 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, '..','data','db.sqlite3'),
+        }
+    }
+    MEDIA_URL = '/data/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, '..','data','media')
+else: #Si NO se encuentra en Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+'''
 
 '''
 DATABASES = {
@@ -214,9 +248,9 @@ USE_TZ = True
 #para cargar imagenes y statics
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+#MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
