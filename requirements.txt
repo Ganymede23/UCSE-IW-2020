@@ -21,7 +21,7 @@ jedi==0.17.2
 oauthlib==3.1.0
 parso==0.7.1
 pickleshare==0.7.5
-Pillow==8.1.1
+Pillow==9.3.0
 prompt-toolkit==3.0.6
 psycopg2==2.8.5
 pydot==1.4.1
